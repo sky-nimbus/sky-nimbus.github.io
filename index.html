@@ -317,7 +317,7 @@ function genTabCode() {
 `;
     }
     tabLoopHead += `&lt;li${tabClassDrop}${tabActive}&gt;&lt;a data-toggle=&quot;${tabToggleDrop}&quot; data-target=&quot;#${tabItemIdValue}&quot;&gt
-[${tabRadioValue}_head] ${tabNameValue} [${tabRadioValue}_head]&lt;/a&gt;&lt;/li&gt;${tabDropStart}${tabLoopDropHead}${tabDropEnd}
+[${tabRadioValue}_head] ${tabNameValue} [${tabRadioValue}_head]&lt;/a&gt;${tabDropStart}${tabLoopDropHead}${tabDropEnd}&lt;/li&gt;
 `;
     if (document.getElementById(`tab_drop_quantity${i}`).value == false) {
       tabLoopBody = `&lt;!--Start ${tabRadioValue} ${i} body &quot;${tabItemIdValue}&quot;--&gt;&lt;div id=&quot;${tabItemIdValue}&quot; class=&quot;tab-pane${tabFadeValue}${tabShowValue}&quot;&gt;
