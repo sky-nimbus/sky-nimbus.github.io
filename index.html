@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<style>
+fieldset {
+  font-family: sans-serif;
+  font-size: small;
+}
+</style>
+</head>
+
+<body onload="genAccFields(), genTabFields(), genDropFields()">
+
+
+
+
+
+<!-- BUTTON -->
+
+<fieldset>
+<legend>Button</legend>
+  <input type="text" id="btn_id_field" oninput="genButtonCode()" placeholder="Button ID"><br>
+  <input type="text" id="btn_name_field" oninput="genButtonCode()" placeholder="Button name"><br>
+</fieldset>
+
+<script>
+function genButtonCode() {
+  var btnCode = document.createElement("P");
+  let btnNameValue = document.getElementById("btn_name_field").value.trim() || "Button";
+  var btnIdValue = document.getElementById("btn_id_field").value.replace(/ /g, '');
+  if (btnIdValue == false) {
+    btnIdValue = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5);
+  }
+  btnCode.innerHTML =
+    `<pre>&lt;!--Start btn head &quot;${btnIdValue}&quot;--&gt;
+&lt;button type=&quot;button&quot; class=&quot;btn btn-primary&quot; data-toggle=&quot;collapse&quot; data-target=&quot;#${btnIdValue}&quot;&gt;
+[btn_head] ${btnNameValue} [btn_head]
+&lt;!--End btn head &quot;${btnIdValue}&quot;--&gt;&lt;/button&gt;
+&lt;!--Start btn body &quot;${btnIdValue}&quot;--&gt;
+&lt;div id=&quot;${btnIdValue}&quot; class=&quot;collapse&quot;&gt;
+[btn_body] Content for ${btnNameValue} [btn_body]
+&lt;!--End btn body &quot;${btnIdValue}&quot;--&gt;&lt;/div&gt;</pre>`;
+  document.getElementById("btn_generate").innerHTML = "";
+  document.getElementById("btn_generate").appendChild(btnCode);
+}
+</script>
+
+<p></p>
+<div id="btn_generate" style="font-family: monospace"></div>
+<p></p>
+
+
+
+
+
+<!-- ACCORDION -->
+
+<fieldset>
+<legend>Accordion</legend>
+  <label for="acc_quantity">Quantity</label>
+    <input type="number" oninput="genAccFields(), genAccCode()" min="1" max="20" id="acc_quantity" value="1"><span style="color: red;">*</span><br>
+  <label for="acc_padding_field">Padding</label>
+    <input type="range" oninput="genAccPadding(this.value), genAccCode()" min="0"  max="50" step="10" value="0" id="acc_padding_field"><span id="acc_padding_amount"></span><br>
+  <label for="acc_width_field">Width</label>
+    <input type="range" oninput="genAccWidth(this.value), genAccCode()" min="0"  max="1000" step="100" value="0" id="acc_width_field"><span id="acc_width_amount"></span><br>
+  <input type="text" id="acc_id_field" oninput="genAccCode()" placeholder="Accordion set ID">
+  <div id="acc_fields"></div>
+</fieldset>
+
+<script>
+function genAccWidth(val) {
+  document.getElementById("acc_width_amount").innerHTML = val + "px";
+  if (document.getElementById("acc_width_field").value == 0) {
+    document.getElementById("acc_width_amount").innerHTML = "";
+  }
+}
+function genAccPadding(val) {
+  document.getElementById("acc_padding_amount").innerHTML = val + "px";
+  if (document.getElementById("acc_padding_field").value == 0) {
+    document.getElementById("acc_padding_amount").innerHTML = "";
+  }
+}
+function genAccFields() {
+  document.getElementById("acc_fields").innerHTML = "";
+  document.getElementById("acc_id_field").value = "";
+  for (let i = 1; i <= document.getElementById("acc_quantity").value; i++) {
+    var accDivFields = document.createElement("DIV");
+      accDivFields.setAttribute("id", `acc_div_field${i}`);
+      accDivFields.setAttribute("style", "float: left");
+    var accIdFields = document.createElement("INPUT");
+      accIdFields.setAttribute("type", "text");
+      accIdFields.setAttribute("id", `acc_id_field${i}`);
+      accIdFields.setAttribute("placeholder", `Accordion item ${i} ID`);
+      accIdFields.setAttribute("oninput", "genAccCode()");
+      accIdFields.style.display = "block";
+    var accNameFields = document.createElement("INPUT");
+      accNameFields.setAttribute("type", "text");
+      accNameFields.setAttribute("id", `acc_name_field${i}`);
+      accNameFields.setAttribute("placeholder", `Accordion item ${i} name`);
+      accNameFields.setAttribute("oninput", "genAccCode()");
+    accDivFields.appendChild(accIdFields);
+    accDivFields.appendChild(accNameFields);
+    document.getElementById("acc_fields").appendChild(accDivFields);
+  }
+}
+function genAccCode() {
+  var accCode = document.createElement("P");
+  var accWidthString = ` style=&quot;width: ${document.getElementById("acc_width_field").value}px&quot;`;
+  var accPaddingString = ` style=&quot;padding: ${document.getElementById("acc_padding_field").value}px&quot;`;
+  var accIdValue = document.getElementById("acc_id_field").value.replace(/ /g, '');
+  var accItemIdValue = "";
+  var accLoop = "";
+  var accNameValue;
+  if (document.getElementById("acc_width_field").value == 0) {
+    accWidthString = "";
+  }
+  if (document.getElementById("acc_padding_field").value == 0) {
+    accPaddingString = "";
+  }
+  if (accIdValue == false) {
+    accIdValue = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5);
+  }
+  for (let i = 1; i <= document.getElementById("acc_quantity").value; i++) {
+    accNameValue = document.getElementById(`acc_name_field${i}`).value;
+    accItemIdValue = document.getElementById(`acc_id_field${i}`).value;
+    if (accNameValue == false) {
+      accNameValue = `Accordion item ${i}`;
+    }
+    if (accItemIdValue == false) {
+      accItemIdValue = `${accIdValue}_${i}`;
+    }
+    accLoop += `&lt;!--Start acc item ${i} &quot;${accItemIdValue}&quot;--&gt;&lt;div class=&quot;panel panel-default&quot;${accWidthString}&gt;
+&lt;!--Start acc item ${i} head &quot;${accItemIdValue}&quot;--&gt;&lt;div class=&quot;panel-heading&quot;&gt;
+&lt;a data-toggle=&quot;collapse&quot; data-parent=&quot;#${accIdValue}&quot; data-target=&quot;#${accItemIdValue}&quot;&gt;
+[acc_head] ${accNameValue} [acc_head]&lt;/a&gt;
+&lt;!--End acc item ${i} head &quot;${accItemIdValue}&quot;--&gt;&lt;/div&gt;
+&lt;!--Start acc item ${i} body &quot;${accItemIdValue}&quot;--&gt;
+&lt;div id=&quot;${accItemIdValue}&quot; class=&quot;panel-collapse collapse&quot;&gt;&lt;div class=&quot;panel-body&quot;${accPaddingString}&gt;
+&lt;p&gt;[acc_body] Content for ${accNameValue} [acc_body]&lt;/p&gt;&lt;/div&gt;
+&lt;!--End acc item ${i} body &quot;${accItemIdValue}&quot;--&gt;&lt;/div&gt;
+&lt;!--End acc item ${i} &quot;${accItemIdValue}&quot;--&gt;&lt;/div&gt;
+`;
+  }
+  accCode.innerHTML =
+    `<pre>&lt;!--Start acc set &quot;${accIdValue}&quot;--&gt;&lt;div class=&quot;panel-group&quot; id=&quot;${accIdValue}&quot;&gt;
+${accLoop}&lt;!--End acc set &quot;${accIdValue}&quot;--&gt;&lt;/div&gt;</pre>`;  
+  document.getElementById("acc_generate").innerHTML = "";
+  document.getElementById("acc_generate").appendChild(accCode);
+}
+</script>
+
+<p></p>
+<div id="acc_generate" style="font-family: monospace"></div>
+<p></p>
+
+
+
+
+
+<!-- TABS -->
+
+<fieldset>
+<legend>Tabs</legend>
+  <label class="radio-inline">
+    <input type="radio" oninput="genTabCode()" name= "tab_radio" id="tab_radio_tab" checked> Tab</label>
+  <label class="radio-inline">
+    <input type="radio" oninput="genTabCode()" name= "tab_radio" id="tab_radio_pill"> Pill</label><br>
+  <label for="tab_quantity">Quantity</label>
+    <input type="number" oninput="genTabFields(), genTabCode()" min="1" max="20" id="tab_quantity" value="1"><span style="color: red;">*</span><br>
+  <label for="tab_fade_check" >Fade transition</label>
+    <input type="checkbox" oninput="genTabCode()"id="tab_fade_check"><br>
+  <label for="tab_show_check" >Show contents initially</label>
+    <input type="checkbox" oninput="genTabCode()"id="tab_show_check"><br>
+  <input type="text" oninput="genTabCode()" id="tab_id_field" placeholder="Tab set ID"><br>
+  <div id="tab_fields"></div>
+</fieldset>
+
+<script>
+function genTabFields() {
+  document.getElementById("tab_fields").innerHTML = "";
+  document.getElementById("tab_id_field").value = "";
+  for (let i = 1; i <= document.getElementById("tab_quantity").value; i++) {
+    var tabDivFields = document.createElement("DIV");
+      tabDivFields.setAttribute("id", `tab_div_field${i}`);
+      tabDivFields.setAttribute("style", "float: left");
+    var tabDropQuantFields = document.createElement("INPUT");
+      tabDropQuantFields.setAttribute("type", "number");
+      tabDropQuantFields.setAttribute("id", `tab_drop_quantity${i}`);
+      tabDropQuantFields.setAttribute("min", "0");
+      tabDropQuantFields.setAttribute("max", "20");
+      tabDropQuantFields.setAttribute("oninput", "genDropFields(), genTabCode()");
+    var tabDropQuantLabels = document.createElement("LABEL");
+      tabDropQuantLabels.setAttribute("id", `tab_drop_label${i}`);
+      tabDropQuantLabels.setAttribute("for", `tab_drop_quantity${i}`);
+      tabDropQuantLabels.innerHTML = `Tab ${i} dropdowns `;
+    var tabIdFields = document.createElement("INPUT");
+      tabIdFields.setAttribute("type", "text");
+      tabIdFields.setAttribute("id", `tab_id_field${i}`);
+      tabIdFields.setAttribute("placeholder", `Tab ${i} ID`);
+      tabIdFields.setAttribute("oninput", "genTabCode()");
+      tabIdFields.style.display = "block";
+    var tabNameFields = document.createElement("INPUT");
+      tabNameFields.setAttribute("type", "text");
+      tabNameFields.setAttribute("id", `tab_name_field${i}`);
+      tabNameFields.setAttribute("placeholder", `Tab ${i} name`);
+      tabNameFields.setAttribute("oninput", "genTabCode()");
+    var tabDropDivFields = document.createElement("DIV");
+      tabDropDivFields.setAttribute("id", `tab_drop_div_field${i}`);
+      tabDropDivFields.style.display = "block";
+    tabDivFields.appendChild(tabDropQuantLabels);
+    tabDivFields.appendChild(tabDropQuantFields);
+    tabDivFields.appendChild(tabIdFields);
+    tabDivFields.appendChild(tabNameFields);
+    tabDivFields.appendChild(tabDropDivFields);
+    document.getElementById("tab_fields").appendChild(tabDivFields);
+  }
+}
+function genDropFields() {
+  for (let i = 1; i <= document.getElementById("tab_quantity").value; i++) {
+  document.getElementById(`tab_drop_div_field${i}`).innerHTML = "";
+    for (let j = 1; j <= document.getElementById(`tab_drop_quantity${i}`).value; j++) {
+      var tabDropFields = document.createElement("INPUT");
+        tabDropFields.setAttribute("type", "text");
+        tabDropFields.setAttribute("id", `tab_drop_field${i}-${j}`);
+        tabDropFields.setAttribute("placeholder", `Tab ${i} dropdown ${j} name`);
+        tabDropFields.setAttribute("oninput", "genTabCode()");
+        tabDropFields.style.display = "block";
+      document.getElementById(`tab_drop_div_field${i}`).appendChild(tabDropFields);
+    }
+  }
+}
+function genTabCode() {
+  var tabCode = document.createElement("P");
+  var tabRadioValue = "";
+  var tabShowValue = "";
+  var tabFadeValue = "";
+  var tabActive = "";
+  var tabNameValue;
+  var tabDropNameValue;
+  var tabIdValue = document.getElementById("tab_id_field").value.replace(/ /g, '');
+  var tabItemIdValue = "";
+  var tabDropIdValue = "";
+  var tabBody = "";
+  var tabLoopHead = "";
+  var tabLoopBody = "";
+  var tabLoopDropHead = "";
+  var tabLoopDropBody = "";
+  var tabDropStart = "";
+  var tabDropEnd = "";
+  if (tab_radio_tab.checked == true){
+    tabRadioValue = "tab";
+  } else {
+    tabRadioValue = "pill";
+  }
+  if (tabIdValue == false){
+    tabIdValue = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5);
+  }
+  for (let i = 1; i <= document.getElementById("tab_quantity").value; i++) {
+    tabNameValue = document.getElementById(`tab_name_field${i}`).value;
+    tabItemIdValue = document.getElementById(`tab_id_field${i}`).value;
+    if (tabNameValue == false) {
+      tabNameValue = `Tab ${i}`;
+    }
+    if (tabItemIdValue == false) {
+      tabItemIdValue = `${tabIdValue}_${i}`;
+    }
+    if (i == 1 && tab_show_check.checked == true) {
+      tabActive = ' class="active"';
+      tabShowValue = " in active";
+    } else {
+      tabActive = "";
+      tabShowValue = "";
+    }
+    if (tab_fade_check.checked == true) {
+      tabFadeValue = " fade";
+    } else {
+      tabFadeValue = "";
+    }
+    if (document.getElementById(`tab_drop_quantity${i}`).value == false) {
+      tabDropStart = "";
+      tabDropEnd = "";
+    } else {
+      tabDropStart = `<br>&lt;!--Start ${tabRadioValue} ${i} subhead(s)--&gt;&lt;ul class=&quot;dropdown-menu&quot; style=&quot;left&colon; -40px&semi;&quot;&gt;`;
+      tabDropEnd = `<br>&lt;!--End ${tabRadioValue} ${i} subhead(s)--&gt;&lt;/ul&gt;`;
+    }
+    for (let j = 1; j <= document.getElementById(`tab_drop_quantity${i}`).value; j++) {
+      if (document.getElementById(`tab_drop_field${i}-${j}`).value == false) {
+        tabDropNameValue = `${tabNameValue} Dropdown ${j}`;
+      } else {
+        tabDropNameValue = document.getElementById(`tab_drop_field${i}-${j}`).value;
+      }
+      if (tabShowValue == " in active" && j == 1) {
+        tabShowValue = " in active";
+      } else {
+        tabShowValue = "";
+      }
+      tabDropIdValue = `${tabItemIdValue}_${j}`;
+      tabLoopDropHead += `
+&lt;li&gt;&lt;a data-target=&quot;#${tabDropIdValue}&quot; data-toggle=&quot;tab&quot;&gt;[drop_head] ${tabDropNameValue} [drop_head]&lt;/a&gt;&lt;/li&gt;`;
+      tabLoopDropBody += `&lt;!--Start ${tabRadioValue} ${i}.${j} body &quot;${tabDropIdValue}&quot;--&gt;&lt;div id=&quot;${tabDropIdValue}&quot; class=&quot;tab-pane${tabFadeValue}${tabShowValue}&quot;&gt;
+&lt;p&gt;[drop_body] Content for ${tabDropNameValue} [drop_body] &lt;/p&gt;
+&lt;!--End ${tabRadioValue} ${i}.${j} body &quot;${tabDropIdValue}&quot;--&gt;&lt;/div&gt;
+`;
+    }
+    tabLoopHead += `&lt;li${tabActive}&gt;&lt;a data-toggle=&quot;${tabRadioValue}&quot; data-target=&quot;#${tabItemIdValue}&quot;&gt[${tabRadioValue}_head] ${tabNameValue} [${tabRadioValue}_head]&lt;/a&gt;&lt;/li&gt;${tabDropStart}${tabLoopDropHead}${tabDropEnd}
+`;
+    if (document.getElementById(`tab_drop_quantity${i}`).value == false) {
+      tabLoopBody = `&lt;!--Start ${tabRadioValue} ${i} body &quot;${tabItemIdValue}&quot;--&gt;&lt;div id=&quot;${tabItemIdValue}&quot; class=&quot;tab-pane${tabFadeValue}${tabShowValue}&quot;&gt;
+&lt;p&gt;[${tabRadioValue}_body] Content for ${tabNameValue} [${tabRadioValue}_body] &lt;/p&gt;
+&lt;!--End ${tabRadioValue} ${i} body &quot;${tabItemIdValue}&quot;--&gt;&lt;/div&gt;
+`;
+      tabLoopDropBody = "";
+    } else {
+      tabLoopBody = "";
+    }
+    tabBody += `${tabLoopBody}${tabLoopDropBody}`;
+    tabLoopDropHead = "";
+    tabLoopDropBody = "";
+  }
+  tabCode.innerHTML = 
+    `<pre>&lt;!--Start ${tabRadioValue} set &quot;${tabIdValue}&quot;--&gt;&lt;div id=&quot;${tabIdValue}&quot; class=&quot;container&quot;&gt;
+&lt;!--Start ${tabRadioValue} head(s) &quot;${tabIdValue}&quot;--&gt;&lt;ul class=&quot;nav nav-${tabRadioValue}s&quot;&gt;
+${tabLoopHead}&lt;!--End ${tabRadioValue} head(s) &quot;${tabIdValue}&quot;--&gt;&lt;/ul&gt;
+&lt;!--Start ${tabRadioValue} body(s) &quot;${tabIdValue}&quot;--&gt;&lt;div class=&quot;tab-content&quot;&gt;
+${tabBody}&lt;!--End ${tabRadioValue} body(s) &quot;${tabIdValue}&quot;--&gt;&lt;/div&gt;
+&lt;!--End ${tabRadioValue} set &quot;${tabIdValue}&quot;--&gt;&lt;/div&gt;</pre>`;
+  document.getElementById("tab_generate").innerHTML = "";
+  document.getElementById("tab_generate").appendChild(tabCode);
+}
+</script>
+
+<p></p>
+<div id="tab_generate" style="font-family: monospace"></div>
+<p></p>
+
+
+
+
+
+</body>
+</html>
