@@ -122,8 +122,8 @@ function genAccCode() {
     accIdValue = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5);
   }
   for (let i = 1; i <= document.getElementById("acc_quantity").value; i++) {
-    accNameValue = document.getElementById(`acc_name_field${i}`).value;
-    accItemIdValue = document.getElementById(`acc_id_field${i}`).value;
+    accNameValue = document.getElementById(`acc_name_field${i}`).value.trim();
+    accItemIdValue = document.getElementById(`acc_id_field${i}`).value.trim();
     if (accNameValue == false) {
       accNameValue = `Accordion item ${i}`;
     }
@@ -257,8 +257,8 @@ function genTabCode() {
     tabIdValue = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5);
   }
   for (let i = 1; i <= document.getElementById("tab_quantity").value; i++) {
-    tabNameValue = document.getElementById(`tab_name_field${i}`).value;
-    tabItemIdValue = document.getElementById(`tab_id_field${i}`).value;
+    tabNameValue = document.getElementById(`tab_name_field${i}`).value.trim();
+    tabItemIdValue = document.getElementById(`tab_id_field${i}`).value.trim();
     if (tabNameValue == false) {
       tabNameValue = `Tab ${i}`;
     }
