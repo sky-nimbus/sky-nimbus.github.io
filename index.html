@@ -248,6 +248,8 @@ function genTabCode() {
   var tabLoopDropBody = "";
   var tabDropStart = "";
   var tabDropEnd = "";
+  var tabClassDrop = "";
+  var tabToggleDrop = "";
   if (tab_radio_tab.checked == true){
     tabRadioValue = "tab";
   } else {
@@ -272,6 +274,14 @@ function genTabCode() {
       tabActive = "";
       tabShowValue = "";
     }
+    if (document.getElementById(`tab_drop_quantity${i}`).value > 0) {
+      tabClassDrop = ' class="dropdown"';
+    } else {
+      tabClassDrop = "";
+    }
+    if (i == 1 && tabClassDrop == ' class="dropdown"' && tabActive == ' class="active"') {
+      tabClassDrop = ' class="dropdown active"';
+    }
     if (tab_fade_check.checked == true) {
       tabFadeValue = " fade";
     } else {
@@ -280,9 +290,11 @@ function genTabCode() {
     if (document.getElementById(`tab_drop_quantity${i}`).value == false) {
       tabDropStart = "";
       tabDropEnd = "";
+      tabToggleDrop = `${tabRadioValue}`;
     } else {
       tabDropStart = `<br>&lt;!--Start ${tabRadioValue} ${i} subhead(s)--&gt;&lt;ul class=&quot;dropdown-menu&quot; style=&quot;left&colon; -40px&semi;&quot;&gt;`;
       tabDropEnd = `<br>&lt;!--End ${tabRadioValue} ${i} subhead(s)--&gt;&lt;/ul&gt;`;
+      tabToggleDrop = 'dropdown" class="dropdown-toggle';
     }
     for (let j = 1; j <= document.getElementById(`tab_drop_quantity${i}`).value; j++) {
       if (document.getElementById(`tab_drop_field${i}-${j}`).value == false) {
@@ -297,13 +309,14 @@ function genTabCode() {
       }
       tabDropIdValue = `${tabItemIdValue}_${j}`;
       tabLoopDropHead += `
-&lt;li&gt;&lt;a data-target=&quot;#${tabDropIdValue}&quot; data-toggle=&quot;tab&quot;&gt;[drop_head] ${tabDropNameValue} [drop_head]&lt;/a&gt;&lt;/li&gt;`;
+&lt;li&gt;&lt;a data-target=&quot;#${tabDropIdValue}&quot; data-toggle=&quot;${tabRadioValue}&quot;&gt;[drop_head] ${tabDropNameValue} [drop_head]&lt;/a&gt;&lt;/li&gt;`;
       tabLoopDropBody += `&lt;!--Start ${tabRadioValue} ${i}.${j} body &quot;${tabDropIdValue}&quot;--&gt;&lt;div id=&quot;${tabDropIdValue}&quot; class=&quot;tab-pane${tabFadeValue}${tabShowValue}&quot;&gt;
 &lt;p&gt;[drop_body] Content for ${tabDropNameValue} [drop_body] &lt;/p&gt;
 &lt;!--End ${tabRadioValue} ${i}.${j} body &quot;${tabDropIdValue}&quot;--&gt;&lt;/div&gt;
 `;
     }
-    tabLoopHead += `&lt;li${tabActive}&gt;&lt;a data-toggle=&quot;${tabRadioValue}&quot; data-target=&quot;#${tabItemIdValue}&quot;&gt[${tabRadioValue}_head] ${tabNameValue} [${tabRadioValue}_head]&lt;/a&gt;&lt;/li&gt;${tabDropStart}${tabLoopDropHead}${tabDropEnd}
+    tabLoopHead += `&lt;li${tabClassDrop}${tabActive}&gt;&lt;a data-toggle=&quot;${tabToggleDrop}&quot; data-target=&quot;#${tabItemIdValue}&quot;&gt
+[${tabRadioValue}_head] ${tabNameValue} [${tabRadioValue}_head]&lt;/a&gt;&lt;/li&gt;${tabDropStart}${tabLoopDropHead}${tabDropEnd}
 `;
     if (document.getElementById(`tab_drop_quantity${i}`).value == false) {
       tabLoopBody = `&lt;!--Start ${tabRadioValue} ${i} body &quot;${tabItemIdValue}&quot;--&gt;&lt;div id=&quot;${tabItemIdValue}&quot; class=&quot;tab-pane${tabFadeValue}${tabShowValue}&quot;&gt;
