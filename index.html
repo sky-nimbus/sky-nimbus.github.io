@@ -128,7 +128,7 @@ function genAccCode() {
       accNameValue = `Accordion item ${i}`;
     }
     if (accItemIdValue == false) {
-      accItemIdValue = `${accIdValue}_${i}`;
+      accItemIdValue = `${accIdValue}-${i}`;
     }
     accLoop += `&lt;!--Start acc item ${i} &quot;${accItemIdValue}&quot;--&gt;&lt;div class=&quot;panel panel-default&quot;${accWidthString}&gt;
 &lt;!--Start acc item ${i} head &quot;${accItemIdValue}&quot;--&gt;&lt;div class=&quot;panel-heading&quot;&gt;
@@ -263,7 +263,7 @@ function genTabCode() {
       tabNameValue = `Tab ${i}`;
     }
     if (tabItemIdValue == false) {
-      tabItemIdValue = `${tabIdValue}_${i}`;
+      tabItemIdValue = `${tabIdValue}-${i}`;
     }
     if (i == 1 && tab_show_check.checked == true) {
       tabActive = ' class="active"';
