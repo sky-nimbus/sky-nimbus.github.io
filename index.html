@@ -286,7 +286,7 @@ function genTabCode() {
     }
     for (let j = 1; j <= document.getElementById(`tab_drop_quantity${i}`).value; j++) {
       if (document.getElementById(`tab_drop_field${i}-${j}`).value == false) {
-        tabDropNameValue = `${tabNameValue} Dropdown ${j}`;
+        tabDropNameValue = `${tabNameValue} dropdown ${j}`;
       } else {
         tabDropNameValue = document.getElementById(`tab_drop_field${i}-${j}`).value;
       }
