@@ -16,16 +16,61 @@ fieldset {
 
 
 
+<!-- TABLE -->
+
+<fieldset>
+<legend>Table</legend>
+  <label class="radio-inline" for="tbl_radio_reg">Regular</label>
+    <input type="radio" oninput="genTblCode()" name="tbl_radio" id="tbl_radio_reg">
+  <label class="radio-inline" for="tbl_radio_bor">Bordered</label>
+    <input type="radio" oninput="genTblCode()" name="tbl_radio" id="tbl_radio_bor">
+  <label class="radio-inline" for="tbl_radio_str">Striped</label>
+    <input type="radio" oninput="genTblCode()" name="tbl_radio" id="tbl_radio_str"><br>
+  <label for="tbl_border_check">Outer border</label>
+    <input type="checkbox" oninput="genTblCode()" id="tbl_border_check"><br>
+</fieldset>
+
+<script>
+function genTblCode() {
+  const tblCode = document.createElement("P");
+  let tblClass = "";
+  let tblStyle = "";
+  if (tbl_radio_reg.checked == true) {
+    tblClass = " class=&quot;table&quot;";
+  } else if (tbl_radio_bor.checked == true) {
+    tblClass = " class=&quot;table table-bordered&quot;";
+  } else if (tbl_radio_str.checked == true) {
+    tblClass = " class=&quot;table table-striped&quot;";
+  }
+  if (tbl_border_check.checked == true) {
+    tblStyle = " style=&quot;border&colon; 1px&semi;&quot;";
+  } else {
+    tblStyle = "";
+  }
+  tblCode.innerHTML = `&lt;table${tblClass}${tblStyle}&gt;`;
+  document.getElementById("tbl_generate").innerHTML = "";
+  document.getElementById("tbl_generate").appendChild(tblCode);
+}
+</script>
+
+<p></p>
+<div id="tbl_generate" style="font-family: monospace"></div>
+<p></p>
+
+
+
+
+
 <!-- BUTTON -->
 
 <fieldset>
 <legend>Button</legend>
-  <input type="text" id="btn_id_field" oninput="genButtonCode()" placeholder="Button ID"><br>
-  <input type="text" id="btn_name_field" oninput="genButtonCode()" placeholder="Button name"><br>
+  <input type="text" id="btn_id_field" oninput="genBtnCode()" placeholder="Button ID"><br>
+  <input type="text" id="btn_name_field" oninput="genBtnCode()" placeholder="Button name"><br>
 </fieldset>
 
 <script>
-function genButtonCode() {
+function genBtnCode() {
   var btnCode = document.createElement("P");
   let btnNameValue = document.getElementById("btn_name_field").value.trim() || "Button";
   var btnIdValue = document.getElementById("btn_id_field").value.replace(/ /g, '');
@@ -162,15 +207,15 @@ ${accLoop}&lt;!--End acc set &quot;${accIdValue}&quot;--&gt;&lt;/div&gt;</pre>`;
 
 <fieldset>
 <legend>Tabs</legend>
-  <label class="radio-inline">
-    <input type="radio" oninput="genTabCode()" name= "tab_radio" id="tab_radio_tab" checked> Tab</label>
-  <label class="radio-inline">
-    <input type="radio" oninput="genTabCode()" name= "tab_radio" id="tab_radio_pill"> Pill</label><br>
+  <label class="radio-inline" for="tab_radio_tab">Tab</label>
+    <input type="radio" oninput="genTabCode()" name="tab_radio" id="tab_radio_tab" checked>
+  <label class="radio-inline" for="tab_radio_pill">Pill</label>
+    <input type="radio" oninput="genTabCode()" name="tab_radio" id="tab_radio_pill"><br>
   <label for="tab_quantity">Quantity</label>
     <input type="number" oninput="genTabFields(), genTabCode()" min="1" max="20" id="tab_quantity" value="1"><span style="color: red;">*</span><br>
-  <label for="tab_fade_check" >Fade transition</label>
+  <label for="tab_fade_check">Fade transition</label>
     <input type="checkbox" oninput="genTabCode()"id="tab_fade_check"><br>
-  <label for="tab_show_check" >Show contents initially</label>
+  <label for="tab_show_check">Show contents initially</label>
     <input type="checkbox" oninput="genTabCode()"id="tab_show_check"><br>
   <input type="text" oninput="genTabCode()" id="tab_id_field" placeholder="Tab set ID"><br>
   <div id="tab_fields"></div>
@@ -251,12 +296,12 @@ function genTabCode() {
   var tabLoopDropBody = "";
   var tabDropStart = "";
   var tabDropEnd = "";
-  if (tab_radio_tab.checked == true){
+  if (tab_radio_tab.checked == true) {
     tabRadioValue = "tab";
   } else {
     tabRadioValue = "pill";
   }
-  if (tabIdValue == false){
+  if (tabIdValue == false) {
     tabIdValue = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5);
   }
   for (let i = 1; i <= document.getElementById("tab_quantity").value; i++) {
