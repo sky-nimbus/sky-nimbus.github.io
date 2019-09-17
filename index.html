@@ -235,12 +235,15 @@ function genTabCode() {
   var tabRadioValue = "";
   var tabShowValue = "";
   var tabFadeValue = "";
-  var tabActive = "";
+  var tabHeadClass = "";
+  var tabHeadToggle = "";
+  var tabHeadClassDrop = "";
   var tabNameValue;
   var tabDropNameValue;
   var tabIdValue = document.getElementById("tab_id_field").value.replace(/ /g, '');
   var tabItemIdValue = "";
   var tabDropIdValue = "";
+  var tabDropQuantity = "";
   var tabBody = "";
   var tabLoopHead = "";
   var tabLoopBody = "";
@@ -248,8 +251,6 @@ function genTabCode() {
   var tabLoopDropBody = "";
   var tabDropStart = "";
   var tabDropEnd = "";
-  var tabClassDrop = "";
-  var tabToggleDrop = "";
   if (tab_radio_tab.checked == true){
     tabRadioValue = "tab";
   } else {
@@ -261,6 +262,7 @@ function genTabCode() {
   for (let i = 1; i <= document.getElementById("tab_quantity").value; i++) {
     tabNameValue = document.getElementById(`tab_name_field${i}`).value.trim();
     tabItemIdValue = document.getElementById(`tab_id_field${i}`).value.trim();
+    tabDropQuantity = document.getElementById(`tab_drop_quantity${i}`).value;
     if (tabNameValue == false) {
       tabNameValue = `Tab ${i}`;
     }
@@ -268,36 +270,39 @@ function genTabCode() {
       tabItemIdValue = `${tabIdValue}-${i}`;
     }
     if (i == 1 && tab_show_check.checked == true) {
-      tabActive = ' class="active"';
       tabShowValue = " in active";
+      if (tabDropQuantity > 0) {
+        tabHeadClass = ' class="dropdown active"';
+      } else {
+        tabHeadClass = ' class="active"';
+      }
+    } else if (tabDropQuantity > 0) {
+        tabShowValue = "";
+        tabHeadClass = ' class="dropdown"';
     } else {
-      tabActive = "";
       tabShowValue = "";
-    }
-    if (document.getElementById(`tab_drop_quantity${i}`).value > 0) {
-      tabClassDrop = ' class="dropdown"';
-    } else {
-      tabClassDrop = "";
-    }
-    if (i == 1 && tabClassDrop == ' class="dropdown"' && tabActive == ' class="active"') {
-      tabClassDrop = ' class="dropdown active"';
-      tabActive = "";
+      tabHeadClass = "";
     }
     if (tab_fade_check.checked == true) {
       tabFadeValue = " fade";
     } else {
       tabFadeValue = "";
     }
-    if (document.getElementById(`tab_drop_quantity${i}`).value == false) {
+    if (tabDropQuantity == false) {
       tabDropStart = "";
       tabDropEnd = "";
-      tabToggleDrop = `${tabRadioValue}`;
+      tabHeadToggle = `${tabRadioValue}`;
     } else {
       tabDropStart = `<br>&lt;!--Start ${tabRadioValue} ${i} subhead(s)--&gt;&lt;ul class=&quot;dropdown-menu&quot; style=&quot;left&colon; -40px&semi;&quot;&gt;`;
       tabDropEnd = `<br>&lt;!--End ${tabRadioValue} ${i} subhead(s)--&gt;&lt;/ul&gt;`;
-      tabToggleDrop = 'dropdown" class="dropdown-toggle';
+      tabHeadToggle = "dropdown";
     }
-    for (let j = 1; j <= document.getElementById(`tab_drop_quantity${i}`).value; j++) {
+    if (tabDropQuantity > 0) {
+      tabHeadClassDrop = 'class="dropdown-toggle" ';
+    } else {
+      tabHeadClassDrop = "";
+    }
+    for (let j = 1; j <= tabDropQuantity; j++) {
       if (document.getElementById(`tab_drop_field${i}-${j}`).value == false) {
         tabDropNameValue = `${tabNameValue} dropdown ${j}`;
       } else {
@@ -316,8 +321,9 @@ function genTabCode() {
 &lt;!--End ${tabRadioValue} ${i}.${j} body &quot;${tabDropIdValue}&quot;--&gt;&lt;/div&gt;
 `;
     }
-    tabLoopHead += `&lt;li${tabClassDrop}${tabActive}&gt;&lt;a data-toggle=&quot;${tabToggleDrop}&quot; data-target=&quot;#${tabItemIdValue}&quot;&gt
-[${tabRadioValue}_head] ${tabNameValue} [${tabRadioValue}_head]&lt;/a&gt;${tabDropStart}${tabLoopDropHead}${tabDropEnd}&lt;/li&gt;
+    tabLoopHead += `&lt;!--Start ${tabRadioValue} ${i} head &quot;${tabItemIdValue}&quot;--&gt;&lt;li${tabHeadClass}&gt;
+&lt;a ${tabHeadClassDrop}data-toggle=&quot;${tabHeadToggle}&quot; data-target=&quot;#${tabItemIdValue}&quot;&gt[${tabRadioValue}_head] ${tabNameValue} [${tabRadioValue}_head]&lt;/a&gt;${tabDropStart}${tabLoopDropHead}${tabDropEnd}
+&lt;!--End ${tabRadioValue} ${i} head &quot;${tabItemIdValue}&quot;--&gt;&lt;/li&gt;
 `;
     if (document.getElementById(`tab_drop_quantity${i}`).value == false) {
       tabLoopBody = `&lt;!--Start ${tabRadioValue} ${i} body &quot;${tabItemIdValue}&quot;--&gt;&lt;div id=&quot;${tabItemIdValue}&quot; class=&quot;tab-pane${tabFadeValue}${tabShowValue}&quot;&gt;
