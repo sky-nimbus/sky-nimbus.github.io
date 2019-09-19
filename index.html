@@ -25,7 +25,7 @@ input[type="radio"] {
   flex-direction: column;
 }
 .tab_drop_label {
-  margin-left: 12px;
+  margin-left: 47px;
   margin-top: 2px;
   margin-right: 2px;
 }
@@ -116,11 +116,11 @@ function genBtnCode() {
   document.getElementById("btn_code_box").value =
 `<!--Start btn head "${btnIdValue}"-->
 <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#${btnIdValue}">
-[btn_head] ${btnNameValue} [btn_head]
+<table><tr><td>${btnNameValue}</td></tr></table>
 <!--End btn head "${btnIdValue}"--></button>
 <!--Start btn body "${btnIdValue}"-->
 <div id="${btnIdValue}" class="collapse">
-[btn_body] Content for ${btnNameValue} [btn_body]
+<table><tr><td>Content for ${btnNameValue}</td></tr></table>
 <!--End btn body "${btnIdValue}"--></div>`;
 }
 function copyBtnCode() {
@@ -217,12 +217,14 @@ function genAccCode() {
     accLoop +=
 `<!--Start acc item ${i} "${accItemIdValue}"--><div class="panel panel-default"${accWidthString}>
 <!--Start acc item ${i} head "${accItemIdValue}"--><div class="panel-heading">
+<table><tr><td>
 <a data-toggle="collapse" data-parent="#${accIdValue}" data-target="#${accItemIdValue}">
-[acc_head] ${accNameValue} [acc_head]</a>
+${accNameValue}</a>
+</td></tr></table>
 <!--End acc item ${i} head "${accItemIdValue}"--></div>
 <!--Start acc item ${i} body "${accItemIdValue}"-->
 <div id="${accItemIdValue}" class="panel-collapse collapse"><div class="panel-body"${accPaddingString}>
-<p>[acc_body] Content for ${accNameValue} [acc_body]</p></div>
+<table><tr><td><p>Content for ${accNameValue}</p></td></tr></table></div>
 <!--End acc item ${i} body "${accItemIdValue}"--></div>
 <!--End acc item ${i} "${accItemIdValue}"--></div>
 `;
@@ -287,10 +289,9 @@ function genTabFields() {
     let tabDropDiv = document.createElement("DIV");
       tabDropDiv.style.display = "block";
     let tabDropQuantLabels = document.createElement("LABEL");
-      tabDropQuantLabels.setAttribute("id", `tab_drop_label${i}`);
       tabDropQuantLabels.setAttribute("for", `tab_drop_quantity${i}`);
       tabDropQuantLabels.setAttribute("class", "tab_drop_label");
-      tabDropQuantLabels.innerHTML = `Tab ${i} dropdowns `;
+      tabDropQuantLabels.innerHTML = `dropdowns `;
       tabDropQuantLabels.style.float = "left";
     let tabDropQuantFields = document.createElement("INPUT");
       tabDropQuantFields.setAttribute("type", "number");
@@ -412,22 +413,22 @@ function genTabCode() {
       tabDropIdValue = `${tabItemIdValue}_${j}`;
       tabLoopDropHead +=
 `
-<li><a data-target="#${tabDropIdValue}" data-toggle="${tabRadioValue}">[drop_head] ${tabDropNameValue} [drop_head]</a></li>`;
+<li><a data-target="#${tabDropIdValue}" data-toggle="${tabRadioValue}">${tabDropNameValue}</a></li>`;
       tabLoopDropBody +=
 `<!--Start ${tabRadioValue} ${i}.${j} body "${tabDropIdValue}"--><div id="${tabDropIdValue}" class="tab-pane${tabFadeValue}${tabShowValue}">
-<p>[drop_body] Content for ${tabDropNameValue} [drop_body] </p>
+<table><tr><td><p>Content for ${tabDropNameValue}</p></td></tr></table>
 <!--End ${tabRadioValue} ${i}.${j} body "${tabDropIdValue}"--></div>
 `;
     }
     tabLoopHead +=
 `<!--Start ${tabRadioValue} ${i} head "${tabItemIdValue}"--><li${tabHeadClass}>
-<a ${tabHeadClassDrop}data-toggle="${tabHeadToggle}" data-target="#${tabItemIdValue}">[${tabRadioValue}_head] ${tabNameValue} [${tabRadioValue}_head]</a>${tabDropStart}${tabLoopDropHead}${tabDropEnd}
+<a ${tabHeadClassDrop}data-toggle="${tabHeadToggle}" data-target="#${tabItemIdValue}">${tabNameValue}</a>${tabDropStart}${tabLoopDropHead}${tabDropEnd}
 <!--End ${tabRadioValue} ${i} head "${tabItemIdValue}"--></li>
 `;
     if (document.getElementById(`tab_drop_quantity${i}`).value == false) {
       tabLoopBody =
 `<!--Start ${tabRadioValue} ${i} body "${tabItemIdValue}"--><div id="${tabItemIdValue}" class="tab-pane${tabFadeValue}${tabShowValue}">
-<p>[${tabRadioValue}_body] Content for ${tabNameValue} [${tabRadioValue}_body]</p>
+<table><tr><td><p>Content for ${tabNameValue}</p></td></tr></table>
 <!--End ${tabRadioValue} ${i} body "${tabItemIdValue}"--></div>
 `;
       tabLoopDropBody = "";
