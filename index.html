@@ -66,7 +66,6 @@ input[type="radio"] {
 
 <script>
 function genTblCode() {
-  const tblCode = document.createElement("P");
   let tblClass = "";
   let tblStyle = "";
   if (tbl_radio_reg.checked == true) {
@@ -109,13 +108,13 @@ function copyTblCode() {
 
 <script>
 function genBtnCode() {
-  var btnCode = document.createElement("P");
   let btnNameValue = document.getElementById("btn_name_field").value.trim() || "Button";
-  var btnIdValue = document.getElementById("btn_id_field").value.replace(/ /g, '');
+  let btnIdValue = document.getElementById("btn_id_field").value.replace(/ /g, '');
   if (btnIdValue == false) {
     btnIdValue = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5);
   }
-  document.getElementById("btn_code_box").value = `<!--Start btn head "${btnIdValue}"-->
+  document.getElementById("btn_code_box").value =
+`<!--Start btn head "${btnIdValue}"-->
 <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#${btnIdValue}">
 [btn_head] ${btnNameValue} [btn_head]
 <!--End btn head "${btnIdValue}"--></button>
@@ -171,16 +170,16 @@ function genAccFields() {
   document.getElementById("acc_fields").innerHTML = "";
   document.getElementById("acc_id_field").value = "";
   for (let i = 1; i <= document.getElementById("acc_quantity").value; i++) {
-    var accDivFields = document.createElement("DIV");
+    let accDivFields = document.createElement("DIV");
       accDivFields.setAttribute("id", `acc_div_field${i}`);
       accDivFields.style.display = "block";
-    var accIdFields = document.createElement("INPUT");
+    let accIdFields = document.createElement("INPUT");
       accIdFields.setAttribute("type", "text");
       accIdFields.setAttribute("id", `acc_id_field${i}`);
       accIdFields.setAttribute("placeholder", `Accordion item ${i} ID`);
       accIdFields.setAttribute("oninput", "genAccCode()");
       accIdFields.style.float = "left";
-    var accNameFields = document.createElement("INPUT");
+    let accNameFields = document.createElement("INPUT");
       accNameFields.setAttribute("type", "text");
       accNameFields.setAttribute("id", `acc_name_field${i}`);
       accNameFields.setAttribute("placeholder", `Accordion item ${i} name`);
@@ -191,13 +190,12 @@ function genAccFields() {
   }
 }
 function genAccCode() {
-  var accCode = document.createElement("P");
-  var accWidthString = ` style="width: ${document.getElementById("acc_width_field").value}px;"`;
-  var accPaddingString = ` style="padding: ${document.getElementById("acc_padding_field").value}px;"`;
-  var accIdValue = document.getElementById("acc_id_field").value.replace(/ /g, '');
-  var accItemIdValue = "";
-  var accLoop = "";
-  var accNameValue;
+  let accWidthString = ` style="width: ${document.getElementById("acc_width_field").value}px;"`;
+  let accPaddingString = ` style="padding: ${document.getElementById("acc_padding_field").value}px;"`;
+  let accIdValue = document.getElementById("acc_id_field").value.replace(/ /g, '');
+  let accItemIdValue = "";
+  let accLoop = "";
+  let accNameValue = "";
   if (document.getElementById("acc_width_field").value == 0) {
     accWidthString = "";
   }
@@ -216,7 +214,8 @@ function genAccCode() {
     if (accItemIdValue == false) {
       accItemIdValue = `${accIdValue}-${i}`;
     }
-    accLoop += `<!--Start acc item ${i} "${accItemIdValue}"--><div class="panel panel-default"${accWidthString}>
+    accLoop +=
+`<!--Start acc item ${i} "${accItemIdValue}"--><div class="panel panel-default"${accWidthString}>
 <!--Start acc item ${i} head "${accItemIdValue}"--><div class="panel-heading">
 <a data-toggle="collapse" data-parent="#${accIdValue}" data-target="#${accItemIdValue}">
 [acc_head] ${accNameValue} [acc_head]</a>
@@ -229,7 +228,7 @@ function genAccCode() {
 `;
   }
   document.getElementById("acc_code_box").value =
-    `<!--Start acc set "${accIdValue}"--><div class="panel-group" id="${accIdValue}">
+`<!--Start acc set "${accIdValue}"--><div class="panel-group" id="${accIdValue}">
 ${accLoop}<!--End acc set "${accIdValue}"--></div>`;
 }
 function copyAccCode() {
@@ -271,36 +270,36 @@ function genTabFields() {
   document.getElementById("tab_fields").innerHTML = "";
   document.getElementById("tab_id_field").value = "";
   for (let i = 1; i <= document.getElementById("tab_quantity").value; i++) {
-    var tabDiv = document.createElement("DIV");
+    let tabDiv = document.createElement("DIV");
       tabDiv.style.display = "block";
-    var tabIdFields = document.createElement("INPUT");
+    let tabIdFields = document.createElement("INPUT");
       tabIdFields.setAttribute("type", "text");
       tabIdFields.setAttribute("id", `tab_id_field${i}`);
       tabIdFields.setAttribute("placeholder", `Tab ${i} ID`);
       tabIdFields.setAttribute("oninput", "genTabCode()");
       tabIdFields.style.float = "left";
-    var tabNameFields = document.createElement("INPUT");
+    let tabNameFields = document.createElement("INPUT");
       tabNameFields.setAttribute("type", "text");
       tabNameFields.setAttribute("id", `tab_name_field${i}`);
       tabNameFields.setAttribute("placeholder", `Tab ${i} name`);
       tabNameFields.setAttribute("oninput", "genTabCode()");
       tabNameFields.style.float = "left";
-    var tabDropDiv = document.createElement("DIV");
+    let tabDropDiv = document.createElement("DIV");
       tabDropDiv.style.display = "block";
-    var tabDropQuantLabels = document.createElement("LABEL");
+    let tabDropQuantLabels = document.createElement("LABEL");
       tabDropQuantLabels.setAttribute("id", `tab_drop_label${i}`);
       tabDropQuantLabels.setAttribute("for", `tab_drop_quantity${i}`);
       tabDropQuantLabels.setAttribute("class", "tab_drop_label");
       tabDropQuantLabels.innerHTML = `Tab ${i} dropdowns `;
       tabDropQuantLabels.style.float = "left";
-    var tabDropQuantFields = document.createElement("INPUT");
+    let tabDropQuantFields = document.createElement("INPUT");
       tabDropQuantFields.setAttribute("type", "number");
       tabDropQuantFields.setAttribute("id", `tab_drop_quantity${i}`);
       tabDropQuantFields.setAttribute("min", "0");
       tabDropQuantFields.setAttribute("max", "20");
       tabDropQuantFields.setAttribute("oninput", "genDropFields(), genTabCode()");
       tabDropQuantFields.style.float = "left";
-    var tabDropDivFields = document.createElement("DIV");
+    let tabDropDivFields = document.createElement("DIV");
       tabDropDivFields.setAttribute("id", `tab_drop_div_field${i}`);
       tabDropDivFields.style.float = "left";
     tabDiv.appendChild(tabIdFields);
@@ -316,7 +315,7 @@ function genDropFields() {
   for (let i = 1; i <= document.getElementById("tab_quantity").value; i++) {
   document.getElementById(`tab_drop_div_field${i}`).innerHTML = "";
     for (let j = 1; j <= document.getElementById(`tab_drop_quantity${i}`).value; j++) {
-      var tabDropFields = document.createElement("INPUT");
+      let tabDropFields = document.createElement("INPUT");
         tabDropFields.setAttribute("type", "text");
         tabDropFields.setAttribute("id", `tab_drop_field${i}-${j}`);
         tabDropFields.setAttribute("placeholder", `Tab ${i} dropdown ${j} name`);
@@ -327,26 +326,25 @@ function genDropFields() {
   }
 }
 function genTabCode() {
-  var tabCode = document.createElement("P");
-  var tabRadioValue = "";
-  var tabShowValue = "";
-  var tabFadeValue = "";
-  var tabHeadClass = "";
-  var tabHeadToggle = "";
-  var tabHeadClassDrop = "";
-  var tabNameValue;
-  var tabDropNameValue;
-  var tabIdValue = document.getElementById("tab_id_field").value.replace(/ /g, '');
-  var tabItemIdValue = "";
-  var tabDropIdValue = "";
-  var tabDropQuantity = "";
-  var tabBody = "";
-  var tabLoopHead = "";
-  var tabLoopBody = "";
-  var tabLoopDropHead = "";
-  var tabLoopDropBody = "";
-  var tabDropStart = "";
-  var tabDropEnd = "";
+  let tabRadioValue = "";
+  let tabShowValue = "";
+  let tabFadeValue = "";
+  let tabHeadClass = "";
+  let tabHeadToggle = "";
+  let tabHeadClassDrop = "";
+  let tabNameValue = "";
+  let tabDropNameValue = "";
+  let tabIdValue = document.getElementById("tab_id_field").value.replace(/ /g, '');
+  let tabItemIdValue = "";
+  let tabDropIdValue = "";
+  let tabDropQuantity = "";
+  let tabBody = "";
+  let tabLoopHead = "";
+  let tabLoopBody = "";
+  let tabLoopDropHead = "";
+  let tabLoopDropBody = "";
+  let tabDropStart = "";
+  let tabDropEnd = "";
   if (tab_radio_tab.checked == true) {
     tabRadioValue = "tab";
   } else {
@@ -412,19 +410,23 @@ function genTabCode() {
         tabShowValue = "";
       }
       tabDropIdValue = `${tabItemIdValue}_${j}`;
-      tabLoopDropHead += `
+      tabLoopDropHead +=
+`
 <li><a data-target="#${tabDropIdValue}" data-toggle="${tabRadioValue}">[drop_head] ${tabDropNameValue} [drop_head]</a></li>`;
-      tabLoopDropBody += `<!--Start ${tabRadioValue} ${i}.${j} body "${tabDropIdValue}"--><div id="${tabDropIdValue}" class="tab-pane${tabFadeValue}${tabShowValue}">
+      tabLoopDropBody +=
+`<!--Start ${tabRadioValue} ${i}.${j} body "${tabDropIdValue}"--><div id="${tabDropIdValue}" class="tab-pane${tabFadeValue}${tabShowValue}">
 <p>[drop_body] Content for ${tabDropNameValue} [drop_body] </p>
 <!--End ${tabRadioValue} ${i}.${j} body "${tabDropIdValue}"--></div>
 `;
     }
-    tabLoopHead += `<!--Start ${tabRadioValue} ${i} head "${tabItemIdValue}"--><li${tabHeadClass}>
+    tabLoopHead +=
+`<!--Start ${tabRadioValue} ${i} head "${tabItemIdValue}"--><li${tabHeadClass}>
 <a ${tabHeadClassDrop}data-toggle="${tabHeadToggle}" data-target="#${tabItemIdValue}">[${tabRadioValue}_head] ${tabNameValue} [${tabRadioValue}_head]</a>${tabDropStart}${tabLoopDropHead}${tabDropEnd}
 <!--End ${tabRadioValue} ${i} head "${tabItemIdValue}"--></li>
 `;
     if (document.getElementById(`tab_drop_quantity${i}`).value == false) {
-      tabLoopBody = `<!--Start ${tabRadioValue} ${i} body "${tabItemIdValue}"--><div id="${tabItemIdValue}" class="tab-pane${tabFadeValue}${tabShowValue}">
+      tabLoopBody =
+`<!--Start ${tabRadioValue} ${i} body "${tabItemIdValue}"--><div id="${tabItemIdValue}" class="tab-pane${tabFadeValue}${tabShowValue}">
 <p>[${tabRadioValue}_body] Content for ${tabNameValue} [${tabRadioValue}_body]</p>
 <!--End ${tabRadioValue} ${i} body "${tabItemIdValue}"--></div>
 `;
@@ -437,7 +439,7 @@ function genTabCode() {
     tabLoopDropBody = "";
   }
   document.getElementById("tab_code_box").value =
-    `<!--Start ${tabRadioValue} set "${tabIdValue}"--><div id="${tabIdValue}" class="container">
+`<!--Start ${tabRadioValue} set "${tabIdValue}"--><div id="${tabIdValue}" class="container">
 <!--Start ${tabRadioValue} head(s) "${tabIdValue}"--><ul class="nav nav-${tabRadioValue}s">
 ${tabLoopHead}<!--End ${tabRadioValue} head(s) "${tabIdValue}"--></ul>
 <!--Start ${tabRadioValue} body(s) "${tabIdValue}"--><div class="tab-content">
