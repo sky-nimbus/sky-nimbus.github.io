@@ -101,6 +101,16 @@ function copyTblCode() {
 <legend>Button</legend>
   <input type="text" id="btn_id_field" oninput="genBtnCode()" placeholder="Button ID">
   <input type="text" id="btn_name_field" oninput="genBtnCode()" placeholder="Button name"><br>
+  <div class="form-group"><label for="btn_color_field">Color</label>
+    <select class="form-control" id="btn_color_field" oninput="genBtnCode()">
+      <option>Blue</option>
+      <option>Green</option>
+      <option>Orange</option>
+      <option>Red</option>
+      <option>Sky</option>
+      <option>White</option>
+    </select>
+  </div>
 </fieldset>
 <div class="code_div"><button onclick="copyBtnCode()">Copy code</button><br>
 <textarea class="code_box" id="btn_code_box"></textarea></div>
@@ -110,12 +120,33 @@ function copyTblCode() {
 function genBtnCode() {
   let btnNameValue = document.getElementById("btn_name_field").value.trim() || "Button";
   let btnIdValue = document.getElementById("btn_id_field").value.replace(/ /g, '');
+  let btnColor = "";
   if (btnIdValue == false) {
     btnIdValue = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5);
   }
+  switch (document.getElementById("btn_color_field").value) {
+    case "Blue":
+      btnColor = "btn-primary";
+      break;
+    case "Green":
+      btnColor = "btn-success";
+      break;
+    case "Orange":
+      btnColor = "btn-warning";
+      break;
+    case "Red":
+      btnColor = "btn-danger";
+      break;
+    case "Sky":
+      btnColor = "btn-info";
+      break;
+    case "White":
+      btnColor = "btn-default";
+      break;
+  }
   document.getElementById("btn_code_box").value =
 `<!--Start btn head "${btnIdValue}"-->
-<button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#${btnIdValue}">
+<button type="button" class="btn ${btnColor}" data-toggle="collapse" data-target="#${btnIdValue}">
 <table><tr><td>${btnNameValue}</td></tr></table>
 <!--End btn head "${btnIdValue}"--></button>
 <!--Start btn body "${btnIdValue}"-->
@@ -141,7 +172,13 @@ function copyBtnCode() {
 <fieldset>
 <legend>Accordion</legend>
   <label for="acc_quantity">Quantity</label>
-    <input type="number" oninput="genAccFields(), genAccCode()" min="1" max="20" id="acc_quantity" value="1"><span class="asterisk">*</span><br>
+    <input type="number" oninput="genAccFields(), genAccCode()" min="1" max="20" id="acc_quantity" value="1"><span class="asterisk">*</span>
+  <div class="form-group"><label for="acc_color_field">Color</label>
+    <select class="form-control" id="acc_color_field" oninput="genAccCode()">
+      <option>White</option>
+      <option>Gray</option>
+    </select>
+  </div>
   <label for="acc_padding_field">Padding</label>
     <input type="range" oninput="genAccPadding(this.value), genAccCode()" min="0"  max="50" step="10" value="0" id="acc_padding_field"><span id="acc_padding_amount"></span><br>
   <label for="acc_width_field">Width</label>
@@ -196,6 +233,10 @@ function genAccCode() {
   let accItemIdValue = "";
   let accLoop = "";
   let accNameValue = "";
+  let accColor = ""
+  if (document.getElementById("acc_color_field").value == "Gray") {
+      accColor = " panel-default";
+  }
   if (document.getElementById("acc_width_field").value == 0) {
     accWidthString = "";
   }
@@ -215,7 +256,7 @@ function genAccCode() {
       accItemIdValue = `${accIdValue}-${i}`;
     }
     accLoop +=
-`<!--Start acc item ${i} "${accItemIdValue}"--><div class="panel panel-default"${accWidthString}>
+`<!--Start acc item ${i} "${accItemIdValue}"--><div class="panel${accColor}"${accWidthString}>
 <!--Start acc item ${i} head "${accItemIdValue}"--><div class="panel-heading">
 <table><tr><td>
 <a data-toggle="collapse" data-parent="#${accIdValue}" data-target="#${accItemIdValue}">
