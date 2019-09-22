@@ -20,6 +20,9 @@ fieldset {
 input[type="radio"] {
   margin-right: 10px;
 }
+input[type="checkbox"] {
+  margin-right: 10px;
+}
 .asterisk {
   color: red;
 }
@@ -228,8 +231,8 @@ function copyBtnCode() {
     <input type="number" oninput="genAccFields(), genAccCode()" min="1" max="20" id="acc_quantity" value="1"><span class="asterisk">*</span>
   <div class="form-group"><label for="acc_color_field">Color</label>
     <select class="form-control" id="acc_color_field" oninput="genAccCode()">
-      <option>White</option>
       <option>Gray</option>
+      <option>White</option>
     </select>
   </div>
   <label for="acc_padding_field">Padding</label>
