@@ -14,13 +14,16 @@ body {
 fieldset {
   min-width: 310px;
 }
+.legend {
+  color: chocolate;
+}
 input[type="radio"] {
   margin-right: 10px;
 }
 .asterisk {
   color: red;
 }
-#tab_fields {
+.gen_fields {
   display: flex;
   flex-direction: column;
 }
@@ -29,20 +32,31 @@ input[type="radio"] {
   margin-top: 2px;
   margin-right: 2px;
 }
+.car_field_label {
+  margin-left: 2px;
+  margin-top: 2px;
+  margin-right: 2px;
+}
 .code_box {
   font-family: monospace;
-  width: 200px;
+  width: 300px;
+}
+#tbl_code_box {
+  height: 90px;
 }
 #acc_code_box {
-  height: 100px;
+  height: 110px;
 }
 #tab_code_box {
   height: 130px;
 }
+#car_code_box {
+  height: 70px;
+}
 </style>
 </head>
 
-<body onload="genAccFields(), genTabFields(), genDropFields()">
+<body onload="genAccFields(), genTabFields(), genDropFields(), genCarFields()">
 
 
 
@@ -50,37 +64,78 @@ input[type="radio"] {
 
 <div class="flex-container box_sets">
 <fieldset>
-<legend>Table</legend>
-  <label class="radio-inline" for="tbl_radio_reg">Regular</label>
-    <input type="radio" oninput="genTblCode()" name="tbl_radio" id="tbl_radio_reg">
-  <label class="radio-inline" for="tbl_radio_bor">Bordered</label>
-    <input type="radio" oninput="genTblCode()" name="tbl_radio" id="tbl_radio_bor">
-  <label class="radio-inline" for="tbl_radio_str">Striped</label>
-    <input type="radio" oninput="genTblCode()" name="tbl_radio" id="tbl_radio_str"><br>
-  <label for="tbl_border_check">Outer border</label>
-    <input type="checkbox" oninput="genTblCode()" id="tbl_border_check"><br>
+<legend class="legend">Table</legend>
+  <label for="tbl_regular_check">Regular</label>
+    <input type="checkbox" oninput="chkTblReg(), genTblCode()" name="tbl_class" id="tbl_regular_check">
+  <label for="tbl_combined_check">Combined</label>
+    <input type="checkbox" oninput="chkTblCom(), genTblCode()" name="tbl_class" id="tbl_combined_check"><br><hr>
+  <label for="tbl_bordered_check">Bordered</label>
+    <input type="checkbox" oninput="genTblCode()" name="tbl_class" id="tbl_bordered_check">
+  <label for="tbl_striped_check">Striped</label>
+    <input type="checkbox" oninput="genTblCode()" name="tbl_class" id="tbl_striped_check"><br>
+  <label for="tbl_hover_check">Hover</label>
+    <input type="checkbox" oninput="genTblCode()" name="tbl_class" id="tbl_hover_check">
+  <label for="tbl_condensed_check">Condensed</label>
+    <input type="checkbox" oninput="genTblCode()" name="tbl_class" id="tbl_condensed_check"><br><hr>
+  <label for="tbl_outer_check">Outer border</label>
+    <input type="checkbox" oninput="genTblCode()" id="tbl_outer_check"><br>
 </fieldset>
 <div class="code_div"><button onclick="copyTblCode()">Copy code</button><br>
 <textarea class="code_box" id="tbl_code_box"></textarea></div>
 </div>
 
 <script>
+function chkTblReg() {
+  if (tbl_regular_check.checked == true) {
+    tbl_combined_check.checked = false;
+    tbl_bordered_check.checked = false;
+    tbl_striped_check.checked = false;
+    tbl_hover_check.checked = false;
+    tbl_condensed_check.checked = false;
+  }
+}
+function chkTblCom() {
+  if (tbl_combined_check.checked == true) {
+    tbl_regular_check.checked = false;
+    tbl_bordered_check.checked = true;
+    tbl_striped_check.checked = true;
+    tbl_hover_check.checked = true;
+    tbl_condensed_check.checked = true;
+  }
+}
 function genTblCode() {
   let tblClass = "";
   let tblStyle = "";
-  if (tbl_radio_reg.checked == true) {
-    tblClass = ' class="table"';
-  } else if (tbl_radio_bor.checked == true) {
-    tblClass = ' class="table table-bordered"';
-  } else if (tbl_radio_str.checked == true) {
-    tblClass = ' class="table table-striped"';
+  if (tbl_bordered_check.checked == true) {
+    tblClass += " table-bordered";
   }
-  if (tbl_border_check.checked == true) {
+  if (tbl_striped_check.checked == true) {
+    tblClass += " table-striped";
+  }
+  if (tbl_hover_check.checked == true) {
+    tblClass += " table-hover";
+  }
+  if (tbl_condensed_check.checked == true) {
+    tblClass += " table-condensed";
+  }
+  if (tbl_bordered_check.checked || tbl_striped_check.checked || tbl_hover_check.checked || tbl_condensed_check.checked == false) {
+    tbl_combined_check.checked = false;
+  }
+  if (tbl_bordered_check.checked || tbl_striped_check.checked || tbl_hover_check.checked || tbl_condensed_check.checked == true) {
+    tbl_regular_check.checked = false;
+  }
+  if (tbl_bordered_check.checked == false && tbl_striped_check.checked == false && tbl_hover_check.checked == false && tbl_condensed_check.checked == false) {
+    tbl_regular_check.checked = true;
+  }
+  if (tbl_bordered_check.checked && tbl_striped_check.checked && tbl_hover_check.checked && tbl_condensed_check.checked == true) {
+    tbl_combined_check.checked = true;
+  }
+  if (tbl_outer_check.checked == true) {
     tblStyle = ' style="border: 2px;"';
   } else {
     tblStyle = "";
-  }
-  document.getElementById("tbl_code_box").value = `<table${tblClass}${tblStyle}>`;
+  }  
+  document.getElementById("tbl_code_box").value = `<table class="table${tblClass}"${tblStyle}>`;
 }
 function copyTblCode() {
   const tblCopyText = document.getElementById("tbl_code_box");
@@ -89,8 +144,7 @@ function copyTblCode() {
   document.execCommand("copy");
 }
 </script>
-
-<p></p>
+<br>
 
 
 
@@ -98,7 +152,7 @@ function copyTblCode() {
 
 <div class="flex-container box_sets">
 <fieldset>
-<legend>Button</legend>
+<legend class="legend">Button</legend>
   <input type="text" id="btn_id_field" oninput="genBtnCode()" placeholder="Button ID">
   <input type="text" id="btn_name_field" oninput="genBtnCode()" placeholder="Button name"><br>
   <div class="form-group"><label for="btn_color_field">Color</label>
@@ -161,8 +215,7 @@ function copyBtnCode() {
   document.execCommand("copy");
 }
 </script>
-
-<p></p>
+<br>
 
 
 
@@ -170,7 +223,7 @@ function copyBtnCode() {
 
 <div class="flex-container box_sets">
 <fieldset>
-<legend>Accordion</legend>
+<legend class="legend">Accordion</legend>
   <label for="acc_quantity">Quantity</label>
     <input type="number" oninput="genAccFields(), genAccCode()" min="1" max="20" id="acc_quantity" value="1"><span class="asterisk">*</span>
   <div class="form-group"><label for="acc_color_field">Color</label>
@@ -281,8 +334,7 @@ function copyAccCode() {
   document.execCommand("copy");
 }
 </script>
-
-<p></p>
+<br>
 
 
 
@@ -290,7 +342,7 @@ function copyAccCode() {
 
 <div class="flex-container box_sets">
 <fieldset>
-<legend>Tabs</legend>
+<legend class="legend">Tabs</legend>
   <label class="radio-inline" for="tab_radio_tab">Tab</label>
     <input type="radio" oninput="genTabCode()" name="tab_radio" id="tab_radio_tab" checked>
   <label class="radio-inline" for="tab_radio_pill">Pill</label>
@@ -302,7 +354,7 @@ function copyAccCode() {
   <label for="tab_show_check">Show contents initially</label>
     <input type="checkbox" oninput="genTabCode()"id="tab_show_check"><br>
   <input type="text" oninput="genTabCode()" id="tab_id_field" placeholder="Tab set ID"><br>
-  <div id="tab_fields" class="flex-container"></div>
+  <div id="tab_fields" class="flex-container gen_fields"></div>
 </fieldset>
 <div class="code_div"><button onclick="copyTabCode()">Copy code</button><br>
 <textarea class="code_box" id="tab_code_box"></textarea></div>
@@ -492,6 +544,135 @@ function copyTabCode() {
   const tabCopyText = document.getElementById("tab_code_box");
   tabCopyText.select();
   tabCopyText.setSelectionRange(0, 99999);
+  document.execCommand("copy");
+}
+</script>
+<br>
+
+
+
+<!-- Carousel -->
+
+<div class="flex-container box_sets">
+<fieldset>
+<legend class="legend">Carousel</legend>
+  <label for="car_quantity">Quantity</label>
+    <input type="number" oninput="genCarFields(), genCarCode()" min="1" max="20" id="car_quantity" value="1"><span class="asterisk">*</span><br>
+  <label for="car_interval_field">Interval</label>
+    <input type="range" oninput="genCarInterval(this.value), genCarCode()" min="0"  max="20" step="1" value="0" id="car_interval_field"><span id="car_interval_amount"></span><br>
+  <input type="text" oninput="genCarCode()" id="car_id_field" placeholder="Carousel ID"><br>
+  <div id="car_fields" class="flex-container gen_fields"></div>
+</fieldset>
+<div class="code_div"><button onclick="copyCarCode()">Copy code</button><br>
+<textarea class="code_box" id="car_code_box"></textarea></div>
+</div>
+
+<script>
+function genCarInterval(val) {
+  document.getElementById("car_interval_amount").innerHTML = val + "s";
+  if (document.getElementById("car_interval_field").value == 0) {
+    document.getElementById("car_interval_amount").innerHTML = "";
+  }
+}
+function genCarFields() {
+  document.getElementById("car_fields").innerHTML = "";
+  document.getElementById("car_id_field").value = "";
+  for (let i = 1; i <= document.getElementById("car_quantity").value; i++) {
+    let carDivFields = document.createElement("DIV");
+      carDivFields.style.display = "block";
+    let carSrcLabels = document.createElement("LABEL");
+      carSrcLabels.setAttribute("for", `car_src_field${i}`);
+      carSrcLabels.setAttribute("class", "car_field_label");
+      carSrcLabels.innerHTML = "img src = ";
+      carSrcLabels.style.float = "left";
+    let carSrcFields = document.createElement("INPUT");
+      carSrcFields.setAttribute("type", "text");
+      carSrcFields.setAttribute("id", `car_src_field${i}`);
+      carSrcFields.setAttribute("placeholder", `Slide ${i} source`);
+      carSrcFields.setAttribute("oninput", "genCarCode()");
+      carSrcFields.style.float = "left";
+    let carCaptionLabels = document.createElement("LABEL");
+      carCaptionLabels.setAttribute("for", `car_caption_field${i}`);
+      carCaptionLabels.setAttribute("class", "car_field_label");
+      carCaptionLabels.innerHTML = "caption";
+      carCaptionLabels.style.float = "left";
+    let carCaptionFields = document.createElement("INPUT");
+      carCaptionFields.setAttribute("type", "checkbox");
+      carCaptionFields.setAttribute("id", `car_caption_field${i}`);
+      carCaptionFields.setAttribute("oninput", "genCarCode()");
+    carDivFields.appendChild(carSrcLabels);
+    carDivFields.appendChild(carSrcFields);
+    carDivFields.appendChild(carCaptionLabels);
+    carDivFields.appendChild(carCaptionFields);
+    document.getElementById("car_fields").appendChild(carDivFields);
+  }
+}
+function genCarCode() {
+  let carIdValue = document.getElementById("car_id_field").value.replace(/ /g, '');
+  let carInterval = "";
+  let carSrcValue = "";
+  let carActive = "";
+  let carCaption = "";
+  let carLoop = "";
+  if (carIdValue == false) {
+    carIdValue = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5);
+  }
+  if (document.getElementById("car_interval_field").value * 1000 == 0) {
+    carInterval = "false";
+  } else {
+    carInterval = document.getElementById("car_interval_field").value * 1000;
+  }
+  for (let i = 1; i <= document.getElementById("car_quantity").value; i++) {
+    if (i == 1) {
+      carActive = " active";
+    } else {
+      carActive = "";
+    }
+    if (document.getElementById(`car_src_field${i}`).value == false) {
+      carSrcValue = '"https://www.anpanman.jp/images/otanoshimi/index/download/201904/key_1920x1080.jpg"';
+    } else {
+      carSrcValue = document.getElementById(`car_src_field${i}`).value.trim();
+    }
+    if (document.getElementById(`car_caption_field${i}`).checked == true ) {
+      carCaption =
+`
+<!--Start car "${carIdValue}" slide ${i} caption--><div class="carousel-caption">
+<table style="width: 100%;"><tr><td><p>Caption for Slide ${i}</p></td></tr></table>
+<!--End car "${carIdValue}" slide ${i} caption--></div>`;
+    } else {
+      carCaption = "";
+    }
+    carLoop +=
+`<!--Start car "${carIdValue}" slide ${i}--><div class="item${carActive}">
+<table><tr><td style="text-align: center;">
+<img src=${carSrcValue} style="width: 100%;">
+</td></tr></table>${carCaption}
+<!--End car "${carIdValue}" slide ${i}--></div>
+`;
+  }
+  carControl =
+`<!--Start car "${carIdValue}" controls--><div>
+<!--Start car "${carIdValue}" left control-->
+<span style="position: absolute; left: 0; z-index: 2; top: 50%;">
+<a class="previous" style="position: relative; top: -28px; font-family: arial; font-size: 40px; color: black; text-decoration: none;" data-target="#${carIdValue}" data-slide="prev">&#9668;</a>
+<!--End car "${carIdValue}" left control--></span>
+<!--Start car "${carIdValue}" right control-->
+<span style="position: absolute; right: 0; z-index: 2; top: 50%;">
+<a class="next" style="position: relative; top: -28px; font-family: arial; font-size: 40px; color: black; text-decoration: none;" data-target="#${carIdValue}" data-slide="next">&#9658;</a>
+<!--End car "${carIdValue}" right control--></span>
+<!--End car "${carIdValue}" controls--></div>`;
+  document.getElementById("car_code_box").value =
+`<!--Start car "${carIdValue}"-->
+<div id="${carIdValue}" class="carousel slide" data-ride="carousel" data-interval="${carInterval}" data-pause="hover">
+${carControl}
+<!--Start car "${carIdValue}" slide(s)--><div class="carousel-inner" style="border: 1px solid black; width: 90%; margin: auto;">
+${carLoop}<!--End car "${carIdValue}" slide(s)--></div>
+<!--End car "${carIdValue}"--></div>`;
+}
+function copyCarCode() {
+  const carCopyText = document.getElementById("car_code_box");
+  carCopyText.select();
+  carCopyText.setSelectionRange(0, 99999);
   document.execCommand("copy");
 }
 </script>
