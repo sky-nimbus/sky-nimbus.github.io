@@ -158,7 +158,7 @@ function copyTblCode() {
 <legend class="legend">Button</legend>
   <input type="text" id="btn_id_field" oninput="genBtnCode()" placeholder="Button ID">
   <input type="text" id="btn_name_field" oninput="genBtnCode()" placeholder="Button name"><br>
-  <div class="form-group"><label for="btn_color_field">Color</label>
+  <label for="btn_color_field">Color</label>
     <select class="form-control" id="btn_color_field" oninput="genBtnCode()">
       <option>Blue</option>
       <option>Green</option>
@@ -167,7 +167,6 @@ function copyTblCode() {
       <option>Sky</option>
       <option>White</option>
     </select>
-  </div>
 </fieldset>
 <div class="code_div"><button onclick="copyBtnCode()">Copy code</button><br>
 <textarea class="code_box" id="btn_code_box"></textarea></div>
@@ -228,13 +227,12 @@ function copyBtnCode() {
 <fieldset>
 <legend class="legend">Accordion</legend>
   <label for="acc_quantity">Quantity</label>
-    <input type="number" oninput="genAccFields(), genAccCode()" min="1" max="20" id="acc_quantity" value="1"><span class="asterisk">*</span>
-  <div class="form-group"><label for="acc_color_field">Color</label>
+    <input type="number" oninput="genAccFields(), genAccCode()" min="1" max="20" id="acc_quantity" value="1"><span class="asterisk">*</span><br>
+  <label for="acc_color_field">Color</label>
     <select class="form-control" id="acc_color_field" oninput="genAccCode()">
       <option>Gray</option>
       <option>White</option>
-    </select>
-  </div>
+    </select><br>
   <label for="acc_padding_field">Padding</label>
     <input type="range" oninput="genAccPadding(this.value), genAccCode()" min="0"  max="50" step="10" value="0" id="acc_padding_field"><span id="acc_padding_amount"></span><br>
   <label for="acc_width_field">Width</label>
@@ -564,6 +562,14 @@ function copyTabCode() {
   <label for="car_interval_field">Interval</label>
     <input type="range" oninput="genCarInterval(this.value), genCarCode()" min="0"  max="20" step="1" value="0" id="car_interval_field"><span id="car_interval_amount"></span><br>
   <input type="text" oninput="genCarCode()" id="car_id_field" placeholder="Carousel ID"><br>
+  <label for="car_caption_color">Caption box</label>
+    <select class="form-control" id="car_caption_color" oninput="genCarTrans(), genCarCode()">
+      <option>None</option>
+      <option>Black</option>
+      <option>White</option>
+    </select>
+  <div id="car_transparency" style="display: none;"><label for="car_caption_transp">Transparency</label>
+    <input type="range" oninput="genCarCaption(this.value), genCarCode()" min="0"  max="100" step="10" value="0" id="car_caption_transp"><span id="car_transparency_amount"></span></div>
   <div id="car_fields" class="flex-container gen_fields"></div>
 </fieldset>
 <div class="code_div"><button onclick="copyCarCode()">Copy code</button><br>
@@ -575,6 +581,19 @@ function genCarInterval(val) {
   document.getElementById("car_interval_amount").innerHTML = val + "s";
   if (document.getElementById("car_interval_field").value == 0) {
     document.getElementById("car_interval_amount").innerHTML = "";
+  }
+}
+function genCarCaption(val) {
+  document.getElementById("car_transparency_amount").innerHTML = val + "%";
+  if (document.getElementById("car_caption_transp").value == 0) {
+    document.getElementById("car_transparency_amount").innerHTML = "";
+  }
+}
+function genCarTrans() {
+  if (document.getElementById("car_caption_color").value == "None") {
+    document.getElementById("car_transparency").style.display = "none";
+  } else {
+    document.getElementById("car_transparency").style.display = "block";
   }
 }
 function genCarFields() {
@@ -616,6 +635,8 @@ function genCarCode() {
   let carSrcValue = "";
   let carActive = "";
   let carCaption = "";
+  let carCapBgColor = "";
+  const carCapTrans = 1 - ((document.getElementById("car_caption_transp").value) / 100);
   let carLoop = "";
   if (carIdValue == false) {
     carIdValue = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5);
@@ -624,6 +645,13 @@ function genCarCode() {
     carInterval = "false";
   } else {
     carInterval = document.getElementById("car_interval_field").value * 1000;
+  }
+  if (document.getElementById("car_caption_color").value == "Black") {
+    carCapBgColor = ` style="color: white; background-color: rgba(0, 0, 0, ${carCapTrans});"`;
+  } else if (document.getElementById("car_caption_color").value == "White") {
+    carCapBgColor = ` style="color: black; background-color: rgba(255, 255, 255, ${carCapTrans});"`;
+  } else {
+    carCapBgColor = "";
   }
   for (let i = 1; i <= document.getElementById("car_quantity").value; i++) {
     if (i == 1) {
@@ -640,7 +668,8 @@ function genCarCode() {
       carCaption =
 `
 <!--Start car "${carIdValue}" slide ${i} caption--><div class="carousel-caption">
-<table style="width: 100%;"><tr><td><p>Caption for Slide ${i}</p></td></tr></table>
+<table style="width: 100%;"><tr><td${carCapBgColor}>
+<h3>Slide ${i} Caption</h3><p>Content for Slide ${i} Caption</p></td></tr></table>
 <!--End car "${carIdValue}" slide ${i} caption--></div>`;
     } else {
       carCaption = "";
@@ -657,11 +686,11 @@ function genCarCode() {
 `<!--Start car "${carIdValue}" controls--><div>
 <!--Start car "${carIdValue}" left control-->
 <span style="position: absolute; left: 0; z-index: 2; top: 50%;">
-<a class="previous" style="position: relative; top: -28px; font-family: arial; font-size: 40px; color: black; text-decoration: none;" data-target="#${carIdValue}" data-slide="prev">&#9668;</a>
+<a class="previous" style="position: relative; top: -35px; font-family: arial; font-size: 40px; color: black; text-decoration: none;" data-target="#${carIdValue}" data-slide="prev">&#9668;</a>
 <!--End car "${carIdValue}" left control--></span>
 <!--Start car "${carIdValue}" right control-->
 <span style="position: absolute; right: 0; z-index: 2; top: 50%;">
-<a class="next" style="position: relative; top: -28px; font-family: arial; font-size: 40px; color: black; text-decoration: none;" data-target="#${carIdValue}" data-slide="next">&#9658;</a>
+<a class="next" style="position: relative; top: -35px; font-family: arial; font-size: 40px; color: black; text-decoration: none;" data-target="#${carIdValue}" data-slide="next">&#9658;</a>
 <!--End car "${carIdValue}" right control--></span>
 <!--End car "${carIdValue}" controls--></div>`;
   document.getElementById("car_code_box").value =
