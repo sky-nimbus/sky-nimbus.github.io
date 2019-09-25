@@ -569,7 +569,7 @@ function copyTabCode() {
       <option>White</option>
     </select>
   <div id="car_transparency" style="display: none;"><label for="car_caption_transp">Transparency</label>
-    <input type="range" oninput="genCarCaption(this.value), genCarCode()" min="0"  max="100" step="10" value="0" id="car_caption_transp"><span id="car_transparency_amount"></span></div>
+    <input type="range" oninput="genCarCaption(this.value), genCarCode()" min="0.0"  max="1.0" step="0.1" value="0" id="car_caption_transp"><span id="car_transparency_amount"></span></div>
   <div id="car_fields" class="flex-container gen_fields"></div>
 </fieldset>
 <div class="code_div"><button onclick="copyCarCode()">Copy code</button><br>
@@ -584,7 +584,7 @@ function genCarInterval(val) {
   }
 }
 function genCarCaption(val) {
-  document.getElementById("car_transparency_amount").innerHTML = val + "%";
+  document.getElementById("car_transparency_amount").innerHTML = (val * 100) + "%";
   if (document.getElementById("car_caption_transp").value == 0) {
     document.getElementById("car_transparency_amount").innerHTML = "";
   }
@@ -636,7 +636,7 @@ function genCarCode() {
   let carActive = "";
   let carCaption = "";
   let carCapBgColor = "";
-  const carCapTrans = 1 - ((document.getElementById("car_caption_transp").value) / 100);
+  const carCapTrans = Math.round((1 - document.getElementById("car_caption_transp").value) * 10) / 10;
   let carLoop = "";
   if (carIdValue == false) {
     carIdValue = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5);
