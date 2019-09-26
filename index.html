@@ -30,7 +30,7 @@ input[type="checkbox"] {
   display: flex;
   flex-direction: column;
 }
-.tab_drop_label {
+.sub_label {
   margin-left: 47px;
   margin-top: 2px;
   margin-right: 2px;
@@ -56,10 +56,13 @@ input[type="checkbox"] {
 #car_code_box {
   height: 70px;
 }
+#imgtab_code_box {
+  height: 130px;
+}
 </style>
 </head>
 
-<body onload="genAccFields(), genTabFields(), genDropFields(), genCarFields()">
+<body onload="genAccFields(), genTabFields(), genDropFields(), genCarFields(), genImgTabFields()">
 
 
 
@@ -384,7 +387,7 @@ function genTabFields() {
       tabDropDiv.style.display = "block";
     let tabDropQuantLabels = document.createElement("LABEL");
       tabDropQuantLabels.setAttribute("for", `tab_drop_quantity${i}`);
-      tabDropQuantLabels.setAttribute("class", "tab_drop_label");
+      tabDropQuantLabels.setAttribute("class", "sub_label");
       tabDropQuantLabels.innerHTML = `dropdowns `;
       tabDropQuantLabels.style.float = "left";
     let tabDropQuantFields = document.createElement("INPUT");
@@ -568,7 +571,7 @@ function copyTabCode() {
       <option>Black</option>
       <option>White</option>
     </select>
-  <div id="car_transparency" style="display: none;"><label for="car_caption_transp">Transparency</label>
+  <div id="car_transparency" style="display: none;"><label for="car_caption_transp" class="car_field_label">transparency</label>
     <input type="range" oninput="genCarCaption(this.value), genCarCode()" min="0.0"  max="1.0" step="0.1" value="0" id="car_caption_transp"><span id="car_transparency_amount"></span></div>
   <div id="car_fields" class="flex-container gen_fields"></div>
 </fieldset>
@@ -705,6 +708,140 @@ function copyCarCode() {
   const carCopyText = document.getElementById("car_code_box");
   carCopyText.select();
   carCopyText.setSelectionRange(0, 99999);
+  document.execCommand("copy");
+}
+</script>
+<br>
+
+
+
+<!-- IMAGE TABS -->
+
+<div class="flex-container box_sets">
+<fieldset>
+<legend class="legend">Image Tabs</legend>
+  <label for="imgtab_quantity">Quantity</label>
+    <input type="number" oninput="genImgTabFields(), genImgTabCode()" min="1" max="20" id="imgtab_quantity" value="1"><span class="asterisk">*</span><br>
+  <label for="imgtab_fade_check">Fade transition</label>
+    <input type="checkbox" oninput="genImgTabCode()" id="imgtab_fade_check"><br>
+  <label for="imgtab_show_check">Show contents initially</label>
+    <input type="checkbox" oninput="genImgTabCode()" id="imgtab_show_check"><br>
+  <label for="imgtab_width_field">Images width</label>
+    <input type="range" oninput="genImgTabWidth(this.value), genImgTabCode()" min="50" max="300" step="50" value="100" id="imgtab_width_field"><span id="imgtab_width_amount">100px</span><br>
+  <input type="text" oninput="genImgTabCode()" id="imgtab_id_field" placeholder="Tab set ID"><br>
+  <div id="imgtab_fields" class="flex-container gen_fields"></div>
+</fieldset>
+<div class="code_div"><button onclick="copyImgTabCode()">Copy code</button><br>
+<textarea class="code_box" id="imgtab_code_box"></textarea></div>
+</div>
+
+<script>
+function genImgTabWidth(val) {
+  document.getElementById("imgtab_width_amount").innerHTML = val + "px";
+}
+function genImgTabFields() {
+  document.getElementById("imgtab_fields").innerHTML = "";
+  document.getElementById("imgtab_id_field").value = "";
+  for (let i = 1; i <= document.getElementById("imgtab_quantity").value; i++) {
+    let imgtabDiv = document.createElement("DIV");
+      imgtabDiv.style.display = "block";
+    let imgtabIdFields = document.createElement("INPUT");
+      imgtabIdFields.setAttribute("type", "text");
+      imgtabIdFields.setAttribute("id", `imgtab_id_field${i}`);
+      imgtabIdFields.setAttribute("placeholder", `Tab ${i} ID`);
+      imgtabIdFields.setAttribute("oninput", "genImgTabCode()");
+      imgtabIdFields.style.float = "left";
+    let imgtabNameFields = document.createElement("INPUT");
+      imgtabNameFields.setAttribute("type", "text");
+      imgtabNameFields.setAttribute("id", `imgtab_name_field${i}`);
+      imgtabNameFields.setAttribute("placeholder", `Tab ${i} name`);
+      imgtabNameFields.setAttribute("oninput", "genImgTabCode()");
+      imgtabNameFields.style.float = "left";
+    let imgtabSrcDiv = document.createElement("DIV");
+      imgtabSrcDiv.style.display = "block";
+    let imgtabSrcLabels = document.createElement("LABEL");
+      imgtabSrcLabels.setAttribute("for", `imgtab_src_field${i}`);
+      imgtabSrcLabels.setAttribute("class", "sub_label");
+      imgtabSrcLabels.innerHTML = "img src = ";
+      imgtabSrcLabels.style.float = "left";
+    let imgtabSrcFields = document.createElement("INPUT");
+      imgtabSrcFields.setAttribute("type", "text");
+      imgtabSrcFields.setAttribute("id", `imgtab_src_field${i}`);
+      imgtabSrcFields.setAttribute("placeholder", `Tab ${i} image source`);
+      imgtabSrcFields.setAttribute("oninput", "genImgTabCode()");
+      imgtabSrcFields.style.float = "left";
+    imgtabDiv.appendChild(imgtabIdFields);
+    imgtabDiv.appendChild(imgtabNameFields);
+    imgtabSrcDiv.appendChild(imgtabSrcLabels);
+    imgtabSrcDiv.appendChild(imgtabSrcFields);
+    document.getElementById("imgtab_fields").appendChild(imgtabDiv);
+    document.getElementById("imgtab_fields").appendChild(imgtabSrcDiv);
+  }
+}
+function genImgTabCode() {
+  let imgtabShowValue = "";
+  let imgtabFadeValue = "";
+  let imgtabNameValue = "";
+  let imgtabIdValue = document.getElementById("imgtab_id_field").value.replace(/ /g, '');
+  let imgtabItemIdValue = "";
+  let imgtabLoopHead = "";
+  let imgtabLoopBody = "";
+  let imgtabImgSrc = "";
+  let imgtabImgWidth = document.getElementById("imgtab_width_field").value;;
+  if (imgtabIdValue == false) {
+    imgtabIdValue = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5);
+  }
+  for (let i = 1; i <= document.getElementById("imgtab_quantity").value; i++) {
+    imgtabNameValue = document.getElementById(`imgtab_name_field${i}`).value.trim();
+    imgtabItemIdValue = document.getElementById(`imgtab_id_field${i}`).value.trim();
+    if (imgtabNameValue == false) {
+      imgtabNameValue = `Tab ${i}`;
+    }
+    if (imgtabItemIdValue == false) {
+      imgtabItemIdValue = `${imgtabIdValue}-${i}`;
+    }
+    if (i == 1 && imgtab_show_check.checked == true) {
+      imgtabShowValue = " in active";
+    } else {
+      imgtabShowValue = "";
+    }
+    if (imgtab_fade_check.checked == true) {
+      imgtabFadeValue = " fade";
+    } else {
+      imgtabFadeValue = "";
+    }
+    if (document.getElementById(`imgtab_src_field${i}`).value == false) {
+      imgtabImgSrc = '"https://i.kym-cdn.com/photos/images/original/000/948/128/36c.gif"';
+    } else {
+      imgtabImgSrc = document.getElementById(`imgtab_src_field${i}`).value.trim();
+    }
+    imgtabLoopHead +=
+`<!--Start tab ${i} head "${imgtabItemIdValue}"--><div data-toggle="pill" data-target="#${imgtabItemIdValue}">
+<table><tr><td style="text-align: center;">${imgtabNameValue}</td></tr>
+<tr><td style="text-align: center;"><img src=${imgtabImgSrc} width="${imgtabImgWidth}"></td></tr></table>
+<!--End tab ${i} head "${imgtabItemIdValue}"--></div>
+`;
+    imgtabLoopBody +=
+`<!--Start tab ${i} body "${imgtabItemIdValue}"--><div id="${imgtabItemIdValue}" class="tab-pane${imgtabFadeValue}${imgtabShowValue}">
+<table><tr><td><p>Content for ${imgtabNameValue}</p></td></tr></table>
+<!--End tab ${i} body "${imgtabItemIdValue}"--></div>
+`;
+  }
+  document.getElementById("imgtab_code_box").value =
+`<!--Start tab set "${imgtabIdValue}"--><div id="${imgtabIdValue}" class="container">
+<!--Start tab head(s) "${imgtabIdValue}"--><div class="nav nav-pills">
+<!--Start tab head(s) flexbox "${imgtabIdValue}"-->
+<div class="flex-container" style="width: 100%; height: 100%; display: flex; justify-content: space-between;">
+${imgtabLoopHead}<!--End tab head(s) flexbox "${imgtabIdValue}"--></div>
+<!--End tab head(s) "${imgtabIdValue}"--></div>
+<!--Start tab body(s) "${imgtabIdValue}"--><div class="tab-content">
+${imgtabLoopBody}<!--End tab body(s) "${imgtabIdValue}"--></div>
+<!--End tab set "${imgtabIdValue}"--></div>`;
+}
+function copyImgTabCode() {
+  const imgtabCopyText = document.getElementById("imgtab_code_box");
+  imgtabCopyText.select();
+  imgtabCopyText.setSelectionRange(0, 99999);
   document.execCommand("copy");
 }
 </script>
