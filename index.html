@@ -12,7 +12,7 @@ body {
   flex-direction: row;
 }
 fieldset {
-  min-width: 310px;
+  min-width: 330px;
 }
 .legend {
   color: chocolate;
@@ -45,19 +45,22 @@ input[type="checkbox"] {
   width: 300px;
 }
 #tbl_code_box {
-  height: 90px;
+  height: 95px;
+}
+#btn_code_box {
+  height: 40px;
 }
 #acc_code_box {
-  height: 110px;
+  height: 125px;
 }
 #tab_code_box {
-  height: 130px;
-}
-#car_code_box {
-  height: 70px;
+  height: 140px;
 }
 #imgtab_code_box {
-  height: 130px;
+  height: 145px;
+}
+#car_code_box {
+  height: 105px;
 }
 </style>
 </head>
@@ -555,166 +558,6 @@ function copyTabCode() {
 
 
 
-<!-- Carousel -->
-
-<div class="flex-container box_sets">
-<fieldset>
-<legend class="legend">Carousel</legend>
-  <label for="car_quantity">Quantity</label>
-    <input type="number" oninput="genCarFields(), genCarCode()" min="1" max="20" id="car_quantity" value="1"><span class="asterisk">*</span><br>
-  <label for="car_interval_field">Interval</label>
-    <input type="range" oninput="genCarInterval(this.value), genCarCode()" min="0"  max="20" step="1" value="0" id="car_interval_field"><span id="car_interval_amount"></span><br>
-  <input type="text" oninput="genCarCode()" id="car_id_field" placeholder="Carousel ID"><br>
-  <label for="car_caption_color">Caption box</label>
-    <select class="form-control" id="car_caption_color" oninput="genCarTrans(), genCarCode()">
-      <option>None</option>
-      <option>Black</option>
-      <option>White</option>
-    </select>
-  <div id="car_transparency" style="display: none;"><label for="car_caption_transp" class="car_field_label">transparency</label>
-    <input type="range" oninput="genCarCaption(this.value), genCarCode()" min="0.0"  max="1.0" step="0.1" value="0" id="car_caption_transp"><span id="car_transparency_amount"></span></div>
-  <div id="car_fields" class="flex-container gen_fields"></div>
-</fieldset>
-<div class="code_div"><button onclick="copyCarCode()">Copy code</button><br>
-<textarea class="code_box" id="car_code_box"></textarea></div>
-</div>
-
-<script>
-function genCarInterval(val) {
-  document.getElementById("car_interval_amount").innerHTML = val + "s";
-  if (document.getElementById("car_interval_field").value == 0) {
-    document.getElementById("car_interval_amount").innerHTML = "";
-  }
-}
-function genCarCaption(val) {
-  document.getElementById("car_transparency_amount").innerHTML = (val * 100) + "%";
-  if (document.getElementById("car_caption_transp").value == 0) {
-    document.getElementById("car_transparency_amount").innerHTML = "";
-  }
-}
-function genCarTrans() {
-  if (document.getElementById("car_caption_color").value == "None") {
-    document.getElementById("car_transparency").style.display = "none";
-  } else {
-    document.getElementById("car_transparency").style.display = "block";
-  }
-}
-function genCarFields() {
-  document.getElementById("car_fields").innerHTML = "";
-  document.getElementById("car_id_field").value = "";
-  for (let i = 1; i <= document.getElementById("car_quantity").value; i++) {
-    let carDivFields = document.createElement("DIV");
-      carDivFields.style.display = "block";
-    let carSrcLabels = document.createElement("LABEL");
-      carSrcLabels.setAttribute("for", `car_src_field${i}`);
-      carSrcLabels.setAttribute("class", "car_field_label");
-      carSrcLabels.innerHTML = "img src = ";
-      carSrcLabels.style.float = "left";
-    let carSrcFields = document.createElement("INPUT");
-      carSrcFields.setAttribute("type", "text");
-      carSrcFields.setAttribute("id", `car_src_field${i}`);
-      carSrcFields.setAttribute("placeholder", `Slide ${i} source`);
-      carSrcFields.setAttribute("oninput", "genCarCode()");
-      carSrcFields.style.float = "left";
-    let carCaptionLabels = document.createElement("LABEL");
-      carCaptionLabels.setAttribute("for", `car_caption_field${i}`);
-      carCaptionLabels.setAttribute("class", "car_field_label");
-      carCaptionLabels.innerHTML = "caption";
-      carCaptionLabels.style.float = "left";
-    let carCaptionFields = document.createElement("INPUT");
-      carCaptionFields.setAttribute("type", "checkbox");
-      carCaptionFields.setAttribute("id", `car_caption_field${i}`);
-      carCaptionFields.setAttribute("oninput", "genCarCode()");
-    carDivFields.appendChild(carSrcLabels);
-    carDivFields.appendChild(carSrcFields);
-    carDivFields.appendChild(carCaptionLabels);
-    carDivFields.appendChild(carCaptionFields);
-    document.getElementById("car_fields").appendChild(carDivFields);
-  }
-}
-function genCarCode() {
-  let carIdValue = document.getElementById("car_id_field").value.replace(/ /g, '');
-  let carInterval = "";
-  let carSrcValue = "";
-  let carActive = "";
-  let carCaption = "";
-  let carCapBgColor = "";
-  const carCapTrans = Math.round((1 - document.getElementById("car_caption_transp").value) * 10) / 10;
-  let carLoop = "";
-  if (carIdValue == false) {
-    carIdValue = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5);
-  }
-  if (document.getElementById("car_interval_field").value * 1000 == 0) {
-    carInterval = "false";
-  } else {
-    carInterval = document.getElementById("car_interval_field").value * 1000;
-  }
-  if (document.getElementById("car_caption_color").value == "Black") {
-    carCapBgColor = ` style="color: white; background-color: rgba(0, 0, 0, ${carCapTrans});"`;
-  } else if (document.getElementById("car_caption_color").value == "White") {
-    carCapBgColor = ` style="color: black; background-color: rgba(255, 255, 255, ${carCapTrans});"`;
-  } else {
-    carCapBgColor = "";
-  }
-  for (let i = 1; i <= document.getElementById("car_quantity").value; i++) {
-    if (i == 1) {
-      carActive = " active";
-    } else {
-      carActive = "";
-    }
-    if (document.getElementById(`car_src_field${i}`).value == false) {
-      carSrcValue = '"https://www.anpanman.jp/images/otanoshimi/index/download/201904/key_1920x1080.jpg"';
-    } else {
-      carSrcValue = document.getElementById(`car_src_field${i}`).value.trim();
-    }
-    if (document.getElementById(`car_caption_field${i}`).checked == true ) {
-      carCaption =
-`
-<!--Start car "${carIdValue}" slide ${i} caption--><div class="carousel-caption">
-<table style="width: 100%;"><tr><td${carCapBgColor}>
-<h3>Slide ${i} Caption</h3><p>Content for Slide ${i} Caption</p></td></tr></table>
-<!--End car "${carIdValue}" slide ${i} caption--></div>`;
-    } else {
-      carCaption = "";
-    }
-    carLoop +=
-`<!--Start car "${carIdValue}" slide ${i}--><div class="item${carActive}">
-<table><tr><td style="text-align: center;">
-<img src=${carSrcValue} style="width: 100%;">
-</td></tr></table>${carCaption}
-<!--End car "${carIdValue}" slide ${i}--></div>
-`;
-  }
-  carControl =
-`<!--Start car "${carIdValue}" controls--><div>
-<!--Start car "${carIdValue}" left control-->
-<span style="position: absolute; left: 0; z-index: 2; top: 50%;">
-<a class="previous" style="position: relative; top: -35px; font-family: arial; font-size: 40px; color: black; text-decoration: none;" data-target="#${carIdValue}" data-slide="prev">&#9668;</a>
-<!--End car "${carIdValue}" left control--></span>
-<!--Start car "${carIdValue}" right control-->
-<span style="position: absolute; right: 0; z-index: 2; top: 50%;">
-<a class="next" style="position: relative; top: -35px; font-family: arial; font-size: 40px; color: black; text-decoration: none;" data-target="#${carIdValue}" data-slide="next">&#9658;</a>
-<!--End car "${carIdValue}" right control--></span>
-<!--End car "${carIdValue}" controls--></div>`;
-  document.getElementById("car_code_box").value =
-`<!--Start car "${carIdValue}"-->
-<div id="${carIdValue}" class="carousel slide" data-ride="carousel" data-interval="${carInterval}" data-pause="hover">
-${carControl}
-<!--Start car "${carIdValue}" slide(s)--><div class="carousel-inner" style="border: 1px solid black; width: 90%; margin: auto;">
-${carLoop}<!--End car "${carIdValue}" slide(s)--></div>
-<!--End car "${carIdValue}"--></div>`;
-}
-function copyCarCode() {
-  const carCopyText = document.getElementById("car_code_box");
-  carCopyText.select();
-  carCopyText.setSelectionRange(0, 99999);
-  document.execCommand("copy");
-}
-</script>
-<br>
-
-
-
 <!-- IMAGE TABS -->
 
 <div class="flex-container box_sets">
@@ -726,7 +569,7 @@ function copyCarCode() {
     <input type="checkbox" oninput="genImgTabCode()" id="imgtab_fade_check"><br>
   <label for="imgtab_show_check">Show contents initially</label>
     <input type="checkbox" oninput="genImgTabCode()" id="imgtab_show_check"><br>
-  <label for="imgtab_width_field">Images width</label>
+  <label for="imgtab_width_field">img width</label>
     <input type="range" oninput="genImgTabWidth(this.value), genImgTabCode()" min="50" max="300" step="50" value="100" id="imgtab_width_field"><span id="imgtab_width_amount">100px</span><br>
   <input type="text" oninput="genImgTabCode()" id="imgtab_id_field" placeholder="Tab set ID"><br>
   <div id="imgtab_fields" class="flex-container gen_fields"></div>
@@ -845,6 +688,178 @@ function copyImgTabCode() {
   document.execCommand("copy");
 }
 </script>
+<br>
+
+
+
+<!-- Carousel -->
+
+<div class="flex-container box_sets">
+<fieldset>
+<legend class="legend">Carousel</legend>
+  <label for="car_quantity">Quantity</label>
+    <input type="number" oninput="genCarFields(), genCarCode()" min="1" max="20" id="car_quantity" value="1"><span class="asterisk">*</span><br>
+  <label for="car_interval_field">Interval</label>
+    <input type="range" oninput="genCarInterval(this.value), genCarCode()" min="0"  max="20" step="1" value="0" id="car_interval_field"><span id="car_interval_amount"></span><br>
+  <input type="text" oninput="genCarCode()" id="car_id_field" placeholder="Carousel ID"><br>
+  <label for="car_caption_color">Caption background</label>
+    <select class="form-control" id="car_caption_color" oninput="genCarTransp(), genCarCode()">
+      <option>None</option>
+      <option>Black</option>
+      <option>White</option>
+    </select>
+  <span id="car_transparency"></span>
+  <div id="car_fields" class="flex-container gen_fields"></div>
+</fieldset>
+<div class="code_div"><button onclick="copyCarCode()">Copy code</button><br>
+<textarea class="code_box" id="car_code_box"></textarea></div>
+</div>
+
+<script>
+function genCarInterval(val) {
+  document.getElementById("car_interval_amount").innerHTML = val + "s";
+  if (document.getElementById("car_interval_field").value == 0) {
+    document.getElementById("car_interval_amount").innerHTML = "";
+  }
+}
+function genCarTransp() {
+  document.getElementById("car_transparency").innerHTML = "";
+    let carTranspLabel = document.createElement("LABEL");
+      carTranspLabel.setAttribute("for", "car_caption_transp");
+      carTranspLabel.setAttribute("class", "car_field_label");
+      carTranspLabel.innerHTML = "transparency";
+    let carTranspField = document.createElement("INPUT");
+      carTranspField.setAttribute("type", "number");
+      carTranspField.setAttribute("id", "car_caption_transp");
+      carTranspField.setAttribute("oninput", "genCarCode()");
+      carTranspField.setAttribute("min", "0");
+      carTranspField.setAttribute("max", "100");
+      carTranspField.setAttribute("step", "10");
+      carTranspField.setAttribute("value", "0");
+    let carTranspPercent = document.createElement("SPAN");
+      carTranspPercent.innerHTML = "%";
+    document.getElementById("car_transparency").appendChild(carTranspLabel);
+    document.getElementById("car_transparency").appendChild(carTranspField);
+    document.getElementById("car_transparency").appendChild(carTranspPercent);
+}
+function genCarFields() {
+  document.getElementById("car_fields").innerHTML = "";
+  document.getElementById("car_id_field").value = "";
+  for (let i = 1; i <= document.getElementById("car_quantity").value; i++) {
+    let carDivFields = document.createElement("DIV");
+      carDivFields.style.display = "block";
+    let carSrcLabels = document.createElement("LABEL");
+      carSrcLabels.setAttribute("for", `car_src_field${i}`);
+      carSrcLabels.setAttribute("class", "car_field_label");
+      carSrcLabels.innerHTML = "img src = ";
+      carSrcLabels.style.float = "left";
+    let carSrcFields = document.createElement("INPUT");
+      carSrcFields.setAttribute("type", "text");
+      carSrcFields.setAttribute("id", `car_src_field${i}`);
+      carSrcFields.setAttribute("placeholder", `Slide ${i} source`);
+      carSrcFields.setAttribute("oninput", "genCarCode()");
+      carSrcFields.style.float = "left";
+    let carCaptionLabels = document.createElement("LABEL");
+      carCaptionLabels.setAttribute("for", `car_caption_field${i}`);
+      carCaptionLabels.setAttribute("class", "car_field_label");
+      carCaptionLabels.innerHTML = "caption";
+      carCaptionLabels.style.float = "left";
+    let carCaptionFields = document.createElement("INPUT");
+      carCaptionFields.setAttribute("type", "checkbox");
+      carCaptionFields.setAttribute("id", `car_caption_field${i}`);
+      carCaptionFields.setAttribute("oninput", "genCarCode()");
+    carDivFields.appendChild(carSrcLabels);
+    carDivFields.appendChild(carSrcFields);
+    carDivFields.appendChild(carCaptionLabels);
+    carDivFields.appendChild(carCaptionFields);
+    document.getElementById("car_fields").appendChild(carDivFields);
+  }
+}
+function genCarCode() {
+  let carIdValue = document.getElementById("car_id_field").value.replace(/ /g, '');
+  let carInterval = "";
+  let carSrcValue = "";
+  let carActive = "";
+  let carCaption = "";
+  let carCapBgColor = "";
+  let carCapTransp = "";
+  let carLoop = "";
+  if (document.getElementById("car_caption_transp")) {
+    carCapTransp = (100 - document.getElementById("car_caption_transp").value) / 100;
+  } else {
+    carCapTransp = "";
+  }
+  if (carIdValue == false) {
+    carIdValue = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5);
+  }
+  if (document.getElementById("car_interval_field").value * 1000 == 0) {
+    carInterval = "false";
+  } else {
+    carInterval = document.getElementById("car_interval_field").value * 1000;
+  }
+  if (document.getElementById("car_caption_color").value == "Black") {
+    carCapBgColor = ` style="color: white; background-color: rgba(0, 0, 0, ${carCapTransp});"`;
+  } else if (document.getElementById("car_caption_color").value == "White") {
+    carCapBgColor = ` style="color: black; background-color: rgba(255, 255, 255, ${carCapTransp});"`;
+  } else {
+    carCapBgColor = "";
+  }
+  for (let i = 1; i <= document.getElementById("car_quantity").value; i++) {
+    if (i == 1) {
+      carActive = " active";
+    } else {
+      carActive = "";
+    }
+    if (document.getElementById(`car_src_field${i}`).value == false) {
+      carSrcValue = '"https://www.anpanman.jp/images/otanoshimi/index/download/201904/key_1920x1080.jpg"';
+    } else {
+      carSrcValue = document.getElementById(`car_src_field${i}`).value.trim();
+    }
+    if (document.getElementById(`car_caption_field${i}`).checked == true ) {
+      carCaption =
+`
+<!--Start car "${carIdValue}" slide ${i} caption--><div class="carousel-caption">
+<table style="width: 100%;"><tr><td${carCapBgColor}>
+<h3>Slide ${i} Caption</h3><p>Content for Slide ${i} Caption</p></td></tr></table>
+<!--End car "${carIdValue}" slide ${i} caption--></div>`;
+    } else {
+      carCaption = "";
+    }
+    carLoop +=
+`<!--Start car "${carIdValue}" slide ${i}--><div class="item${carActive}">
+<table><tr><td style="text-align: center;">
+<img src=${carSrcValue} style="width: 100%;">
+</td></tr></table>${carCaption}
+<!--End car "${carIdValue}" slide ${i}--></div>
+`;
+  }
+  carControl =
+`<!--Start car "${carIdValue}" controls--><div>
+<!--Start car "${carIdValue}" left control-->
+<span style="position: absolute; left: 0; z-index: 2; top: 50%;">
+<a class="previous" style="position: relative; top: -35px; font-family: arial; font-size: 40px; color: black; text-decoration: none;" data-target="#${carIdValue}" data-slide="prev">&#9668;</a>
+<!--End car "${carIdValue}" left control--></span>
+<!--Start car "${carIdValue}" right control-->
+<span style="position: absolute; right: 0; z-index: 2; top: 50%;">
+<a class="next" style="position: relative; top: -35px; font-family: arial; font-size: 40px; color: black; text-decoration: none;" data-target="#${carIdValue}" data-slide="next">&#9658;</a>
+<!--End car "${carIdValue}" right control--></span>
+<!--End car "${carIdValue}" controls--></div>`;
+  document.getElementById("car_code_box").value =
+`<!--Start car "${carIdValue}"-->
+<div id="${carIdValue}" class="carousel slide" data-ride="carousel" data-interval="${carInterval}" data-pause="hover">
+${carControl}
+<!--Start car "${carIdValue}" slide(s)--><div class="carousel-inner" style="border: 1px solid black; width: 90%; margin: auto;">
+${carLoop}<!--End car "${carIdValue}" slide(s)--></div>
+<!--End car "${carIdValue}"--></div>`;
+}
+function copyCarCode() {
+  const carCopyText = document.getElementById("car_code_box");
+  carCopyText.select();
+  carCopyText.setSelectionRange(0, 99999);
+  document.execCommand("copy");
+}
+</script>
+<div style="height: 200px;"></div>
 
 
 
