@@ -62,10 +62,19 @@ input[type="checkbox"] {
 #car_code_box {
   height: 105px;
 }
+#acc_padding_field {
+  width: 100px;
+}
+#acc_width_field {
+  width: 100px;
+}
+#imgtab_width_field {
+  width: 100px;
+}
 </style>
 </head>
 
-<body onload="genAccFields(), genTabFields(), genDropFields(), genCarFields(), genImgTabFields()">
+<body onload="genAccFields(), genTabFields(), genDropFields(), genImgTabFields(), genCarFields()">
 
 
 
@@ -570,7 +579,7 @@ function copyTabCode() {
   <label for="imgtab_show_check">Show contents initially</label>
     <input type="checkbox" oninput="genImgTabCode()" id="imgtab_show_check"><br>
   <label for="imgtab_width_field">img width</label>
-    <input type="range" oninput="genImgTabWidth(this.value), genImgTabCode()" min="50" max="300" step="50" value="100" id="imgtab_width_field"><span id="imgtab_width_amount">100px</span><br>
+    <input type="range" oninput="genImgTabWidth(this.value), genImgTabCode()" min="50" max="300" step="25" value="100" id="imgtab_width_field"><span id="imgtab_width_amount">100px</span><br>
   <input type="text" oninput="genImgTabCode()" id="imgtab_id_field" placeholder="Tab set ID"><br>
   <div id="imgtab_fields" class="flex-container gen_fields"></div>
 </fieldset>
