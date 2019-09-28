@@ -7,7 +7,7 @@ body {
   font-family: sans-serif;
   font-size: small;
 }
-.box_sets {
+.box_set {
   display: flex;
   flex-direction: row;
 }
@@ -26,49 +26,26 @@ input[type="checkbox"] {
 .asterisk {
   color: red;
 }
-.gen_fields {
+.gen_field {
   display: flex;
   flex-direction: column;
 }
 .sub_label {
-  margin-left: 47px;
+  margin-left: 2px;
   margin-top: 2px;
   margin-right: 2px;
 }
-.car_field_label {
-  margin-left: 2px;
+.sub_label_margin {
+  margin-left: 47px;
   margin-top: 2px;
   margin-right: 2px;
 }
 .code_box {
   font-family: monospace;
   width: 300px;
+  height: calc(100% - 40px);
 }
-#tbl_code_box {
-  height: 95px;
-}
-#btn_code_box {
-  height: 40px;
-}
-#acc_code_box {
-  height: 125px;
-}
-#tab_code_box {
-  height: 140px;
-}
-#imgtab_code_box {
-  height: 145px;
-}
-#car_code_box {
-  height: 105px;
-}
-#acc_padding_field {
-  width: 100px;
-}
-#acc_width_field {
-  width: 100px;
-}
-#imgtab_width_field {
+.range_field_short {
   width: 100px;
 }
 </style>
@@ -80,7 +57,7 @@ input[type="checkbox"] {
 
 <!-- TABLE -->
 
-<div class="flex-container box_sets">
+<div class="flex-container box_set">
 <fieldset>
 <legend class="legend">Table</legend>
   <label for="tbl_regular_check">Regular</label>
@@ -168,7 +145,7 @@ function copyTblCode() {
 
 <!-- BUTTON -->
 
-<div class="flex-container box_sets">
+<div class="flex-container box_set">
 <fieldset>
 <legend class="legend">Button</legend>
   <input type="text" id="btn_id_field" oninput="genBtnCode()" placeholder="Button ID">
@@ -238,7 +215,7 @@ function copyBtnCode() {
 
 <!-- ACCORDION -->
 
-<div class="flex-container box_sets">
+<div class="flex-container box_set">
 <fieldset>
 <legend class="legend">Accordion</legend>
   <label for="acc_quantity">Quantity</label>
@@ -249,9 +226,9 @@ function copyBtnCode() {
       <option>White</option>
     </select><br>
   <label for="acc_padding_field">Padding</label>
-    <input type="range" oninput="genAccPadding(this.value), genAccCode()" min="0"  max="50" step="10" value="0" id="acc_padding_field"><span id="acc_padding_amount"></span><br>
+    <input type="range" class="range_field_short" oninput="genAccPadding(this.value), genAccCode()" min="0"  max="50" step="10" value="0" id="acc_padding_field"><span id="acc_padding_amount"></span><br>
   <label for="acc_width_field">Width</label>
-    <input type="range" oninput="genAccWidth(this.value), genAccCode()" min="0"  max="1000" step="100" value="0" id="acc_width_field"><span id="acc_width_amount"></span><br>
+    <input type="range" class="range_field_short" oninput="genAccWidth(this.value), genAccCode()" min="0"  max="1000" step="100" value="0" id="acc_width_field"><span id="acc_width_amount"></span><br>
   <input type="text" id="acc_id_field" oninput="genAccCode()" placeholder="Accordion set ID">
   <div id="acc_fields"></div>
 </fieldset>
@@ -356,7 +333,7 @@ function copyAccCode() {
 
 <!-- TABS -->
 
-<div class="flex-container box_sets">
+<div class="flex-container box_set">
 <fieldset>
 <legend class="legend">Tabs</legend>
   <label class="radio-inline" for="tab_radio_tab">Tab</label>
@@ -370,7 +347,7 @@ function copyAccCode() {
   <label for="tab_show_check">Show contents initially</label>
     <input type="checkbox" oninput="genTabCode()"id="tab_show_check"><br>
   <input type="text" oninput="genTabCode()" id="tab_id_field" placeholder="Tab set ID"><br>
-  <div id="tab_fields" class="flex-container gen_fields"></div>
+  <div id="tab_fields" class="flex-container gen_field"></div>
 </fieldset>
 <div class="code_div"><button onclick="copyTabCode()">Copy code</button><br>
 <textarea class="code_box" id="tab_code_box"></textarea></div>
@@ -399,7 +376,7 @@ function genTabFields() {
       tabDropDiv.style.display = "block";
     let tabDropQuantLabels = document.createElement("LABEL");
       tabDropQuantLabels.setAttribute("for", `tab_drop_quantity${i}`);
-      tabDropQuantLabels.setAttribute("class", "sub_label");
+      tabDropQuantLabels.setAttribute("class", "sub_label_margin");
       tabDropQuantLabels.innerHTML = `dropdowns `;
       tabDropQuantLabels.style.float = "left";
     let tabDropQuantFields = document.createElement("INPUT");
@@ -569,7 +546,7 @@ function copyTabCode() {
 
 <!-- IMAGE TABS -->
 
-<div class="flex-container box_sets">
+<div class="flex-container box_set">
 <fieldset>
 <legend class="legend">Image Tabs</legend>
   <label for="imgtab_quantity">Quantity</label>
@@ -579,9 +556,9 @@ function copyTabCode() {
   <label for="imgtab_show_check">Show contents initially</label>
     <input type="checkbox" oninput="genImgTabCode()" id="imgtab_show_check"><br>
   <label for="imgtab_width_field">img width</label>
-    <input type="range" oninput="genImgTabWidth(this.value), genImgTabCode()" min="50" max="300" step="25" value="100" id="imgtab_width_field"><span id="imgtab_width_amount">100px</span><br>
+    <input type="range" class="range_field_short" oninput="genImgTabWidth(this.value), genImgTabCode()" min="50" max="300" step="25" value="100" id="imgtab_width_field"><span id="imgtab_width_amount">100px</span><br>
   <input type="text" oninput="genImgTabCode()" id="imgtab_id_field" placeholder="Tab set ID"><br>
-  <div id="imgtab_fields" class="flex-container gen_fields"></div>
+  <div id="imgtab_fields" class="flex-container gen_field"></div>
 </fieldset>
 <div class="code_div"><button onclick="copyImgTabCode()">Copy code</button><br>
 <textarea class="code_box" id="imgtab_code_box"></textarea></div>
@@ -613,7 +590,7 @@ function genImgTabFields() {
       imgtabSrcDiv.style.display = "block";
     let imgtabSrcLabels = document.createElement("LABEL");
       imgtabSrcLabels.setAttribute("for", `imgtab_src_field${i}`);
-      imgtabSrcLabels.setAttribute("class", "sub_label");
+      imgtabSrcLabels.setAttribute("class", "sub_label_margin");
       imgtabSrcLabels.innerHTML = "img src = ";
       imgtabSrcLabels.style.float = "left";
     let imgtabSrcFields = document.createElement("INPUT");
@@ -663,7 +640,7 @@ function genImgTabCode() {
       imgtabFadeValue = "";
     }
     if (document.getElementById(`imgtab_src_field${i}`).value == false) {
-      imgtabImgSrc = '"https://i.kym-cdn.com/photos/images/original/000/948/128/36c.gif"';
+      imgtabImgSrc = '"http://museum.anpanman-acm.co.jp/assets/images/language/top/sp_top_img_03.png"';
     } else {
       imgtabImgSrc = document.getElementById(`imgtab_src_field${i}`).value.trim();
     }
@@ -681,11 +658,8 @@ function genImgTabCode() {
   }
   document.getElementById("imgtab_code_box").value =
 `<!--Start tab set "${imgtabIdValue}"--><div id="${imgtabIdValue}" class="container">
-<!--Start tab head(s) "${imgtabIdValue}"--><div class="nav nav-pills">
-<!--Start tab head(s) flexbox "${imgtabIdValue}"-->
-<div class="flex-container" style="width: 100%; height: 100%; display: flex; justify-content: space-between;">
-${imgtabLoopHead}<!--End tab head(s) flexbox "${imgtabIdValue}"--></div>
-<!--End tab head(s) "${imgtabIdValue}"--></div>
+<!--Start tab head(s) "${imgtabIdValue}"--><div class="nav nav-pills flex-container" style="width: 100%; height: 100%; display: flex; justify-content: space-between;">
+${imgtabLoopHead}<!--End tab head(s) "${imgtabIdValue}"--></div>
 <!--Start tab body(s) "${imgtabIdValue}"--><div class="tab-content">
 ${imgtabLoopBody}<!--End tab body(s) "${imgtabIdValue}"--></div>
 <!--End tab set "${imgtabIdValue}"--></div>`;
@@ -703,7 +677,7 @@ function copyImgTabCode() {
 
 <!-- Carousel -->
 
-<div class="flex-container box_sets">
+<div class="flex-container box_set">
 <fieldset>
 <legend class="legend">Carousel</legend>
   <label for="car_quantity">Quantity</label>
@@ -718,7 +692,7 @@ function copyImgTabCode() {
       <option>White</option>
     </select>
   <span id="car_transparency"></span>
-  <div id="car_fields" class="flex-container gen_fields"></div>
+  <div id="car_fields" class="flex-container gen_field"></div>
 </fieldset>
 <div class="code_div"><button onclick="copyCarCode()">Copy code</button><br>
 <textarea class="code_box" id="car_code_box"></textarea></div>
@@ -735,7 +709,7 @@ function genCarTransp() {
   document.getElementById("car_transparency").innerHTML = "";
     let carTranspLabel = document.createElement("LABEL");
       carTranspLabel.setAttribute("for", "car_caption_transp");
-      carTranspLabel.setAttribute("class", "car_field_label");
+      carTranspLabel.setAttribute("class", "sub_label");
       carTranspLabel.innerHTML = "transparency";
     let carTranspField = document.createElement("INPUT");
       carTranspField.setAttribute("type", "number");
@@ -759,7 +733,7 @@ function genCarFields() {
       carDivFields.style.display = "block";
     let carSrcLabels = document.createElement("LABEL");
       carSrcLabels.setAttribute("for", `car_src_field${i}`);
-      carSrcLabels.setAttribute("class", "car_field_label");
+      carSrcLabels.setAttribute("class", "sub_label");
       carSrcLabels.innerHTML = "img src = ";
       carSrcLabels.style.float = "left";
     let carSrcFields = document.createElement("INPUT");
@@ -770,7 +744,7 @@ function genCarFields() {
       carSrcFields.style.float = "left";
     let carCaptionLabels = document.createElement("LABEL");
       carCaptionLabels.setAttribute("for", `car_caption_field${i}`);
-      carCaptionLabels.setAttribute("class", "car_field_label");
+      carCaptionLabels.setAttribute("class", "sub_label");
       carCaptionLabels.innerHTML = "caption";
       carCaptionLabels.style.float = "left";
     let carCaptionFields = document.createElement("INPUT");
@@ -790,7 +764,7 @@ function genCarCode() {
   let carSrcValue = "";
   let carActive = "";
   let carCaption = "";
-  let carCapBgColor = "";
+  let carCapColor = "";
   let carCapTransp = "";
   let carLoop = "";
   if (document.getElementById("car_caption_transp")) {
@@ -807,11 +781,11 @@ function genCarCode() {
     carInterval = document.getElementById("car_interval_field").value * 1000;
   }
   if (document.getElementById("car_caption_color").value == "Black") {
-    carCapBgColor = ` style="color: white; background-color: rgba(0, 0, 0, ${carCapTransp});"`;
+    carCapColor = ` style="color: white; background-color: rgba(0, 0, 0, ${carCapTransp}); text-shadow: none;"`;
   } else if (document.getElementById("car_caption_color").value == "White") {
-    carCapBgColor = ` style="color: black; background-color: rgba(255, 255, 255, ${carCapTransp});"`;
+    carCapColor = ` style="color: black; background-color: rgba(255, 255, 255, ${carCapTransp}); text-shadow: none;"`;
   } else {
-    carCapBgColor = "";
+    carCapColor = "";
   }
   for (let i = 1; i <= document.getElementById("car_quantity").value; i++) {
     if (i == 1) {
@@ -828,7 +802,7 @@ function genCarCode() {
       carCaption =
 `
 <!--Start car "${carIdValue}" slide ${i} caption--><div class="carousel-caption">
-<table style="width: 100%;"><tr><td${carCapBgColor}>
+<table style="width: 100%;"><tr><td${carCapColor}>
 <h3>Slide ${i} Caption</h3><p>Content for Slide ${i} Caption</p></td></tr></table>
 <!--End car "${carIdValue}" slide ${i} caption--></div>`;
     } else {
