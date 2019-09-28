@@ -342,6 +342,8 @@ function copyAccCode() {
     <input type="radio" oninput="genTabCode()" name="tab_radio" id="tab_radio_pill"><br>
   <label for="tab_quantity">Quantity</label>
     <input type="number" oninput="genTabFields(), genTabCode()" min="1" max="20" id="tab_quantity" value="1"><span class="asterisk">*</span><br>
+  <label for="tab_justified_check">Justified</label>
+    <input type="checkbox" oninput="genTabCode()"id="tab_justified_check"><br>
   <label for="tab_fade_check">Fade transition</label>
     <input type="checkbox" oninput="genTabCode()"id="tab_fade_check"><br>
   <label for="tab_show_check">Show contents initially</label>
@@ -425,6 +427,7 @@ function genTabCode() {
   let tabItemIdValue = "";
   let tabDropIdValue = "";
   let tabDropQuantity = "";
+  let tabJustifiedValue = "";
   let tabBody = "";
   let tabLoopHead = "";
   let tabLoopBody = "";
@@ -439,6 +442,9 @@ function genTabCode() {
   }
   if (tabIdValue == false) {
     tabIdValue = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5);
+  }
+  if (tab_justified_check.checked == true) {
+    tabJustifiedValue = ' flex-container" style="width: 100%; height: 100%; display: flex; justify-content: space-between;';
   }
   for (let i = 1; i <= document.getElementById("tab_quantity").value; i++) {
     tabNameValue = document.getElementById(`tab_name_field${i}`).value.trim();
@@ -527,7 +533,7 @@ function genTabCode() {
   }
   document.getElementById("tab_code_box").value =
 `<!--Start ${tabRadioValue} set "${tabIdValue}"--><div id="${tabIdValue}" class="container">
-<!--Start ${tabRadioValue} head(s) "${tabIdValue}"--><ul class="nav nav-${tabRadioValue}s">
+<!--Start ${tabRadioValue} head(s) "${tabIdValue}"--><ul class="nav nav-${tabRadioValue}s${tabJustifiedValue}">
 ${tabLoopHead}<!--End ${tabRadioValue} head(s) "${tabIdValue}"--></ul>
 <!--Start ${tabRadioValue} body(s) "${tabIdValue}"--><div class="tab-content">
 ${tabBody}<!--End ${tabRadioValue} body(s) "${tabIdValue}"--></div>
@@ -646,8 +652,8 @@ function genImgTabCode() {
     }
     imgtabLoopHead +=
 `<!--Start tab ${i} head "${imgtabItemIdValue}"--><div data-toggle="pill" data-target="#${imgtabItemIdValue}">
-<table><tr><td style="text-align: center;">${imgtabNameValue}</td></tr>
-<tr><td style="text-align: center;"><img src=${imgtabImgSrc} width="${imgtabImgWidth}"></td></tr></table>
+<table style="text-align: center;"><tr><td>${imgtabNameValue}</td></tr>
+<tr><td><img src=${imgtabImgSrc} width="${imgtabImgWidth}"></td></tr></table>
 <!--End tab ${i} head "${imgtabItemIdValue}"--></div>
 `;
     imgtabLoopBody +=
