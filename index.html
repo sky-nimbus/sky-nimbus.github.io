@@ -223,12 +223,13 @@ function copyBtnCode() {
   <label for="acc_color_field">Color</label>
     <select class="form-control" id="acc_color_field" oninput="genAccCode()">
       <option>Gray</option>
-      <option>White</option>
+      <option>Blue</option>
+      <option>Sage</option>
+      <option>Amber</option>
+      <option>Red</option>
     </select><br>
-  <label for="acc_padding_field">Padding</label>
-    <input type="range" class="range_field_short" oninput="genAccPadding(this.value), genAccCode()" min="0"  max="50" step="10" value="0" id="acc_padding_field"><span id="acc_padding_amount"></span><br>
   <label for="acc_width_field">Width</label>
-    <input type="range" class="range_field_short" oninput="genAccWidth(this.value), genAccCode()" min="0"  max="1000" step="100" value="0" id="acc_width_field"><span id="acc_width_amount"></span><br>
+    <input type="range" class="range_field_short" oninput="genAccWidth(this.value), genAccCode()" min="0"  max="1000" step="100" value="0" id="acc_width_field" style="margin-right: 5px;"><span id="acc_width_amount"></span><br>
   <input type="text" id="acc_id_field" oninput="genAccCode()" placeholder="Accordion set ID">
   <div id="acc_fields"></div>
 </fieldset>
@@ -241,12 +242,6 @@ function genAccWidth(val) {
   document.getElementById("acc_width_amount").innerHTML = val + "px";
   if (document.getElementById("acc_width_field").value == 0) {
     document.getElementById("acc_width_amount").innerHTML = "";
-  }
-}
-function genAccPadding(val) {
-  document.getElementById("acc_padding_amount").innerHTML = val + "px";
-  if (document.getElementById("acc_padding_field").value == 0) {
-    document.getElementById("acc_padding_amount").innerHTML = "";
   }
 }
 function genAccFields() {
@@ -273,21 +268,32 @@ function genAccFields() {
   }
 }
 function genAccCode() {
+  let accColor = "";
+  switch (document.getElementById("acc_color_field").value) {
+    case "Gray":
+      accColor = "#eeeeee";
+      break;
+    case "Blue":
+      accColor = "#dce6f1";
+      break;
+    case "Sage":
+      accColor = "#d7ebce";
+      break;
+    case "Amber":
+      accColor = "#fce2ba";
+      break;
+    case "Red":
+      accColor = "#fadfd8";
+      break;
+  }
+  let accColorString = ` background-color: ${accColor};`;
   let accWidthString = ` style="width: ${document.getElementById("acc_width_field").value}px;"`;
-  let accPaddingString = ` style="padding: ${document.getElementById("acc_padding_field").value}px;"`;
   let accIdValue = document.getElementById("acc_id_field").value.replace(/ /g, '');
   let accItemIdValue = "";
   let accLoop = "";
   let accNameValue = "";
-  let accColor = ""
-  if (document.getElementById("acc_color_field").value == "Gray") {
-      accColor = " panel-default";
-  }
   if (document.getElementById("acc_width_field").value == 0) {
     accWidthString = "";
-  }
-  if (document.getElementById("acc_padding_field").value == 0) {
-    accPaddingString = "";
   }
   if (accIdValue == false) {
     accIdValue = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5);
@@ -302,22 +308,20 @@ function genAccCode() {
       accItemIdValue = `${accIdValue}-${i}`;
     }
     accLoop +=
-`<!--Start acc item ${i} "${accItemIdValue}"--><div class="panel${accColor}"${accWidthString}>
-<!--Start acc item ${i} head "${accItemIdValue}"--><div class="panel-heading">
-<table><tr><td>
-<a data-toggle="collapse" data-parent="#${accIdValue}" data-target="#${accItemIdValue}">
+`<!--Start acc item ${i} head "${accItemIdValue}"--><table style="margin-top: 5px;">
+<tr><td>
+<a class="list-group-item" style="padding: 0px 10px 0px 10px; border: 1px solid #dddddd;${accColorString}" data-toggle="collapse" data-parent="#${accIdValue}" data-target="#${accItemIdValue}">
 ${accNameValue}</a>
-</td></tr></table>
-<!--End acc item ${i} head "${accItemIdValue}"--></div>
-<!--Start acc item ${i} body "${accItemIdValue}"-->
-<div id="${accItemIdValue}" class="panel-collapse collapse"><div class="panel-body"${accPaddingString}>
-<table><tr><td><p>Content for ${accNameValue}</p></td></tr></table></div>
+</td></tr>
+<!--End acc item ${i} head "${accItemIdValue}"--></table>
+<!--Start acc item ${i} body "${accItemIdValue}"--><div id="${accItemIdValue}" class="collapse">
+<div class="list-group-item" style="border: 1px solid #dddddd; padding: 10px;">
+<table><tr><td>Content for ${accNameValue}</td></tr></table></div>
 <!--End acc item ${i} body "${accItemIdValue}"--></div>
-<!--End acc item ${i} "${accItemIdValue}"--></div>
 `;
   }
   document.getElementById("acc_code_box").value =
-`<!--Start acc set "${accIdValue}"--><div class="panel-group" id="${accIdValue}">
+`<!--Start acc set "${accIdValue}"--><div class="panel list-group" id="${accIdValue}"${accWidthString}>
 ${accLoop}<!--End acc set "${accIdValue}"--></div>`;
 }
 function copyAccCode() {
