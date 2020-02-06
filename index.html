@@ -51,173 +51,15 @@ input[type="checkbox"] {
 </style>
 </head>
 
-<body onload="genAccFields(), genTabFields(), genDropFields(), genCarFields()">
+<body onload="genAccFields(), genAcc2Fields(), genTabFields(), genDropFields(), genCarFields()">
 
 
 
-<!-- TABLE -->
-
-<div class="flex-container box_set">
-<fieldset>
-<legend class="legend">Table</legend>
-  <label for="tbl_regular_check">Regular</label>
-    <input type="checkbox" oninput="chkTblReg(), genTblCode()" name="tbl_class" id="tbl_regular_check">
-  <label for="tbl_combined_check">Combined</label>
-    <input type="checkbox" oninput="chkTblCom(), genTblCode()" name="tbl_class" id="tbl_combined_check"><br><hr>
-  <label for="tbl_bordered_check">Bordered</label>
-    <input type="checkbox" oninput="genTblCode()" name="tbl_class" id="tbl_bordered_check">
-  <label for="tbl_striped_check">Striped</label>
-    <input type="checkbox" oninput="genTblCode()" name="tbl_class" id="tbl_striped_check"><br>
-  <label for="tbl_hover_check">Hover</label>
-    <input type="checkbox" oninput="genTblCode()" name="tbl_class" id="tbl_hover_check">
-  <label for="tbl_condensed_check">Condensed</label>
-    <input type="checkbox" oninput="genTblCode()" name="tbl_class" id="tbl_condensed_check"><br><hr>
-  <label for="tbl_outer_check">Outer border</label>
-    <input type="checkbox" oninput="genTblCode()" id="tbl_outer_check"><br>
-</fieldset>
-<div class="code_div"><button onclick="copyTblCode()">Copy code</button><br>
-<textarea class="code_box" id="tbl_code_box"></textarea></div>
-</div>
-
-<script>
-function chkTblReg() {
-  if (tbl_regular_check.checked == true) {
-    tbl_combined_check.checked = false;
-    tbl_bordered_check.checked = false;
-    tbl_striped_check.checked = false;
-    tbl_hover_check.checked = false;
-    tbl_condensed_check.checked = false;
-  }
-}
-function chkTblCom() {
-  if (tbl_combined_check.checked == true) {
-    tbl_regular_check.checked = false;
-    tbl_bordered_check.checked = true;
-    tbl_striped_check.checked = true;
-    tbl_hover_check.checked = true;
-    tbl_condensed_check.checked = true;
-  }
-}
-function genTblCode() {
-  let tblClass = "";
-  let tblStyle = "";
-  if (tbl_bordered_check.checked == true) {
-    tblClass += " table-bordered";
-  }
-  if (tbl_striped_check.checked == true) {
-    tblClass += " table-striped";
-  }
-  if (tbl_hover_check.checked == true) {
-    tblClass += " table-hover";
-  }
-  if (tbl_condensed_check.checked == true) {
-    tblClass += " table-condensed";
-  }
-  if (tbl_bordered_check.checked || tbl_striped_check.checked || tbl_hover_check.checked || tbl_condensed_check.checked == false) {
-    tbl_combined_check.checked = false;
-  }
-  if (tbl_bordered_check.checked || tbl_striped_check.checked || tbl_hover_check.checked || tbl_condensed_check.checked == true) {
-    tbl_regular_check.checked = false;
-  }
-  if (tbl_bordered_check.checked == false && tbl_striped_check.checked == false && tbl_hover_check.checked == false && tbl_condensed_check.checked == false) {
-    tbl_regular_check.checked = true;
-  }
-  if (tbl_bordered_check.checked && tbl_striped_check.checked && tbl_hover_check.checked && tbl_condensed_check.checked == true) {
-    tbl_combined_check.checked = true;
-  }
-  if (tbl_outer_check.checked == true) {
-    tblStyle = ' style="border: 2px;"';
-  } else {
-    tblStyle = "";
-  }  
-  document.getElementById("tbl_code_box").value = `<table class="table${tblClass}"${tblStyle}>`;
-}
-function copyTblCode() {
-  const tblCopyText = document.getElementById("tbl_code_box");
-  tblCopyText.select();
-  tblCopyText.setSelectionRange(0, 99999);
-  document.execCommand("copy");
-}
-</script>
-<br>
-
-
-
-<!-- BUTTON -->
+<!-- ACCORDION 1 -->
 
 <div class="flex-container box_set">
 <fieldset>
-<legend class="legend">Button</legend>
-  <input type="text" id="btn_id_field" oninput="genBtnCode()" placeholder="Button ID">
-  <input type="text" id="btn_name_field" oninput="genBtnCode()" placeholder="Button name"><br>
-  <label for="btn_color_field">Color</label>
-    <select class="form-control" id="btn_color_field" oninput="genBtnCode()">
-      <option>Blue</option>
-      <option>Green</option>
-      <option>Orange</option>
-      <option>Red</option>
-      <option>Sky</option>
-      <option>White</option>
-    </select>
-</fieldset>
-<div class="code_div"><button onclick="copyBtnCode()">Copy code</button><br>
-<textarea class="code_box" id="btn_code_box"></textarea></div>
-</div>
-
-<script>
-function genBtnCode() {
-  let btnNameValue = document.getElementById("btn_name_field").value.trim() || "Button";
-  let btnIdValue = document.getElementById("btn_id_field").value.replace(/ /g, '');
-  let btnColor = "";
-  if (btnIdValue == false) {
-    btnIdValue = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5);
-  }
-  switch (document.getElementById("btn_color_field").value) {
-    case "Blue":
-      btnColor = "btn-primary";
-      break;
-    case "Green":
-      btnColor = "btn-success";
-      break;
-    case "Orange":
-      btnColor = "btn-warning";
-      break;
-    case "Red":
-      btnColor = "btn-danger";
-      break;
-    case "Sky":
-      btnColor = "btn-info";
-      break;
-    case "White":
-      btnColor = "btn-default";
-      break;
-  }
-  document.getElementById("btn_code_box").value =
-`<!--Start btn head "${btnIdValue}"-->
-<button type="button" class="btn ${btnColor}" data-toggle="collapse" data-target="#${btnIdValue}">
-<table><tr><td>${btnNameValue}</td></tr></table>
-<!--End btn head "${btnIdValue}"--></button>
-<!--Start btn body "${btnIdValue}"-->
-<div id="${btnIdValue}" class="collapse">
-<table><tr><td>Content for ${btnNameValue}</td></tr></table>
-<!--End btn body "${btnIdValue}"--></div>`;
-}
-function copyBtnCode() {
-  const btnCopyText = document.getElementById("btn_code_box");
-  btnCopyText.select();
-  btnCopyText.setSelectionRange(0, 99999);
-  document.execCommand("copy");
-}
-</script>
-<br>
-
-
-
-<!-- ACCORDION -->
-
-<div class="flex-container box_set">
-<fieldset>
-<legend class="legend">Accordion</legend>
+<legend class="legend">Accordion 1 (clickable panels)</legend>
   <label for="acc_quantity">Quantity</label>
     <input type="number" oninput="genAccFields(), genAccCode()" min="1" max="20" id="acc_quantity" value="1"><span class="asterisk">*</span><br>
   <label for="acc_color_field">Color</label>
@@ -340,6 +182,124 @@ function copyAccCode() {
   const accCopyText = document.getElementById("acc_code_box");
   accCopyText.select();
   accCopyText.setSelectionRange(0, 99999);
+  document.execCommand("copy");
+}
+</script>
+<br>
+
+
+
+<!-- ACCORDION 2 -->
+
+<div class="flex-container box_set">
+<fieldset>
+<legend class="legend">Accordion 2 (clickable text only)</legend>
+  <label for="acc2_quantity">Quantity</label>
+    <input type="number" oninput="genAcc2Fields(), genAcc2Code()" min="1" max="20" id="acc2_quantity" value="1"><span class="asterisk">*</span><br>
+  <label for="acc2_color_field">Color</label>
+    <select class="form-control" id="acc2_color_field" oninput="genAcc2Code()">
+      <option>Gray</option>
+      <option>White</option>
+    </select><br>
+  <label for="acc2_padding_field">Padding</label>
+    <input type="range" class="range_field_short" oninput="genAcc2Padding(this.value), genAcc2Code()" min="0"  max="50" step="10" value="0" id="acc2_padding_field"><span id="acc2_padding_amount"></span><br>
+  <label for="acc2_width_field">Width</label>
+    <input type="range" class="range_field_short" oninput="genAcc2Width(this.value), genAcc2Code()" min="0"  max="1000" step="100" value="0" id="acc2_width_field"><span id="acc2_width_amount"></span><br>
+  <input type="text" id="acc2_id_field" oninput="genAcc2Code()" placeholder="Accordion set ID">
+  <div id="acc2_fields"></div>
+</fieldset>
+<div class="code_div"><button onclick="copyAcc2Code()">Copy code</button><br>
+<textarea class="code_box" id="acc2_code_box"></textarea></div>
+</div>
+
+<script>
+function genAcc2Width(val) {
+  document.getElementById("acc2_width_amount").innerHTML = val + "px";
+  if (document.getElementById("acc2_width_field").value == 0) {
+    document.getElementById("acc2_width_amount").innerHTML = "";
+  }
+}
+function genAcc2Padding(val) {
+  document.getElementById("acc2_padding_amount").innerHTML = val + "px";
+  if (document.getElementById("acc2_padding_field").value == 0) {
+    document.getElementById("acc2_padding_amount").innerHTML = "";
+  }
+}
+function genAcc2Fields() {
+  document.getElementById("acc2_fields").innerHTML = "";
+  document.getElementById("acc2_id_field").value = "";
+  for (let i = 1; i <= document.getElementById("acc2_quantity").value; i++) {
+    let acc2DivFields = document.createElement("DIV");
+      acc2DivFields.setAttribute("id", `acc2_div_field${i}`);
+      acc2DivFields.style.display = "block";
+    let acc2IdFields = document.createElement("INPUT");
+      acc2IdFields.setAttribute("type", "text");
+      acc2IdFields.setAttribute("id", `acc2_id_field${i}`);
+      acc2IdFields.setAttribute("placeholder", `Accordion item ${i} ID`);
+      acc2IdFields.setAttribute("oninput", "genAcc2Code()");
+      acc2IdFields.style.float = "left";
+    let acc2NameFields = document.createElement("INPUT");
+      acc2NameFields.setAttribute("type", "text");
+      acc2NameFields.setAttribute("id", `acc2_name_field${i}`);
+      acc2NameFields.setAttribute("placeholder", `Accordion item ${i} name`);
+      acc2NameFields.setAttribute("oninput", "genAcc2Code()");
+    acc2DivFields.appendChild(acc2IdFields);
+    acc2DivFields.appendChild(acc2NameFields);
+    document.getElementById("acc2_fields").appendChild(acc2DivFields);
+  }
+}
+function genAcc2Code() {
+  let acc2WidthString = ` style="width: ${document.getElementById("acc2_width_field").value}px;"`;
+  let acc2PaddingString = ` style="padding: ${document.getElementById("acc2_padding_field").value}px;"`;
+  let acc2IdValue = document.getElementById("acc2_id_field").value.replace(/ /g, '');
+  let acc2ItemIdValue = "";
+  let acc2Loop = "";
+  let acc2NameValue = "";
+  let acc2Color = ""
+  if (document.getElementById("acc2_color_field").value == "Gray") {
+      acc2Color = " panel-default";
+  }
+  if (document.getElementById("acc2_width_field").value == 0) {
+    acc2WidthString = "";
+  }
+  if (document.getElementById("acc2_padding_field").value == 0) {
+    acc2PaddingString = "";
+  }
+  if (acc2IdValue == false) {
+    acc2IdValue = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5);
+  }
+  for (let i = 1; i <= document.getElementById("acc2_quantity").value; i++) {
+    acc2NameValue = document.getElementById(`acc2_name_field${i}`).value.trim();
+    acc2ItemIdValue = document.getElementById(`acc2_id_field${i}`).value.trim();
+    if (acc2NameValue == false) {
+      acc2NameValue = `Accordion item ${i}`;
+    }
+    if (acc2ItemIdValue == false) {
+      acc2ItemIdValue = `${acc2IdValue}-${i}`;
+    }
+    acc2Loop +=
+`<!--Start acc item ${i} "${acc2ItemIdValue}"--><div class="panel${acc2Color}"${acc2WidthString}>
+<!--Start acc item ${i} head "${acc2ItemIdValue}"--><div class="panel-heading">
+<table><tr><td>
+<a data-toggle="collapse" data-parent="#${acc2IdValue}" data-target="#${acc2ItemIdValue}">
+${acc2NameValue}</a>
+</td></tr></table>
+<!--End acc item ${i} head "${acc2ItemIdValue}"--></div>
+<!--Start acc item ${i} body "${acc2ItemIdValue}"-->
+<div id="${acc2ItemIdValue}" class="panel-collapse collapse"><div class="panel-body"${acc2PaddingString}>
+<table><tr><td><p>Content for ${acc2NameValue}</p></td></tr></table></div>
+<!--End acc item ${i} body "${acc2ItemIdValue}"--></div>
+<!--End acc item ${i} "${acc2ItemIdValue}"--></div>
+`;
+  }
+  document.getElementById("acc2_code_box").value =
+`<!--Start acc set "${acc2IdValue}"--><div class="panel-group" id="${acc2IdValue}">
+${acc2Loop}<!--End acc set "${acc2IdValue}"--></div>`;
+}
+function copyAcc2Code() {
+  const acc2CopyText = document.getElementById("acc2_code_box");
+  acc2CopyText.select();
+  acc2CopyText.setSelectionRange(0, 99999);
   document.execCommand("copy");
 }
 </script>
