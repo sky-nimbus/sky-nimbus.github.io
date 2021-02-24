@@ -164,7 +164,7 @@ function genAccCode() {
     accLoop +=
 `<!--Start acc item ${i} head "${accItemIdValue}"--><table style="margin-top: 5px;${accWidthHeadString}">
 <tr><td>
-<a class="list-group-item" style="padding: 5px 10px; border: 1px solid #dddddd;${accColorString}" data-toggle="collapse" data-parent="#${accIdValue}" data-target="#${accItemIdValue}">
+<a class="list-group-item" style="padding: 10px 10px; color: #0000ff; border: 1px solid #dddddd;${accColorString}" data-toggle="collapse" data-parent="#${accIdValue}" data-target="#${accItemIdValue}">
 ${accNameValue}</a>
 </td></tr>
 <!--End acc item ${i} head "${accItemIdValue}"--></table>
@@ -196,11 +196,6 @@ function copyAccCode() {
 <legend class="legend">Accordion 2 (clickable text only)</legend>
   <label for="acc2_quantity">Quantity</label>
     <input type="number" oninput="genAcc2Fields(), genAcc2Code()" min="1" max="20" id="acc2_quantity" value="1"><span class="asterisk">*</span><br>
-  <label for="acc2_color_field">Color</label>
-    <select class="form-control" id="acc2_color_field" oninput="genAcc2Code()">
-      <option>Gray</option>
-      <option>White</option>
-    </select><br>
   <label for="acc2_padding_field">Padding</label>
     <input type="range" class="range_field_short" oninput="genAcc2Padding(this.value), genAcc2Code()" min="0"  max="50" step="10" value="0" id="acc2_padding_field"><span id="acc2_padding_amount"></span><br>
   <label for="acc2_width_field">Width</label>
@@ -255,10 +250,6 @@ function genAcc2Code() {
   let acc2ItemIdValue = "";
   let acc2Loop = "";
   let acc2NameValue = "";
-  let acc2Color = ""
-  if (document.getElementById("acc2_color_field").value == "Gray") {
-      acc2Color = " panel-default";
-  }
   if (document.getElementById("acc2_width_field").value == 0) {
     acc2WidthString = "";
   }
@@ -278,7 +269,7 @@ function genAcc2Code() {
       acc2ItemIdValue = `${acc2IdValue}-${i}`;
     }
     acc2Loop +=
-`<!--Start acc item ${i} "${acc2ItemIdValue}"--><div class="panel${acc2Color}"${acc2WidthString}>
+`<!--Start acc item ${i} "${acc2ItemIdValue}"--><div class="panel panel-default"${acc2WidthString}>
 <!--Start acc item ${i} head "${acc2ItemIdValue}"--><div class="panel-heading">
 <table><tr><td>
 <a data-toggle="collapse" data-parent="#${acc2IdValue}" data-target="#${acc2ItemIdValue}">
@@ -287,7 +278,7 @@ ${acc2NameValue}</a>
 <!--End acc item ${i} head "${acc2ItemIdValue}"--></div>
 <!--Start acc item ${i} body "${acc2ItemIdValue}"-->
 <div id="${acc2ItemIdValue}" class="panel-collapse collapse"><div class="panel-body"${acc2PaddingString}>
-<table><tr><td><p>Content for ${acc2NameValue}</p></td></tr></table></div>
+<table><tr><td>Content for ${acc2NameValue}</td></tr></table></div>
 <!--End acc item ${i} body "${acc2ItemIdValue}"--></div>
 <!--End acc item ${i} "${acc2ItemIdValue}"--></div>
 `;
@@ -312,6 +303,10 @@ function copyAcc2Code() {
 <div class="flex-container box_set">
 <fieldset>
 <legend class="legend">Tabs</legend>
+  <span style="color: gray;">
+  <span style="font-style: oblique;">Note:</span> IDs must not contain any spaces.<br>
+  <span style="font-style: oblique;">Note:</span> Justify + dropdowns don't work together.<br><br>
+  </span>
   <label for="tab_quantity">Quantity</label>
     <input type="number" oninput="genTabFields(), genTabCode()" min="1" max="20" id="tab_quantity" value="1"><span class="asterisk">*</span><br>
   <label class="radio-inline" for="tab_radio_tab">Tab</label>
