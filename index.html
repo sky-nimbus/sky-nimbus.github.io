@@ -172,10 +172,10 @@ function genAcc2Code() {
     }
     acc2Loop +=
 `<!--Start acc item ${i} "${acc2ItemIdValue}"--><div class="panel panel-default" style="box-shadow: none;">
-<!--Start acc item ${i} head "${acc2ItemIdValue}"-->
+<!--Start acc item ${i} head "${acc2ItemIdValue}"--><table><tr><td>
 <a class="btn${acc2ColorString}" style="width: 100%; text-align: left;" data-toggle="collapse" data-parent="#${acc2IdValue}" data-target="#${acc2ItemIdValue}">
 ${acc2NameValue}
-<!--End acc item ${i} head "${acc2ItemIdValue}"--></a>
+<!--End acc item ${i} head "${acc2ItemIdValue}"--></a></td></tr></table>
 <!--Start acc item ${i} body "${acc2ItemIdValue}"-->
 <div id="${acc2ItemIdValue}" class="panel-collapse collapse"><div class="panel-body"${acc2PaddingString}>
 <table><tr><td>Content for ${acc2NameValue}</td></tr></table></div>
