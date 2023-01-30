@@ -3,6 +3,7 @@
 
 <head>
 <style>
+
 body {
   font-family: sans-serif;
   font-size: small;
@@ -32,6 +33,18 @@ input[type="checkbox"] {
 .note {
   color: gray;
   font-size: x-small;
+  margin-bottom: -8px;
+}
+
+.instructions {
+  max-width: 400px;
+  min-width: 400px;
+  margin-left: 20px;
+  padding-top: 10px;
+}
+
+.instruction-heading {
+  color: forestgreen;
   margin-bottom: -8px;
 }
 
@@ -88,6 +101,7 @@ input[type="checkbox"] {
   display: flex;
   margin-right: 20px;
 }
+
 </style>
 </head>
 
@@ -130,7 +144,7 @@ input[type="checkbox"] {
     <label for="ssj_textdecor_check" class="p_select"
       >Text Colors & Underlines</label
     >
-    <input type="checkbox" class="p_select" id="ssj_textdecor_check" />
+    <input type="checkbox" class="p_select" id="ssj_textdecor_check" checked />
     <label for="ssj_headings_check" class="p_heading">Heading Styles</label>
     <input type="checkbox" class="p_heading" id="ssj_headings_check" />
     <br />
@@ -311,6 +325,31 @@ input[type="checkbox"] {
       style="width: 300px; height: 150px; background-color: #ebebeb"
       readonly
     ></textarea>
+  </div>
+
+  <!-- Instructions -->
+  <div class="instructions">
+    <div class="instruction-heading"><strong>Instructions</strong></div>
+    <br />
+    1. &nbsp;Copy an article's source code from ServiceNow.<br />
+    2. &nbsp;Paste the code into the white box on the left.<br />
+    3. &nbsp;Select any of the dropdowns or checkboxes in the 'Stylizer' box.<br />
+    4. &nbsp;Select any of the <strong>Paragraphs</strong>, <strong>Lists</strong>, or <strong>Tables</strong> buttons.<br />
+    5. &nbsp;Copy the code from the grey box.<br />
+    6. &nbsp;Paste the code back into the article in ServiceNow.<br /><br />
+    <div class="instruction-heading"><strong>Tip</strong></div>
+    <br />
+    Before step 1, review the article contents in ServiceNow and apply <strong>headings</strong> or <strong>bullet points</strong> where appropriate.<br /><br />
+    <hr />
+    <br />
+    <div class="instruction-heading"><strong>Bugs</strong></div>
+    <br />
+    Bugs in the program can manifest in two ways:<br />
+    <ol style="list-style-type: upper-alpha; margin-top: 5px; margin-bottom: 5px;">
+    <li>Selecting one of the Paragraphs, Lists, or Tables buttons fails to modify the code in the gray box.</li>
+    <li>Selecting one of the Paragraphs, Lists, or Tables buttons freezes this page. If this happens, refresh the page.</li>
+    </ol>
+    For either case, it would be helpful to select <strong>Report a bug</strong>.
   </div>
 </div>
 
@@ -3298,7 +3337,7 @@ function ssjAddAnchorType(i, j) {
     anchors.Type = "acc_tab";
   } else if (anchors.Id != "" && anchors.Url == "") {
     anchors.Type = "anchor";
-  } else {
+  } else if (anchors.Url != "") {
     anchors.Type = "hyperlink";
   }
 }
@@ -3494,6 +3533,8 @@ function ssjShiftInline(array, i) {
     );
     array[i] = array[i].replaceAll("<br />" + close[x], close[x] + "<br />");
   }
+  array[i] = array[i].replaceAll(":</strong> ", ":</strong>&nbsp; ");
+  array[i] = array[i].replaceAll(":</em> ", ":</em>&nbsp; ");
 }
 // LOOP Shift or remove inline tags around media
 function ssjShiftMedia(array, i) {
