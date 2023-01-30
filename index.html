@@ -3805,49 +3805,49 @@ function genTabFields() {
   document.getElementById("tab_id_field").value = "";
   for (let i = 1; i <= document.getElementById("tab_quantity").value; i++) {
     let tabDiv = document.createElement("DIV");
-      tabDiv.style.display = "block";
+    tabDiv.style.display = "block";
     let tabIdFields = document.createElement("INPUT");
-      tabIdFields.setAttribute("type", "text");
-      tabIdFields.setAttribute("id", `tab_id_field${i}`);
-      tabIdFields.setAttribute("placeholder", `Tab ${i} ID`);
-      tabIdFields.setAttribute("oninput", "genTabCode()");
-      tabIdFields.style.float = "left";
+    tabIdFields.setAttribute("type", "text");
+    tabIdFields.setAttribute("id", `tab_id_field${i}`);
+    tabIdFields.setAttribute("placeholder", `Tab ${i} ID`);
+    tabIdFields.setAttribute("oninput", "genTabCode()");
+    tabIdFields.style.float = "left";
     let tabNameFields = document.createElement("INPUT");
-      tabNameFields.setAttribute("type", "text");
-      tabNameFields.setAttribute("id", `tab_name_field${i}`);
-      tabNameFields.setAttribute("placeholder", `Tab ${i} name`);
-      tabNameFields.setAttribute("oninput", "genTabCode()");
-      tabNameFields.style.float = "left";
+    tabNameFields.setAttribute("type", "text");
+    tabNameFields.setAttribute("id", `tab_name_field${i}`);
+    tabNameFields.setAttribute("placeholder", `Tab ${i} name`);
+    tabNameFields.setAttribute("oninput", "genTabCode()");
+    tabNameFields.style.float = "left";
     let tabImgDiv = document.createElement("DIV");
-      tabImgDiv.style.display = "block";
+    tabImgDiv.style.display = "block";
     let tabImgSrcLabels = document.createElement("LABEL");
-      tabImgSrcLabels.setAttribute("for", `tab_imgsrc_field${i}`);
-      tabImgSrcLabels.setAttribute("class", "sub_label_margin");
-      tabImgSrcLabels.innerHTML = "img src = ";
-      tabImgSrcLabels.style.float = "left";
+    tabImgSrcLabels.setAttribute("for", `tab_imgsrc_field${i}`);
+    tabImgSrcLabels.setAttribute("class", "sub_label_margin");
+    tabImgSrcLabels.innerHTML = "img src = ";
+    tabImgSrcLabels.style.float = "left";
     let tabImgSrcFields = document.createElement("INPUT");
-      tabImgSrcFields.setAttribute("type", "text");
-      tabImgSrcFields.setAttribute("id", `tab_imgsrc_field${i}`);
-      tabImgSrcFields.setAttribute("placeholder", `Tab ${i} image source`);
-      tabImgSrcFields.setAttribute("oninput", "genTabCode()");
-      tabImgSrcFields.style.float = "left";
+    tabImgSrcFields.setAttribute("type", "text");
+    tabImgSrcFields.setAttribute("id", `tab_imgsrc_field${i}`);
+    tabImgSrcFields.setAttribute("placeholder", `Tab ${i} image source`);
+    tabImgSrcFields.setAttribute("oninput", "genTabCode()");
+    tabImgSrcFields.style.float = "left";
     let tabDropDiv = document.createElement("DIV");
-      tabDropDiv.style.display = "block";
+    tabDropDiv.style.display = "block";
     let tabDropQuantLabels = document.createElement("LABEL");
-      tabDropQuantLabels.setAttribute("for", `tab_drop_quantity${i}`);
-      tabDropQuantLabels.setAttribute("class", "sub_label_margin");
-      tabDropQuantLabels.innerHTML = `dropdowns `;
-      tabDropQuantLabels.style.float = "left";
+    tabDropQuantLabels.setAttribute("for", `tab_drop_quantity${i}`);
+    tabDropQuantLabels.setAttribute("class", "sub_label_margin");
+    tabDropQuantLabels.innerHTML = `dropdowns `;
+    tabDropQuantLabels.style.float = "left";
     let tabDropQuantFields = document.createElement("INPUT");
-      tabDropQuantFields.setAttribute("type", "number");
-      tabDropQuantFields.setAttribute("id", `tab_drop_quantity${i}`);
-      tabDropQuantFields.setAttribute("min", "0");
-      tabDropQuantFields.setAttribute("max", "20");
-      tabDropQuantFields.setAttribute("oninput", "genDropFields(), genTabCode()");
-      tabDropQuantFields.style.float = "left";
+    tabDropQuantFields.setAttribute("type", "number");
+    tabDropQuantFields.setAttribute("id", `tab_drop_quantity${i}`);
+    tabDropQuantFields.setAttribute("min", "0");
+    tabDropQuantFields.setAttribute("max", "20");
+    tabDropQuantFields.setAttribute("oninput", "genDropFields(), genTabCode()");
+    tabDropQuantFields.style.float = "left";
     let tabDropDivFields = document.createElement("DIV");
-      tabDropDivFields.setAttribute("id", `tab_drop_div_field${i}`);
-      tabDropDivFields.style.float = "left";
+    tabDropDivFields.setAttribute("id", `tab_drop_div_field${i}`);
+    tabDropDivFields.style.float = "left";
     tabDiv.appendChild(tabIdFields);
     tabDiv.appendChild(tabNameFields);
     if (tab_image_check.checked == true) {
@@ -3864,15 +3864,21 @@ function genTabFields() {
 }
 function genDropFields() {
   for (let i = 1; i <= document.getElementById("tab_quantity").value; i++) {
-  document.getElementById(`tab_drop_div_field${i}`).innerHTML = "";
-    for (let j = 1; j <= document.getElementById(`tab_drop_quantity${i}`).value; j++) {
+    document.getElementById(`tab_drop_div_field${i}`).innerHTML = "";
+    for (
+      let j = 1;
+      j <= document.getElementById(`tab_drop_quantity${i}`).value;
+      j++
+    ) {
       let tabDropFields = document.createElement("INPUT");
-        tabDropFields.setAttribute("type", "text");
-        tabDropFields.setAttribute("id", `tab_drop_field${i}-${j}`);
-        tabDropFields.setAttribute("placeholder", `Tab ${i} dropdown ${j} name`);
-        tabDropFields.setAttribute("oninput", "genTabCode()");
-        tabDropFields.style.display = "block";
-      document.getElementById(`tab_drop_div_field${i}`).appendChild(tabDropFields);
+      tabDropFields.setAttribute("type", "text");
+      tabDropFields.setAttribute("id", `tab_drop_field${i}-${j}`);
+      tabDropFields.setAttribute("placeholder", `Tab ${i} dropdown ${j} name`);
+      tabDropFields.setAttribute("oninput", "genTabCode()");
+      tabDropFields.style.display = "block";
+      document
+        .getElementById(`tab_drop_div_field${i}`)
+        .appendChild(tabDropFields);
     }
   }
 }
@@ -3885,7 +3891,9 @@ function genTabCode() {
   let tabHeadClassDrop = "";
   let tabNameValue = "";
   let tabDropNameValue = "";
-  let tabIdValue = document.getElementById("tab_id_field").value.replace(/ /g, '');
+  let tabIdValue = document
+    .getElementById("tab_id_field")
+    .value.replace(/ /g, "");
   let tabItemIdValue = "";
   let tabDropIdValue = "";
   let tabDropQuantity = "";
@@ -3902,20 +3910,28 @@ function genTabCode() {
   let tabImgSrcValue = "";
   let tabImageWidth = "";
   let tabTextCenter = "";
+  let tabPillButton = "";
   if (tab_radio_tab.checked == true) {
     tabRadioValue = "tab";
   } else {
     tabRadioValue = "pill";
   }
   if (tabIdValue == false) {
-    tabIdValue = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5);
+    tabIdValue = Math.random()
+      .toString(36)
+      .replace(/[^a-z]+/g, "")
+      .substr(0, 5);
   }
   if (tab_justified_check.checked == true) {
-    tabJustifiedValue = ' flex-container" style="width: 100%; height: 100%; display: flex; justify-content: space-between; align-items: flex-end; position: relative; left: -40px;';
+    tabJustifiedValue =
+      ' flex-container" style="width: 100%; height: 100%; display: flex; justify-content: space-between; align-items: flex-end; position: relative; left: -40px;';
   }
   for (let i = 1; i <= document.getElementById("tab_quantity").value; i++) {
     tabNameValue = document.getElementById(`tab_name_field${i}`).value.trim();
-    tabItemIdValue = document.getElementById(`tab_id_field${i}`).value.replace(/ /g, '').trim();
+    tabItemIdValue = document
+      .getElementById(`tab_id_field${i}`)
+      .value.replace(/ /g, "")
+      .trim();
     tabDropQuantity = document.getElementById(`tab_drop_quantity${i}`).value;
     if (tabNameValue == false) {
       tabNameValue = `Tab ${i}`;
@@ -3931,8 +3947,8 @@ function genTabCode() {
         tabHeadClass = ' class="active"';
       }
     } else if (tabDropQuantity > 0) {
-        tabShowValue = "";
-        tabHeadClass = ' class="dropdown"';
+      tabShowValue = "";
+      tabHeadClass = ' class="dropdown"';
     } else {
       tabShowValue = "";
       tabHeadClass = "";
@@ -3958,6 +3974,11 @@ function genTabCode() {
     } else {
       tabHeadClassDrop = "";
     }
+    if (tab_radio_tab.checked == false) {
+      tabPillButton = 'class="btn btn-default" style="border: 1px solid #d5d5d5; font-size: 14px;" role="button" ';
+    } else {
+      tabPillButton = "";
+    }
     if (tab_image_check.checked == false) {
       tabImageSource = "";
     } else {
@@ -3974,7 +3995,9 @@ function genTabCode() {
       if (document.getElementById(`tab_drop_field${i}-${j}`).value == false) {
         tabDropNameValue = `${tabNameValue} dropdown ${j}`;
       } else {
-        tabDropNameValue = document.getElementById(`tab_drop_field${i}-${j}`).value;
+        tabDropNameValue = document.getElementById(
+          `tab_drop_field${i}-${j}`
+        ).value;
       }
       if (tabShowValue == " in active" && j == 1) {
         tabShowValue = " in active";
@@ -3982,23 +4005,19 @@ function genTabCode() {
         tabShowValue = "";
       }
       tabDropIdValue = `${tabItemIdValue}_${j}`;
-      tabLoopDropHead +=
-`
+      tabLoopDropHead += `
 <li><a data-target="#${tabDropIdValue}" data-toggle="${tabRadioValue}">${tabDropNameValue}</a></li>`;
-      tabLoopDropBody +=
-`<!--Start ${tabRadioValue} ${i}.${j} body "${tabDropIdValue}"--><div id="${tabDropIdValue}" class="tab-pane${tabFadeValue}${tabShowValue}">
+      tabLoopDropBody += `<!--Start ${tabRadioValue} ${i}.${j} body "${tabDropIdValue}"--><div id="${tabDropIdValue}" class="tab-pane${tabFadeValue}${tabShowValue}">
 <table><tr><td><p>Content for ${tabDropNameValue}</p></td></tr></table>
 <!--End ${tabRadioValue} ${i}.${j} body "${tabDropIdValue}"--></div>
 `;
     }
-    tabLoopHead +=
-`<!--Start ${tabRadioValue} ${i} head "${tabItemIdValue}"--><li${tabHeadClass}>
-<a ${tabHeadClassDrop}data-toggle="${tabHeadToggle}" data-target="#${tabItemIdValue}"${tabTextCenter}>${tabNameValue}${tabImageSource}</a>${tabDropStart}${tabLoopDropHead}${tabDropEnd}
+    tabLoopHead += `<!--Start ${tabRadioValue} ${i} head "${tabItemIdValue}"--><li${tabHeadClass}>
+<a ${tabPillButton}${tabHeadClassDrop}data-toggle="${tabHeadToggle}" data-target="#${tabItemIdValue}"${tabTextCenter}>${tabNameValue}${tabImageSource}</a>${tabDropStart}${tabLoopDropHead}${tabDropEnd}
 <!--End ${tabRadioValue} ${i} head "${tabItemIdValue}"--></li>
 `;
     if (document.getElementById(`tab_drop_quantity${i}`).value == false) {
-      tabLoopBody =
-`<!--Start ${tabRadioValue} ${i} body "${tabItemIdValue}"--><div id="${tabItemIdValue}" class="tab-pane${tabFadeValue}${tabShowValue}">
+      tabLoopBody = `<!--Start ${tabRadioValue} ${i} body "${tabItemIdValue}"--><div id="${tabItemIdValue}" class="tab-pane${tabFadeValue}${tabShowValue}">
 <table><tr><td><p>Content for ${tabNameValue}</p></td></tr></table>
 <!--End ${tabRadioValue} ${i} body "${tabItemIdValue}"--></div>
 `;
@@ -4010,8 +4029,9 @@ function genTabCode() {
     tabLoopDropHead = "";
     tabLoopDropBody = "";
   }
-  document.getElementById("tab_code_box").value =
-`<!--Start ${tabRadioValue} set "${tabIdValue}"--><div id="${tabIdValue}" class="container">
+  document.getElementById(
+    "tab_code_box"
+  ).value = `<!--Start ${tabRadioValue} set "${tabIdValue}"--><div id="${tabIdValue}" class="container">
 <!--Start ${tabRadioValue} head(s) "${tabIdValue}"--><ul class="nav nav-${tabRadioValue}s${tabJustifiedValue}">
 ${tabLoopHead}<!--End ${tabRadioValue} head(s) "${tabIdValue}"--></ul>
 <!--Start ${tabRadioValue} body(s) "${tabIdValue}"--><div class="tab-content">
