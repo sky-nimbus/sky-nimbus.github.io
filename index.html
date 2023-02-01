@@ -3360,13 +3360,23 @@ function ssjShiftAnchorEnds(array, i, j) {
       anchors.OpenTag_O - 2,
       anchors.OpenTag_O
     );
+    let BeforeOpenTagQuote = array[i].slice(
+      anchors.OpenTag_O - 3,
+      anchors.OpenTag_O
+    );
     let ZeroToOpenTag = array[i]
       .slice(0, anchors.OpenTag_O)
       .replaceAll(/<[^>]*>/g, "")
       .trim();
     let FirstText = anchors.LabelText[0];
     if (
-      (BeforeOpenTag != ". " && ZeroToOpenTag != "") ||
+      (BeforeOpenTag != ". " &&
+        BeforeOpenTag != "? " &&
+        BeforeOpenTag != "! " &&
+        BeforeOpenTagQuote != '." ' &&
+        BeforeOpenTagQuote != '!" ' &&
+        BeforeOpenTagQuote != '?" ' &&
+        ZeroToOpenTag != "") ||
       !FirstText.match(/[A-Z]/)
     ) {
       anchors.LabelPeriod = "move";
