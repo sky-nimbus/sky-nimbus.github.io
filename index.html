@@ -2601,7 +2601,7 @@ function ssjAddSpaceAbove(array, i) {
 }
 // Add a horizontal rule below a heading
 function ssjAddHorizon(array, i) {
-  if (array[i + 1] != null && array[i + 1] != "<hr />") {
+  if (array[i + 1] != null && !array[i + 1].includes("<hr />")) {
     if (array[i + 1] == "<p></p>") {
       array[i + 1] = "<hr />";
     } else {
