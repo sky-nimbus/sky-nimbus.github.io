@@ -1671,9 +1671,9 @@ function ssjRemoveBullets(array, i) {
   if (array[i].match(/<li[^>]*>/)) {
     let tag = array[i].match(/<li[^>]*>/)[0];
     // 1 or 2 digit numbers
-    array[i] = array[i].replace(/<li[^>]*>\s*\d{1,2}\s*[^A-Za-z0-9\s]\s*/, tag);
+    array[i] = array[i].replace(/<li[^>]*>\s*\d{1,2}\s*[.)-:]\s*/, tag);
     // Uppercase or lowercase letters
-    array[i] = array[i].replace(/<li[^>]*>\s*[A-Za-z][^A-Za-z0-9\s]\s*/, tag);
+    array[i] = array[i].replace(/<li[^>]*>\s*[A-Za-z][.)-:]\s*/, tag);
     // Bullet unicode
     array[i] = array[i].replace(
       /<li[^>]*>\s*[\u2022,\u2023,\u25E6,\u2043,\u2219]\s*/,
