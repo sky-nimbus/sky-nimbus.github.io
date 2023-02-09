@@ -3207,8 +3207,8 @@ function ssjReplaceSpans(array, i) {
 //? Remove black text spans
 function ssjRemoveBlackSpans(array, i) {
   let black = [
-    '<span style="color: #000000;">',
-    '<span style="color: black;">',
+    '<span style="color: #000000; font-size: 100%;">',
+    '<span style="color: black; font-size: 100%;">',
   ];
   for (let x = 0; x < black.length; x++) {
     if (array[i].includes(black[x])) {
