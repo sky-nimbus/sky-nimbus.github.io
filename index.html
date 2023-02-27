@@ -3,10 +3,16 @@
 
 <head>
 <style>
-
 body {
   font-family: sans-serif;
   font-size: small;
+}
+
+.title {
+  color: #0A66C2;
+  font-family: 'Trebuchet MS', sans-serif;
+  font-size: x-large;
+  padding-left: 15px;
 }
 
 .box_set {
@@ -16,10 +22,11 @@ body {
 
 fieldset {
   min-width: 330px;
+  margin-right: 10px;
 }
 
 .legend {
-  color: chocolate;
+  color: #DF2935;
 }
 
 input[type="radio"] {
@@ -44,7 +51,7 @@ input[type="checkbox"] {
 }
 
 .instruction-heading {
-  color: forestgreen;
+  color: chocolate;
   margin-bottom: -8px;
 }
 
@@ -85,8 +92,8 @@ input[type="checkbox"] {
 
 .color_box {
   display: inline-block;
-  width: 12px;
-  height: 12px;
+  width: 14px;
+  height: 14px;
   margin-left: 3px;
   vertical-align: middle;
   box-shadow: 0px 0px 0px 1px gray inset;
@@ -102,10 +109,81 @@ input[type="checkbox"] {
   margin-right: 20px;
 }
 
+.button {
+  padding: 3px 7px;
+  text-align: center;
+  cursor: pointer;
+  outline: none;
+  color: #fff;
+  background-color: #04AA6D;
+  border: none;
+  border-radius: 4px;
+  box-shadow: 0 2px #3e8e41;
+  margin-bottom: 5px;
+}
+
+.button:active {
+  box-shadow: 0 1px #3e8e41;
+  transform: translateY(1px);
+}
+
+.button-code {
+  padding: 3px 7px;
+  text-align: center;
+  cursor: pointer;
+  outline: none;
+  color: #fff;
+  background-color: #9B62E4;
+  border: none;
+  border-radius: 4px;
+  box-shadow: 0 2px #8F51E1;
+  margin-bottom: 5px;
+}
+
+.button-code:active {
+  box-shadow: 0 1px #8F51E1;
+  transform: translateY(1px);
+}
+
+.button-adv {
+  padding: 3px 7px;
+  text-align: center;
+  cursor: pointer;
+  outline: none;
+  color: #fff;
+  background-color: #C79D05;
+  border: none;
+  border-radius: 4px;
+  box-shadow: 0 2px #9F7E04;
+  margin-bottom: 5px;
+}
+
+.button-adv:active {
+  box-shadow: 0 1px #9F7E04;
+  transform: translateY(1px);
+}
+
+.menu-dropdown {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: auto;
+  padding: 1px 5px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
 </style>
 </head>
 
 <body onload="ssjLoadCode(), genAccFields(), genAcc2Fields(), genTabFields(), genDropFields(), genCarFields()">
+
+
+
+<!-- TITLE -->
+<div class="title">
+  <strong>go/Stylizer</strong>
+</div>
+<br />
 
 
 
@@ -114,14 +192,14 @@ input[type="checkbox"] {
 <div class="flex-container box_set">
   <fieldset>
     <!-- Title -->
-    <legend class="legend">Stylizer</legend>
+    <legend class="legend"><strong>Stylizer</strong></legend>
 
     <!-- Templates -->
     <div class="note"><strong>Choose Colors</strong></div>
     <br />
     <label for="ssj_colors_drop" id="ssj_colors_label">Theme</label>
     <select
-      class="form-control"
+      class="form-control menu-dropdown"
       id="ssj_colors_drop"
       oninput="ssjChangeColorBoxes()"
     >
@@ -144,7 +222,12 @@ input[type="checkbox"] {
     <label for="ssj_textdecor_check" class="p_select"
       >Text Colors & Underlines</label
     >
-    <input type="checkbox" class="p_select" id="ssj_textdecor_check" checked />
+    <input
+      type="checkbox"
+      class="p_select"
+      id="ssj_textdecor_check"
+      checked
+    />
     <label for="ssj_headings_check" class="p_heading">Heading Styles</label>
     <input type="checkbox" class="p_heading" id="ssj_headings_check" />
     <br />
@@ -155,7 +238,11 @@ input[type="checkbox"] {
     <hr />
 
     <!-- Paragraphs -->
-    <button onclick="ssjRunParagraphs()" id="ssj_paragraphs_button">
+    <button
+      class="button"
+      onclick="ssjRunParagraphs()"
+      id="ssj_paragraphs_button"
+    >
       Paragraphs
     </button>
     <br />
@@ -182,7 +269,9 @@ input[type="checkbox"] {
     <hr />
 
     <!-- Lists -->
-    <button onclick="ssjRunLists()" id="ssj_lists_button">Lists</button>
+    <button class="button" onclick="ssjRunLists()" id="ssj_lists_button">
+      Lists
+    </button>
     <br />
 
     <!-- List Images -->
@@ -224,7 +313,9 @@ input[type="checkbox"] {
     <hr />
 
     <!-- Tables -->
-    <button onclick="ssjRunTables()" id="ssj_tables_button">Tables</button>
+    <button class="button" onclick="ssjRunTables()" id="ssj_tables_button">
+      Tables
+    </button>
     <br />
 
     <!-- Table Bootstrap -->
@@ -275,7 +366,11 @@ input[type="checkbox"] {
     <hr />
 
     <!-- Advanced -->
-    <button id="ssj_advance_button" onclick="ssjRunAdvanced()">
+    <button
+      class="button-adv"
+      id="ssj_advance_button"
+      onclick="ssjRunAdvanced()"
+    >
       Advanced
     </button>
     <br />
@@ -295,10 +390,18 @@ input[type="checkbox"] {
     <!--
     <button id="ssj_test_button" onclick="ssjTestCode()">Test code</button>
     -->
-    <button id="ssj_source_button" onclick="ssjSourceCode()">
+    <button
+      class="button-code"
+      id="ssj_source_button"
+      onclick="ssjSourceCode()"
+    >
       Commit code
     </button>
-    <button id="ssj_source_button" onclick="ssjClearCode()">
+    <button
+      class="button-code"
+      id="ssj_source_button"
+      onclick="ssjClearCode()"
+    >
       Clear code
     </button>
     <br />
@@ -310,8 +413,15 @@ input[type="checkbox"] {
       oninput="ssjSourceCode()"
     ></textarea>
     <br />
-    <button id="ssj_copy_button" onclick="ssjCopyCode()">Copy code</button>
     <button
+      class="button-code"
+      id="ssj_copy_button"
+      onclick="ssjCopyCode()"
+    >
+      Copy code
+    </button>
+    <button
+      class="button-code"
       id="ssj_bug_button"
       onclick="window.open('https://forms.office.com/r/cJfE3JUEWV', '_blank')"
       target="_blank"
@@ -333,23 +443,37 @@ input[type="checkbox"] {
     <br />
     1. &nbsp;Copy an article's source code from ServiceNow.<br />
     2. &nbsp;Paste the code into the white box on the left.<br />
-    3. &nbsp;Select any of the dropdowns or checkboxes in the 'Stylizer' box.<br />
-    4. &nbsp;Select any of the <strong>Paragraphs</strong>, <strong>Lists</strong>, or <strong>Tables</strong> buttons.<br />
-    5. &nbsp;Copy the code from the grey box.<br />
+    3. &nbsp;Select any of the dropdowns or checkboxes in the 'Stylizer'
+    box.<br />
+    4. &nbsp;Select any of the green buttons.<br />
+    5. &nbsp;Copy the code from the gray box.<br />
     6. &nbsp;Paste the code back into the article in ServiceNow.<br /><br />
     <div class="instruction-heading"><strong>Tip</strong></div>
     <br />
-    Before step 1, review the article contents in ServiceNow and apply <strong>headings</strong> or <strong>bullet points</strong> where appropriate.<br /><br />
+    Before step 1, review the article contents in ServiceNow and apply
+    headings or bullet points where
+    appropriate.<br /><br />
     <hr />
     <br />
     <div class="instruction-heading"><strong>Bugs</strong></div>
     <br />
     Bugs in the program can manifest in two ways:<br />
-    <ol style="list-style-type: upper-alpha; margin-top: 5px; margin-bottom: 5px;">
-    <li>Selecting one of the Paragraphs, Lists, or Tables buttons fails to modify the code in the grey box.</li>
-    <li>Selecting one of the Paragraphs, Lists, or Tables buttons freezes this page. If this happens, refresh the page.</li>
+    <ol
+      style="
+        list-style-type: upper-alpha;
+        margin-top: 5px;
+        margin-bottom: 5px;
+      "
+    >
+      <li>
+        Selecting one of the green buttons fails to modify the code in the gray box.
+      </li>
+      <li>
+        Selecting one of the green buttons freezes this page. If this happens, go to 
+        another webpage and then return here.
+      </li>
     </ol>
-    For either case, it would be helpful to select <strong>Report a bug</strong>.
+    For either case, it would be helpful to select 'Report a bug'.
   </div>
 </div>
 
@@ -376,64 +500,152 @@ input[type="checkbox"] {
 <!-- ACCORDION -->
 
 <div class="flex-container box_set">
-<fieldset>
-<legend class="legend">Accordion</legend>
-  <label for="acc2_quantity">Quantity</label>
-    <input type="number" oninput="genAcc2Fields(), genAcc2Code()" min="1" max="20" id="acc2_quantity" value="1"><span class="asterisk">*</span><br>
-  <label for="acc2_color_field">Color</label>
-    <select class="form-control" id="acc2_color_field" oninput="genAcc2Code()">
+  <fieldset>
+    <legend class="legend"><strong>Accordion</strong></legend>
+    <label for="acc2_quantity">Quantity</label>
+    <input
+      type="number"
+      oninput="genAcc2Fields(), genAcc2Code()"
+      min="1"
+      max="20"
+      id="acc2_quantity"
+      value="1"
+    /><span class="asterisk">*</span><br />
+    <label for="acc2_color_field">Color</label>
+    <select
+      class="form-control menu-dropdown"
+      id="acc2_color_field"
+      oninput="genAcc2Code()"
+    >
       <option>Light Blue</option>
       <option>Blue</option>
       <option>Green</option>
       <option>Orange</option>
       <option>Red</option>
-      <option>White</option>
-    </select><br>
-  <label for="acc2_padding_field">Padding</label>
-    <input type="range" class="range_field_short" oninput="genAcc2Padding(this.value), genAcc2Code()" min="0"  max="50" step="10" value="0" id="acc2_padding_field" style="margin-right: 5px;"><span id="acc2_padding_amount" style="color: gray;">auto</span><br>
-  <label for="acc2_width_field">Width</label>
-    <input type="range" class="range_field_short" oninput="genAcc2Width(this.value), genAcc2Code()" min="0"  max="1000" step="100" value="0" id="acc2_width_field" style="margin-right: 5px;"><span id="acc2_width_amount" style="color: gray;">auto</span><br>
-  <input type="text" id="acc2_id_field" oninput="genAcc2Code()" placeholder="Accordion set ID">
-  <div id="acc2_fields"></div>
-</fieldset>
-<div class="code_div"><button onclick="copyAcc2Code()">Copy code</button><br>
-<textarea class="code_box" id="acc2_code_box"></textarea></div>
+      <option>White</option></select
+    ><br />
+    <label for="acc2_padding_field">Padding</label>
+    <input
+      type="range"
+      class="range_field_short"
+      oninput="genAcc2Padding(this.value), genAcc2Code()"
+      min="0"
+      max="50"
+      step="10"
+      value="0"
+      id="acc2_padding_field"
+      style="margin-right: 5px"
+    /><span id="acc2_padding_amount" style="color: gray">auto</span><br />
+    <label for="acc2_width_field">Width</label>
+    <input
+      type="range"
+      class="range_field_short"
+      oninput="genAcc2Width(this.value), genAcc2Code()"
+      min="0"
+      max="1000"
+      step="100"
+      value="0"
+      id="acc2_width_field"
+      style="margin-right: 5px"
+    /><span id="acc2_width_amount" style="color: gray">auto</span><br />
+    <input
+      type="text"
+      id="acc2_id_field"
+      oninput="genAcc2Code()"
+      placeholder="Accordion set ID"
+    />
+    <div id="acc2_fields"></div>
+  </fieldset>
+  <div class="code_div">
+    <button class="button-code" onclick="copyAcc2Code()">Copy code</button
+    ><br />
+    <textarea class="code_box" id="acc2_code_box"></textarea>
+  </div>
 </div>
-<br>
+<br />
 
 
 
 <!-- TABS -->
 
 <div class="flex-container box_set">
-<fieldset>
-<legend class="legend">Tabs</legend>
-  <span style="color: gray; font-size: x-small;">
-  <span style="font-weight: bold;">Note:</span> Justify + dropdowns don't work together for some reason.<br><br>
-  </span>
-  <label for="tab_quantity">Quantity</label>
-    <input type="number" oninput="genTabFields(), genTabCode()" min="1" max="20" id="tab_quantity" value="1"><span class="asterisk">*</span><br>
-  <label class="radio-inline" for="tab_radio_tab">Tab</label>
-    <input type="radio" oninput="genTabCode()" name="tab_radio" id="tab_radio_tab" checked>
-  <label class="radio-inline" for="tab_radio_pill">Pill</label>
-    <input type="radio" oninput="genTabCode()" name="tab_radio" id="tab_radio_pill">
-  <label for="tab_image_check">Image</label>
-    <input type="checkbox" oninput="genTabImgWidthDisplay(), genTabFields(), genTabCode()" id="tab_image_check"><br>
-  <div id="tab_imgwidth_display" style="display: none;">
-  <label for="tab_imgwidth_field">img width</label>
-    <input type="range" class="range_field_short" oninput="genTabImgWidth(this.value), genTabCode()" min="50" max="300" step="25" value="100" id="tab_imgwidth_field" style="margin-right: 5px;"><span id="tab_imgwidth_amount">100px</span>
+  <fieldset>
+    <legend class="legend"><strong>Tabs</strong></legend>
+    <span style="color: gray; font-size: x-small">
+      <span style="font-weight: bold">Note:</span> Justify + dropdowns don't
+      work together for some reason.<br /><br />
+    </span>
+    <label for="tab_quantity">Quantity</label>
+    <input
+      type="number"
+      oninput="genTabFields(), genTabCode()"
+      min="1"
+      max="20"
+      id="tab_quantity"
+      value="1"
+    /><span class="asterisk">*</span><br />
+    <label class="radio-inline" for="tab_radio_tab">Tab</label>
+    <input
+      type="radio"
+      oninput="genTabCode()"
+      name="tab_radio"
+      id="tab_radio_tab"
+      checked
+    />
+    <label class="radio-inline" for="tab_radio_pill">Pill</label>
+    <input
+      type="radio"
+      oninput="genTabCode()"
+      name="tab_radio"
+      id="tab_radio_pill"
+    />
+    <label for="tab_image_check">Image</label>
+    <input
+      type="checkbox"
+      oninput="genTabImgWidthDisplay(), genTabFields(), genTabCode()"
+      id="tab_image_check"
+    /><br />
+    <div id="tab_imgwidth_display" style="display: none">
+      <label for="tab_imgwidth_field">img width</label>
+      <input
+        type="range"
+        class="range_field_short"
+        oninput="genTabImgWidth(this.value), genTabCode()"
+        min="50"
+        max="300"
+        step="25"
+        value="100"
+        id="tab_imgwidth_field"
+        style="margin-right: 5px"
+      /><span id="tab_imgwidth_amount">100px</span>
+    </div>
+    <label for="tab_justified_check">Justify</label>
+    <input
+      type="checkbox"
+      oninput="genTabCode()"
+      id="tab_justified_check"
+    />
+    <label for="tab_fade_check">Fade</label>
+    <input type="checkbox" oninput="genTabCode()" id="tab_fade_check" />
+    <label for="tab_show_check">Show initially</label>
+    <input
+      type="checkbox"
+      oninput="genTabCode()"
+      id="tab_show_check"
+    /><br />
+    <input
+      type="text"
+      oninput="genTabCode()"
+      id="tab_id_field"
+      placeholder="Tab set ID"
+    /><br />
+    <div id="tab_fields" class="flex-container gen_field"></div>
+  </fieldset>
+  <div class="code_div">
+    <button class="button-code" onclick="copyTabCode()">Copy code</button
+    ><br />
+    <textarea class="code_box" id="tab_code_box"></textarea>
   </div>
-  <label for="tab_justified_check">Justify</label>
-    <input type="checkbox" oninput="genTabCode()"id="tab_justified_check">
-  <label for="tab_fade_check">Fade</label>
-    <input type="checkbox" oninput="genTabCode()"id="tab_fade_check">
-  <label for="tab_show_check">Show initially</label>
-    <input type="checkbox" oninput="genTabCode()"id="tab_show_check"><br>
-  <input type="text" oninput="genTabCode()" id="tab_id_field" placeholder="Tab set ID"><br>
-  <div id="tab_fields" class="flex-container gen_field"></div>
-</fieldset>
-<div class="code_div"><button onclick="copyTabCode()">Copy code</button><br>
-<textarea class="code_box" id="tab_code_box"></textarea></div>
 </div>
 
 
