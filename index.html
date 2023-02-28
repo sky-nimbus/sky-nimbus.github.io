@@ -3,6 +3,7 @@
 
 <head>
 <style>
+
 body {
   font-family: sans-serif;
   font-size: small;
@@ -26,7 +27,7 @@ fieldset {
 }
 
 .legend {
-  color: #DF2935;
+  color: chocolate;
 }
 
 input[type="radio"] {
@@ -51,7 +52,7 @@ input[type="checkbox"] {
 }
 
 .instruction-heading {
-  color: #DF2935;
+  color: #C31D28;
   margin-bottom: -8px;
 }
 
@@ -127,25 +128,12 @@ input[type="checkbox"] {
   transform: translateY(1px);
 }
 
+.button:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
 .button-code {
-  padding: 3px 7px;
-  text-align: center;
-  cursor: pointer;
-  outline: none;
-  color: #fff;
-  background-color: #9B62E4;
-  border: none;
-  border-radius: 4px;
-  box-shadow: 0 2px #8F51E1;
-  margin-bottom: 5px;
-}
-
-.button-code:active {
-  box-shadow: 0 1px #8F51E1;
-  transform: translateY(1px);
-}
-
-.button-adv {
   padding: 3px 7px;
   text-align: center;
   cursor: pointer;
@@ -158,9 +146,37 @@ input[type="checkbox"] {
   margin-bottom: 5px;
 }
 
-.button-adv:active {
+.button-code:active {
   box-shadow: 0 1px #9F7E04;
   transform: translateY(1px);
+}
+
+.button-code:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.button-adv {
+  padding: 3px 7px;
+  text-align: center;
+  cursor: pointer;
+  outline: none;
+  color: #fff;
+  background-color: #9A94BC;
+  border: none;
+  border-radius: 4px;
+  box-shadow: 0 2px #8982B0;
+  margin-bottom: 5px;
+}
+
+.button-adv:active {
+  box-shadow: 0 1px #8982B0;
+  transform: translateY(1px);
+}
+
+.button-adv:disabled {
+  opacity: 0.6;
+  cursor: default;
 }
 
 .menu-dropdown {
