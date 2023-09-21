@@ -4004,7 +4004,7 @@ function genAcc2Code() {
   }
   let acc2ColorString = `${acc2Color}`;
   let acc2WidthString = ` style="width: ${document.getElementById("acc2_width_field").value}px;"`;
-  let acc2PaddingString = `padding: ${document.getElementById("acc2_padding_field").value}px;`;
+  let acc2PaddingString = ` padding: ${document.getElementById("acc2_padding_field").value}px;`;
   let acc2IdValue = document.getElementById("acc2_id_field").value.replace(/ /g, '').trim();
   let acc2ItemIdValue = "";
   let acc2Loop = "";
@@ -4034,7 +4034,7 @@ function genAcc2Code() {
 ${acc2NameValue}
 <!--End acc item ${i} head "${acc2ItemIdValue}"--></a></td></tr></table>
 <!--Start acc item ${i} body "${acc2ItemIdValue}"-->
-<div id="${acc2ItemIdValue}" class="panel-collapse collapse"><div class="panel-body" style="border: 1px solid #d5d8de; border-radius: 8px; ${acc2PaddingString}">
+<div id="${acc2ItemIdValue}" class="panel-collapse collapse"><div class="panel-body" style="border: 1px solid #d5d8de; border-radius: 8px;${acc2PaddingString}">
 <table><tr><td>Content for ${acc2NameValue}</td></tr></table></div>
 <!--End acc item ${i} body "${acc2ItemIdValue}"--></div>
 <!--End acc item ${i} "${acc2ItemIdValue}"--></div>
