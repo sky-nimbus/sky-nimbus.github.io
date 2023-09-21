@@ -566,12 +566,7 @@ input[type="checkbox"] {
       id="acc2_color_field"
       oninput="genAcc2Code()"
     >
-      <option>Light Blue</option>
-      <option>Blue</option>
-      <option>Green</option>
-      <option>Orange</option>
-      <option>Red</option>
-      <option>White</option></select
+      <option>Default</option></select
     ><br />
     <label for="acc2_padding_field">Padding</label>
     <input
@@ -3989,7 +3984,7 @@ function genAcc2Code() {
   let acc2Color = "";
   switch (document.getElementById("acc2_color_field").value) {
     case "Default":
-      acc2Color = "";
+      acc2Color = " btn-default";
       break;
     case "Blue":
       acc2Color = " btn-primary";
@@ -4009,7 +4004,7 @@ function genAcc2Code() {
   }
   let acc2ColorString = `${acc2Color}`;
   let acc2WidthString = ` style="width: ${document.getElementById("acc2_width_field").value}px;"`;
-  let acc2PaddingString = ` style="padding: ${document.getElementById("acc2_padding_field").value}px;"`;
+  let acc2PaddingString = `padding: ${document.getElementById("acc2_padding_field").value}px;`;
   let acc2IdValue = document.getElementById("acc2_id_field").value.replace(/ /g, '').trim();
   let acc2ItemIdValue = "";
   let acc2Loop = "";
@@ -4033,13 +4028,13 @@ function genAcc2Code() {
       acc2ItemIdValue = `${acc2IdValue}-${i}`;
     }
     acc2Loop +=
-`<!--Start acc item ${i} "${acc2ItemIdValue}"--><div class="panel panel-default" style="box-shadow: none;">
+`<!--Start acc item ${i} "${acc2ItemIdValue}"--><div class="panel panel-default" style="box-shadow: none; border: none;">
 <!--Start acc item ${i} head "${acc2ItemIdValue}"--><table><tr><td>
 <a class="btn${acc2ColorString}" style="width: 100%; text-align: left;" data-toggle="collapse" data-parent="#${acc2IdValue}" data-target="#${acc2ItemIdValue}">
 ${acc2NameValue}
 <!--End acc item ${i} head "${acc2ItemIdValue}"--></a></td></tr></table>
 <!--Start acc item ${i} body "${acc2ItemIdValue}"-->
-<div id="${acc2ItemIdValue}" class="panel-collapse collapse"><div class="panel-body"${acc2PaddingString}>
+<div id="${acc2ItemIdValue}" class="panel-collapse collapse"><div class="panel-body" style="border: 1px solid #d5d8de; border-radius: 8px; ${acc2PaddingString}">
 <table><tr><td>Content for ${acc2NameValue}</td></tr></table></div>
 <!--End acc item ${i} body "${acc2ItemIdValue}"--></div>
 <!--End acc item ${i} "${acc2ItemIdValue}"--></div>
