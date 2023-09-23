@@ -255,461 +255,479 @@ input[type="checkbox"] {
 
 
 
-<!-- STYLIZER -->
+    <!-- STYLIZER -->
+    
+    <div class="flex-container box_set">
+      <fieldset>
+        <!-- Title -->
+        <legend class="legend">Stylizer</legend>
+    
+        <!-- Templates -->
+        <div class="note"><strong>Choose Colors</strong></div>
+        <br />
+        <label for="ssj_colors_drop" id="ssj_colors_label">Theme</label>
+        <select
+          class="form-control menu-dropdown"
+          id="ssj_colors_drop"
+          oninput="ssjChangeColorBoxes()"
+        >
+          <option>Moon Rabbit</option>
+          <option>Cheese Bread</option>
+          <option>Hydro Soda</option>
+          <option>Cherry Blossom</option>
+          <option>Mocha Ice Cream</option>
+          <option>Forest Kingdom</option>
+          <option>Sweet Potato Farm</option>
+        </select>
+        <div class="color_box" id="ssj_colorbox_toc"></div>
+        <div class="color_box" id="ssj_colorbox_well"></div>
+        <div class="color_box" id="ssj_colorbox_table"></div>
+        <hr />
+    
+        <!-- Preserve -->
+        <div class="note"><strong>Preserve Decorations</strong></div>
+        <br />
+        <label for="ssj_textdecor_check" class="p_select"
+          >Text Colors & Underlines</label
+        >
+        <input
+          type="checkbox"
+          class="p_select"
+          id="ssj_textdecor_check"
+          checked
+        />
+        <label for="ssj_headings_check" class="p_heading">Heading Styles</label>
+        <input type="checkbox" class="p_heading" id="ssj_headings_check" />
+        <br />
+        <label for="ssj_tbl_colors_check" class="tbl_select"
+          >Table Cell Colors</label
+        >
+        <input type="checkbox" class="tbl_select" id="ssj_tbl_colors_check" />
+        <hr />
+    
+        <!-- Paragraphs -->
+        <button
+          class="button"
+          onclick="ssjRunParagraphs()"
+          id="ssj_paragraphs_button"
+        >
+          Paragraphs
+        </button>
+        <br />
+    
+        <!-- Paragraph Headings -->
+        <label for="ssj_toc_check" class="p_select" id="ssj_toc_label"
+          >Add Table of Contents</label
+        >
+        <input type="checkbox" class="p_select" id="ssj_toc_check" />
+        <label
+          for="ssj_well_check"
+          class="p_select p_heading"
+          id="ssj_well_label"
+          >Add Panel Headings</label
+        >
+        <input type="checkbox" class="p_select p_heading" id="ssj_well_check" />
+        <br />
+    
+        <!-- Paragraph Other -->
+        <label for="ssj_crunchy_check" class="p_select"
+          >Remove Empty Paragraphs</label
+        >
+        <input type="checkbox" class="p_select" id="ssj_crunchy_check" />
+        <hr />
+    
+        <!-- Lists -->
+        <button class="button" onclick="ssjRunLists()" id="ssj_lists_button">
+          Lists
+        </button>
+        <br />
+    
+        <!-- List Images -->
+        <label for="ssj_img_borders_check" class="blt_select blt_image"
+          >Add Image Borders</label
+        >
+        <input
+          type="checkbox"
+          class="blt_select blt_image"
+          id="ssj_img_borders_check"
+          checked
+        />
+        <label for="ssj_img_sizes_check" class="blt_select blt_image"
+          >Reset Image Sizes</label
+        >
+        <input
+          type="checkbox"
+          class="blt_select blt_image"
+          id="ssj_img_sizes_check"
+        />
+        <br />
+    
+        <!-- List Images More -->
+        <label for="ssj_img_align_check" class="blt_select blt_image"
+          >Left-Align Images</label
+        >
+        <input
+          type="checkbox"
+          class="blt_select blt_image"
+          id="ssj_img_align_check"
+        />
+        <label
+          for="ssj_blt_periods_check"
+          class="blt_select"
+          id="ssj_blt_periods_label"
+          >Add Periods</label
+        >
+        <input type="checkbox" class="blt_select" id="ssj_blt_periods_check" />
+        <hr />
+    
+        <!-- Tables -->
+        <button class="button" onclick="ssjRunTables()" id="ssj_tables_button">
+          Tables
+        </button>
+        <br />
+    
+        <!-- Table Bootstrap -->
+        <label for="ssj_tbl_bordered_check" class="tbl_select">Bordered</label>
+        <input
+          type="checkbox"
+          class="tbl_select"
+          id="ssj_tbl_bordered_check"
+          checked
+        />
+        <label for="ssj_tbl_condensed_check" class="tbl_select"
+          >Condensed</label
+        >
+        <input
+          type="checkbox"
+          class="tbl_select"
+          id="ssj_tbl_condensed_check"
+        />
+        <label for="ssj_tbl_striped_check" class="tbl_select">Striped</label>
+        <input type="checkbox" class="tbl_select" id="ssj_tbl_striped_check" />
+        <label for="ssj_tbl_hover_check" class="tbl_select">Hover</label>
+        <input type="checkbox" class="tbl_select" id="ssj_tbl_hover_check" />
+        <br />
+    
+        <!-- Table Header -->
+        <label for="ssj_tbl_header_check" class="tbl_select"
+          >Add Header Row</label
+        >
+        <input
+          type="checkbox"
+          class="tbl_select"
+          id="ssj_tbl_header_check"
+          checked
+        />
+        <label for="ssj_tbl_column_check" class="tbl_select"
+          >Add Header Column</label
+        >
+        <input type="checkbox" class="tbl_select" id="ssj_tbl_column_check" />
+        <br />
+        <label for="ssj_tbl_double_check" class="tbl_select"
+          >Double-Space Contents</label
+        >
+        <input type="checkbox" class="tbl_select" id="ssj_tbl_double_check" />
+        <label for="ssj_tbl_periods_check" class="tbl_select"
+          >Add Periods</label
+        >
+        <input type="checkbox" class="tbl_select" id="ssj_tbl_periods_check" />
+        <hr />
+    
+        <!-- Advanced -->
+        <button
+          class="button-adv"
+          id="ssj_advance_button"
+          onclick="ssjRunAdvanced()"
+        >
+          Advanced
+        </button>
+        <br />
 
-<div class="flex-container box_set">
-  <fieldset>
-    <!-- Title -->
-    <legend class="legend">Stylizer</legend>
+        <!-- Upgrade Accordions -->
+        <label for="ssj_upgrade_acc_check"
+          >Upgrade Accordions</label
+        >
+        <input
+          type="checkbox"
+          class="adv_select"
+          id="ssj_upgrade_acc_check"
+          onclick="ssjEnableAdvanced()"
+        />
 
-    <!-- Templates -->
-    <div class="note"><strong>Choose Colors</strong></div>
-    <br />
-    <label for="ssj_colors_drop" id="ssj_colors_label">Theme</label>
-    <select
-      class="form-control menu-dropdown"
-      id="ssj_colors_drop"
-      oninput="ssjChangeColorBoxes()"
-    >
-      <option>Moon Rabbit</option>
-      <option>Cheese Bread</option>
-      <option>Hydro Soda</option>
-      <option>Cherry Blossom</option>
-      <option>Mocha Ice Cream</option>
-      <option>Forest Kingdom</option>
-      <option>Sweet Potato Farm</option>
-    </select>
-    <div class="color_box" id="ssj_colorbox_toc"></div>
-    <div class="color_box" id="ssj_colorbox_well"></div>
-    <div class="color_box" id="ssj_colorbox_table"></div>
-    <hr />
+        <!-- Convert Line Breaks -->
+        <br />
+        <label for="ssj_breaks_check"
+          >Convert Line Breaks into Paragraphs</label
+        >
+        <input
+          type="checkbox"
+          class="adv_select"
+          id="ssj_breaks_check"
+          onclick="ssjEnableAdvanced()"
+        />
 
-    <!-- Preserve -->
-    <div class="note"><strong>Preserve Decorations</strong></div>
-    <br />
-    <label for="ssj_textdecor_check" class="p_select"
-      >Text Colors & Underlines</label
-    >
-    <input
-      type="checkbox"
-      class="p_select"
-      id="ssj_textdecor_check"
-      checked
-    />
-    <label for="ssj_headings_check" class="p_heading">Heading Styles</label>
-    <input type="checkbox" class="p_heading" id="ssj_headings_check" />
-    <br />
-    <label for="ssj_tbl_colors_check" class="tbl_select"
-      >Table Cell Colors</label
-    >
-    <input type="checkbox" class="tbl_select" id="ssj_tbl_colors_check" />
-    <hr />
+      </fieldset>
+    
+      <div class="code_div">
 
-    <!-- Paragraphs -->
-    <button
-      class="button"
-      onclick="ssjRunParagraphs()"
-      id="ssj_paragraphs_button"
-    >
-      Paragraphs
-    </button>
-    <br />
+        <!-- <button id="ssj_test_button" onclick="ssjTestCode()">Test code</button> -->
 
-    <!-- Paragraph Headings -->
-    <label for="ssj_toc_check" class="p_select" id="ssj_toc_label"
-      >Add Table of Contents</label
-    >
-    <input type="checkbox" class="p_select" id="ssj_toc_check" />
-    <label
-      for="ssj_well_check"
-      class="p_select p_heading"
-      id="ssj_well_label"
-      >Add Panel Headings</label
-    >
-    <input type="checkbox" class="p_select p_heading" id="ssj_well_check" />
-    <br />
+        <!-- Input -->
+        <button
+          class="button-code"
+          id="ssj_source_button"
+          onclick="ssjSourceCode()"
+        >
+          Commit code
+        </button>
+        <button
+          class="button-code"
+          id="ssj_source_button"
+          onclick="ssjClearCode()"
+        >
+          Clear code
+        </button>
+        <br />
+        <textarea
+          class="code_box"
+          id="ssj_source_box"
+          style="width: 300px; height: 150px; margin-bottom: 15px"
+          placeholder="Paste code here"
+          oninput="ssjSourceCode()"
+        ></textarea>
+        <br />
 
-    <!-- Paragraph Other -->
-    <label for="ssj_crunchy_check" class="p_select"
-      >Remove Empty Paragraphs</label
-    >
-    <input type="checkbox" class="p_select" id="ssj_crunchy_check" />
-    <hr />
-
-    <!-- Lists -->
-    <button class="button" onclick="ssjRunLists()" id="ssj_lists_button">
-      Lists
-    </button>
-    <br />
-
-    <!-- List Images -->
-    <label for="ssj_img_borders_check" class="blt_select blt_image"
-      >Add Image Borders</label
-    >
-    <input
-      type="checkbox"
-      class="blt_select blt_image"
-      id="ssj_img_borders_check"
-      checked
-    />
-    <label for="ssj_img_sizes_check" class="blt_select blt_image"
-      >Reset Image Sizes</label
-    >
-    <input
-      type="checkbox"
-      class="blt_select blt_image"
-      id="ssj_img_sizes_check"
-    />
-    <br />
-
-    <!-- List Images More -->
-    <label for="ssj_img_align_check" class="blt_select blt_image"
-      >Left-Align Images</label
-    >
-    <input
-      type="checkbox"
-      class="blt_select blt_image"
-      id="ssj_img_align_check"
-    />
-    <label
-      for="ssj_blt_periods_check"
-      class="blt_select"
-      id="ssj_blt_periods_label"
-      >Add Periods</label
-    >
-    <input type="checkbox" class="blt_select" id="ssj_blt_periods_check" />
-    <hr />
-
-    <!-- Tables -->
-    <button class="button" onclick="ssjRunTables()" id="ssj_tables_button">
-      Tables
-    </button>
-    <br />
-
-    <!-- Table Bootstrap -->
-    <label for="ssj_tbl_bordered_check" class="tbl_select">Bordered</label>
-    <input
-      type="checkbox"
-      class="tbl_select"
-      id="ssj_tbl_bordered_check"
-      checked
-    />
-    <label for="ssj_tbl_condensed_check" class="tbl_select"
-      >Condensed</label
-    >
-    <input
-      type="checkbox"
-      class="tbl_select"
-      id="ssj_tbl_condensed_check"
-    />
-    <label for="ssj_tbl_striped_check" class="tbl_select">Striped</label>
-    <input type="checkbox" class="tbl_select" id="ssj_tbl_striped_check" />
-    <label for="ssj_tbl_hover_check" class="tbl_select">Hover</label>
-    <input type="checkbox" class="tbl_select" id="ssj_tbl_hover_check" />
-    <br />
-
-    <!-- Table Header -->
-    <label for="ssj_tbl_header_check" class="tbl_select"
-      >Add Header Row</label
-    >
-    <input
-      type="checkbox"
-      class="tbl_select"
-      id="ssj_tbl_header_check"
-      checked
-    />
-    <label for="ssj_tbl_column_check" class="tbl_select"
-      >Add Header Column</label
-    >
-    <input type="checkbox" class="tbl_select" id="ssj_tbl_column_check" />
-    <br />
-    <label for="ssj_tbl_double_check" class="tbl_select"
-      >Double-Space Contents</label
-    >
-    <input type="checkbox" class="tbl_select" id="ssj_tbl_double_check" />
-    <label for="ssj_tbl_periods_check" class="tbl_select"
-      >Add Periods</label
-    >
-    <input type="checkbox" class="tbl_select" id="ssj_tbl_periods_check" />
-    <hr />
-
-    <!-- Advanced -->
-    <button
-      class="button-adv"
-      id="ssj_advance_button"
-      onclick="ssjRunAdvanced()"
-    >
-      Advanced
-    </button>
-    <br />
-    <label for="ssj_breaks_check"
-      >Convert Line Breaks into Paragraphs</label
-    >
-    <input
-      type="checkbox"
-      class="adv_select"
-      id="ssj_breaks_check"
-      onclick="ssjEnableAdvanced()"
-    />
-  </fieldset>
-
-  <!-- Copy Button, Code Box -->
-  <div class="code_div">
-    <!--
-    <button id="ssj_test_button" onclick="ssjTestCode()">Test code</button>
-    -->
-    <button
-      class="button-code"
-      id="ssj_source_button"
-      onclick="ssjSourceCode()"
-    >
-      Commit code
-    </button>
-    <button
-      class="button-code"
-      id="ssj_source_button"
-      onclick="ssjClearCode()"
-    >
-      Clear code
-    </button>
-    <br />
-    <textarea
-      class="code_box"
-      id="ssj_source_box"
-      style="width: 300px; height: 150px; margin-bottom: 15px"
-      placeholder="Paste code here"
-      oninput="ssjSourceCode()"
-    ></textarea>
-    <br />
-    <button
-      class="button-code"
-      id="ssj_copy_button"
-      onclick="ssjCopyCode()"
-    >
-      Copy code
-    </button>
-    <button
-      class="button-code"
-      id="ssj_bug_button"
-      onclick="window.open('https://forms.office.com/r/cJfE3JUEWV', '_blank')"
-      target="_blank"
-    >
-      Report a bug
-    </button>
-    <br />
-    <textarea
-      class="code_box"
-      id="ssj_code_box"
-      style="width: 300px; height: 150px; background-color: #ebebeb"
-      readonly
-    ></textarea>
-  </div>
-
-  <!-- Instructions -->
-  <div class="instructions">
-    <div class="instruction-heading">Instructions</div>
-    <br />
-    1. &nbsp;Copy an article's source code from ServiceNow.<br />
-    2. &nbsp;Paste the code into the white box on the left.<br />
-    3. &nbsp;Select any of the dropdowns or checkboxes in the 'Stylizer'
-    box.<br />
-    4. &nbsp;Select any of the green buttons.<br />
-    5. &nbsp;Copy the code from the gray box.<br />
-    6. &nbsp;Paste the code back into the article in ServiceNow.<br /><br />
-    <div class="instruction-heading">Tip</div>
-    <br />
-    Before step 1, review the article contents in ServiceNow and apply
-    headings or bullet points where
-    appropriate.<br /><br />
-    <hr />
-    <br />
-    <div class="instruction-heading">Bugs</div>
-    <br />
-    Bugs in the program can manifest in two ways:<br />
-    <ol
-      style="
-        list-style-type: upper-alpha;
-        margin-top: 5px;
-        margin-bottom: 5px;
-      "
-    >
-      <li>
-        Selecting one of the green buttons fails to modify the code in the gray box.
-      </li>
-      <li>
-        Selecting one of the green buttons freezes this page. If this happens, go to 
-        another webpage and then return here.
-      </li>
-    </ol>
-    For either case, it would be helpful to select 'Report a bug'.
-  </div>
-</div>
-
-<!-- Sample Box -->
-<div hidden>
-  <textarea
-    class="code_box"
-    id="ssj_sample_box"
-    style="width: 650px; height: 150px"
-  ></textarea>
-</div>
-
-<!-- Stats Area -->
-<div class="stats" hidden>
-  <div class="column" id="ssj_stats_tags"></div>
-  <div class="column" id="ssj_stats_line"></div>
-  <div class="column" id="ssj_stats_type"></div>
-  <div class="column" id="ssj_stats_element"></div>
-</div>
-<br />
-
-
-
-<!-- ACCORDION -->
-
-<div class="flex-container box_set">
-  <fieldset>
-    <legend class="legend">Accordion</legend>
-    <label for="acc2_quantity">Quantity</label>
-    <input
-      type="number"
-      oninput="genAcc2Fields(), genAcc2Code()"
-      min="1"
-      max="20"
-      id="acc2_quantity"
-      value="1"
-    /><span class="asterisk">*</span><br />
-    <label for="acc2_color_field">Color</label>
-    <select
-      class="form-control menu-dropdown"
-      id="acc2_color_field"
-      oninput="genAcc2Code()"
-    >
-      <option>Default</option></select
-    ><br />
-    <label for="acc2_padding_field">Padding</label>
-    <input
-      type="range"
-      class="range_field_short"
-      oninput="genAcc2Padding(this.value), genAcc2Code()"
-      min="0"
-      max="50"
-      step="10"
-      value="0"
-      id="acc2_padding_field"
-      style="margin-right: 5px"
-    /><span id="acc2_padding_amount" style="color: gray">auto</span><br />
-    <label for="acc2_width_field">Width</label>
-    <input
-      type="range"
-      class="range_field_short"
-      oninput="genAcc2Width(this.value), genAcc2Code()"
-      min="0"
-      max="1000"
-      step="100"
-      value="0"
-      id="acc2_width_field"
-      style="margin-right: 5px"
-    /><span id="acc2_width_amount" style="color: gray">auto</span><br />
-    <input
-      type="text"
-      id="acc2_id_field"
-      oninput="genAcc2Code()"
-      placeholder="Accordion set ID"
-    />
-    <div id="acc2_fields"></div>
-  </fieldset>
-  <div class="code_div">
-    <button class="button-code" onclick="copyAcc2Code()">Copy code</button
-    ><br />
-    <textarea class="code_box" id="acc2_code_box"></textarea>
-  </div>
-</div>
-<br />
-
-
-
-<!-- TABS -->
-
-<div class="flex-container box_set">
-  <fieldset>
-    <legend class="legend">Tabs</legend>
-    <span style="color: gray; font-size: x-small">
-      <span style="font-weight: bold">Note:</span> Justify + dropdowns don't
-      work together for some reason.<br /><br />
-    </span>
-    <label for="tab_quantity">Quantity</label>
-    <input
-      type="number"
-      oninput="genTabFields(), genTabCode()"
-      min="1"
-      max="20"
-      id="tab_quantity"
-      value="1"
-    /><span class="asterisk">*</span><br />
-    <label class="radio-inline" for="tab_radio_tab">Tab</label>
-    <input
-      type="radio"
-      oninput="genTabCode()"
-      name="tab_radio"
-      id="tab_radio_tab"
-      checked
-    />
-    <label class="radio-inline" for="tab_radio_pill">Pill</label>
-    <input
-      type="radio"
-      oninput="genTabCode()"
-      name="tab_radio"
-      id="tab_radio_pill"
-    />
-    <label for="tab_image_check">Image</label>
-    <input
-      type="checkbox"
-      oninput="genTabImgWidthDisplay(), genTabFields(), genTabCode()"
-      id="tab_image_check"
-    /><br />
-    <div id="tab_imgwidth_display" style="display: none">
-      <label for="tab_imgwidth_field">img width</label>
-      <input
-        type="range"
-        class="range_field_short"
-        oninput="genTabImgWidth(this.value), genTabCode()"
-        min="50"
-        max="300"
-        step="25"
-        value="100"
-        id="tab_imgwidth_field"
-        style="margin-right: 5px"
-      /><span id="tab_imgwidth_amount">100px</span>
+        <!-- Output -->
+        <button
+          class="button-code"
+          id="ssj_copy_button"
+          onclick="ssjCopyCode()"
+        >
+          Copy code
+        </button>
+        <button
+          class="button-code"
+          id="ssj_bug_button"
+          onclick="window.open('https://forms.office.com/r/cJfE3JUEWV', '_blank')"
+          target="_blank"
+        >
+          Report a bug
+        </button>
+        <br />
+        <textarea
+          class="code_box"
+          id="ssj_code_box"
+          style="width: 300px; height: 150px; background-color: #ebebeb"
+          readonly
+        ></textarea>
+      </div>
+    
+      <!-- Instructions -->
+      <div class="instructions">
+        <div class="instruction-heading">Instructions</div>
+        <br />
+        1. &nbsp;Copy an article's source code from ServiceNow.<br />
+        2. &nbsp;Paste the code into the white box on the left.<br />
+        3. &nbsp;Select any of the dropdowns or checkboxes in the 'Stylizer'
+        box.<br />
+        4. &nbsp;Select any of the green buttons.<br />
+        5. &nbsp;Copy the code from the gray box.<br />
+        6. &nbsp;Paste the code back into the article in ServiceNow.<br /><br />
+        <div class="instruction-heading">Tip</div>
+        <br />
+        Before step 1, review the article contents in ServiceNow and apply
+        headings or bullet points where
+        appropriate.<br /><br />
+        <hr />
+        <br />
+        <div class="instruction-heading">Bugs</div>
+        <br />
+        Bugs in the program can manifest in two ways:<br />
+        <ol
+          style="
+            list-style-type: upper-alpha;
+            margin-top: 5px;
+            margin-bottom: 5px;
+          "
+        >
+          <li>
+            Selecting one of the green buttons fails to modify the code in the gray box.
+          </li>
+          <li>
+            Selecting one of the green buttons freezes this page. If this happens, go to 
+            another webpage and then return here.
+          </li>
+        </ol>
+        For either case, it would be helpful to select 'Report a bug'.
+      </div>
     </div>
-    <label for="tab_justified_check">Justify</label>
-    <input
-      type="checkbox"
-      oninput="genTabCode()"
-      id="tab_justified_check"
-    />
-    <label for="tab_fade_check">Fade</label>
-    <input type="checkbox" oninput="genTabCode()" id="tab_fade_check" />
-    <label for="tab_show_check">Show initially</label>
-    <input
-      type="checkbox"
-      oninput="genTabCode()"
-      id="tab_show_check"
-    /><br />
-    <input
-      type="text"
-      oninput="genTabCode()"
-      id="tab_id_field"
-      placeholder="Tab set ID"
-    /><br />
-    <div id="tab_fields" class="flex-container gen_field"></div>
-  </fieldset>
-  <div class="code_div">
-    <button class="button-code" onclick="copyTabCode()">Copy code</button
-    ><br />
-    <textarea class="code_box" id="tab_code_box"></textarea>
-  </div>
-</div>
+    
+    <!-- Sample Box -->
+    <div hidden>
+      <textarea
+        class="code_box"
+        id="ssj_sample_box"
+        style="width: 650px; height: 150px"
+      ></textarea>
+    </div>
+    
+    <!-- Stats Area -->
+    <div class="stats" hidden>
+      <div class="column" id="ssj_stats_tags"></div>
+      <div class="column" id="ssj_stats_line"></div>
+      <div class="column" id="ssj_stats_type"></div>
+      <div class="column" id="ssj_stats_element"></div>
+    </div>
+    <br />
+
+
+
+    <!-- ACCORDION -->
+    
+    <div class="flex-container box_set">
+      <fieldset>
+        <legend class="legend">Accordion</legend>
+        <label for="acc2_quantity">Quantity</label>
+        <input
+          type="number"
+          oninput="genAcc2Fields(), genAcc2Code()"
+          min="1"
+          max="20"
+          id="acc2_quantity"
+          value="1"
+        /><span class="asterisk">*</span><br />
+        <label for="acc2_color_field">Color</label>
+        <select
+          disabled
+          class="form-control menu-dropdown"
+          id="acc2_color_field"
+          oninput="genAcc2Code()"
+        >
+          <option>Default</option></select
+        ><br />
+        <label for="acc2_padding_field">Padding</label>
+        <input
+          type="range"
+          class="range_field_short"
+          oninput="genAcc2Padding(this.value), genAcc2Code()"
+          min="0"
+          max="50"
+          step="10"
+          value="0"
+          id="acc2_padding_field"
+          style="margin-right: 5px"
+        /><span id="acc2_padding_amount" style="color: gray">auto</span><br />
+        <label for="acc2_width_field">Width</label>
+        <input
+          type="range"
+          class="range_field_short"
+          oninput="genAcc2Width(this.value), genAcc2Code()"
+          min="0"
+          max="1000"
+          step="100"
+          value="0"
+          id="acc2_width_field"
+          style="margin-right: 5px"
+        /><span id="acc2_width_amount" style="color: gray">auto</span><br />
+        <input
+          type="text"
+          id="acc2_id_field"
+          oninput="genAcc2Code()"
+          placeholder="Accordion set ID"
+        />
+        <div id="acc2_fields"></div>
+      </fieldset>
+      <div class="code_div">
+        <button class="button-code" onclick="copyAcc2Code()">Copy code</button
+        ><br />
+        <textarea class="code_box" id="acc2_code_box"></textarea>
+      </div>
+    </div>
+    <br />
+
+
+
+    <!-- TABS -->
+    
+    <div class="flex-container box_set">
+      <fieldset>
+        <legend class="legend">Tabs</legend>
+        <span style="color: gray; font-size: x-small">
+          <span style="font-weight: bold">Note:</span> Justify + dropdowns don't
+          work together for some reason.<br /><br />
+        </span>
+        <label for="tab_quantity">Quantity</label>
+        <input
+          type="number"
+          oninput="genTabFields(), genTabCode()"
+          min="1"
+          max="20"
+          id="tab_quantity"
+          value="1"
+        /><span class="asterisk">*</span><br />
+        <label class="radio-inline" for="tab_radio_tab">Tab</label>
+        <input
+          type="radio"
+          oninput="genTabCode()"
+          name="tab_radio"
+          id="tab_radio_tab"
+          checked
+        />
+        <label class="radio-inline" for="tab_radio_pill">Pill</label>
+        <input
+          type="radio"
+          oninput="genTabCode()"
+          name="tab_radio"
+          id="tab_radio_pill"
+        />
+        <label for="tab_image_check">Image</label>
+        <input
+          type="checkbox"
+          oninput="genTabImgWidthDisplay(), genTabFields(), genTabCode()"
+          id="tab_image_check"
+        /><br />
+        <div id="tab_imgwidth_display" style="display: none">
+          <label for="tab_imgwidth_field">img width</label>
+          <input
+            type="range"
+            class="range_field_short"
+            oninput="genTabImgWidth(this.value), genTabCode()"
+            min="50"
+            max="300"
+            step="25"
+            value="100"
+            id="tab_imgwidth_field"
+            style="margin-right: 5px"
+          /><span id="tab_imgwidth_amount">100px</span>
+        </div>
+        <label for="tab_justified_check">Justify</label>
+        <input
+          type="checkbox"
+          oninput="genTabCode()"
+          id="tab_justified_check"
+        />
+        <label for="tab_fade_check">Fade</label>
+        <input type="checkbox" oninput="genTabCode()" id="tab_fade_check" />
+        <label for="tab_show_check">Show initially</label>
+        <input
+          type="checkbox"
+          oninput="genTabCode()"
+          id="tab_show_check"
+        /><br />
+        <input
+          type="text"
+          oninput="genTabCode()"
+          id="tab_id_field"
+          placeholder="Tab set ID"
+        /><br />
+        <div id="tab_fields" class="flex-container gen_field"></div>
+      </fieldset>
+      <div class="code_div">
+        <button class="button-code" onclick="copyTabCode()">Copy code</button
+        ><br />
+        <textarea class="code_box" id="tab_code_box"></textarea>
+      </div>
+    </div>
 
 
 
@@ -3939,6 +3957,7 @@ function ssjRunAdvanced() {
   let ssjArray = ssjOutputBox.value.split("\n");
   ssjSkipToC(ssjArray);
   ssjConvertBreaks(ssjArray);
+  ssjUpgradeAccordions(ssjArray);
   ssjArray = ssjArray.filter((value) => Object.keys(value).length !== 0);
   // Display the results in the code box
   ssjOutputBox.value = ssjArray.join("\n");
@@ -3956,6 +3975,38 @@ function ssjConvertBreaks(array) {
       } else if (array[i].trim() == "<br />") {
         array[i] = "";
       }
+    }
+  }
+}
+// Upgrade accordions
+function ssjUpgradeAccordions(array) {
+  if (ssj_upgrade_acc_check.checked) {
+    for (let i = ssjSkip; i < array.length; i++) {
+      // Upgrade accordion type 2
+      array[i] = array[i].replaceAll(
+        '<div class="panel panel-default" style="box-shadow: none;">',
+        '<div class="panel panel-default" style="box-shadow: none; border: none;">'
+      );
+      array[i] = array[i].replaceAll('class="btn btn-primary"', 'class="btn btn-default"');
+      array[i] = array[i].replaceAll('class="btn btn-success"', 'class="btn btn-default"');
+      array[i] = array[i].replaceAll('class="btn btn-info"', 'class="btn btn-default"');
+      array[i] = array[i].replaceAll('class="btn btn-warning"', 'class="btn btn-default"');
+      array[i] = array[i].replaceAll('class="btn btn-danger"', 'class="btn btn-default"');
+      array[i] = array[i].replaceAll(
+        '<div class="panel-body">',
+        '<div class="panel-body" style="border: 1px solid #d5d8de; border-radius: 8px;">'
+      );
+      // Upgrade accordion type 1
+      array[i] = array[i].replaceAll('class="panel list-group"', 'class="panel-group"');
+      array[i] = array[i].replaceAll(
+        /<a class="list-group-item" style="[^"]*"/g,
+        '<a class="btn btn-default" style="width: 100%; text-align: left;"'
+      );
+      array[i] = array[i].replaceAll('class="collapse"', 'class="panel-collapse collapse"');
+      array[i] = array[i].replaceAll(
+        /<div class="list-group-item" style="[^"]*"/g,
+        '<div class="panel-body" style="border: 1px solid #d5d8de; border-radius: 8px;"'
+      );
     }
   }
 }
