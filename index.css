@@ -1,0 +1,314 @@
+@font-face {
+  font-family: "Community Regular";
+  src: url("LinkedIn Community Font/Community-Regular.otf");
+}
+
+@font-face {
+  font-family: "Community Semibold";
+  src: url("LinkedIn Community Font/Community-Semibold.otf");
+}
+
+@font-face {
+  font-family: "Community Slab Regular";
+  src: url("LinkedIn Community Font/CommunitySlab-Regular.otf");
+}
+
+@font-face {
+  font-family: "Community Slab Semibold";
+  src: url("LinkedIn Community Font/CommunitySlab-Semibold.otf");
+}
+
+@font-face {
+  font-family: "SF Pro Display Regular";
+  src: url("SF Pro Display Font/SFPRODISPLAYREGULAR.otf");
+}
+
+@font-face {
+  font-family: "SF Pro Display Medium";
+  src: url("SF Pro Display Font/SFPRODISPLAYMEDIUM.otf");
+}
+
+@font-face {
+  font-family: "SF Pro Display Bold";
+  src: url("SF Pro Display Font/SFPRODISPLAYBOLD.otf");
+}
+
+.tablink {
+  margin: auto;
+  color: #666;
+  background-color: white;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  font-size: 14px;
+  margin: 0 15px;
+}
+
+.tablink:hover {
+  color: #282828;
+}
+
+.tablink:active {
+  color: #282828;
+}
+
+.tablink img {
+  filter: brightness(0) saturate(100%) hue-rotate(0deg) invert(40%);
+}
+
+.tablink:hover img {
+  filter: brightness(0) saturate(100%) hue-rotate(0deg) invert(5%);
+}
+
+.tablink:active img {
+  filter: brightness(0) saturate(100%) hue-rotate(0deg) invert(5%);
+}
+
+.tabcontent {
+  display: none;
+}
+
+.page_buttons {
+  width: fit-content;
+  margin: auto;
+  padding: 6px 0;
+}
+
+.header {
+  background-color: #fff;
+  height: 60px;
+  border-bottom: 1px solid #e8e8e8;
+}
+
+body {
+  color: #38434f;
+  font-family: "SF Pro Display Regular", sans-serif;
+  font-size: 16px;
+  background-color: #f4f2ee;
+  margin: 0;
+  padding: 0;
+}
+
+h1 {
+  color: #0a66c2;
+  font-family: "SF Pro Display Medium", sans-serif;
+  font-size: 30px;
+  margin: 0;
+  line-height: 40px;
+}
+
+h2 {
+  color: #282828;
+  font-family: "SF Pro Display Medium", sans-serif;
+  font-size: 26px;
+  margin-top: -6px;
+  text-align: center;
+}
+
+h3 {
+  line-height: 1.4;
+  color: #282828;
+  font-family: "SF Pro Display Medium", sans-serif;
+  font-size: 16px;
+  margin-top: 2px;
+  margin-bottom: -8px;
+}
+
+.breaker {
+  height: 1px;
+  margin: 16px 0px 12px 0px;
+  background-color: #dfdeda;
+}
+
+.container {
+  width: fit-content;
+  padding: 28px;
+  background-color: #fff;
+  border: 1px solid #dfdeda;
+  border-radius: 10px;
+  margin: auto;
+}
+
+.box_set {
+  display: flex;
+  flex-direction: row;
+}
+
+.settings {
+  min-width: 420px;
+  background-color: #fff;
+  border: 1px solid #dfdeda;
+  border-radius: 10px;
+  padding-top: 10px;
+}
+
+.legend {
+  color: #c31d28;
+  font-family: "SF Pro Display Medium", sans-serif;
+}
+
+.radio {
+  margin-right: 10px;
+  height: 15px;
+  width: 15px;
+}
+
+.checkbox {
+  margin-right: 10px;
+  height: 15px;
+  width: 15px;
+}
+
+.note {
+  color: gray;
+  font-size: 14px;
+}
+
+.instructions {
+  max-width: 400px;
+  line-height: 1.5;
+  background-color: #fff;
+  border: 1px solid #dfdeda;
+  border-radius: 10px;
+  padding: 10px 10px 0px 10px;
+}
+
+.asterisk {
+  color: red;
+}
+
+.gen_field {
+  display: flex;
+  flex-direction: column;
+}
+
+.sub_label {
+  margin-left: 2px;
+  margin-top: 2px;
+  margin-right: 2px;
+}
+
+.sub_label_margin {
+  margin-left: 47px;
+  margin-top: 2px;
+  margin-right: 2px;
+}
+
+.code_div {
+  margin-left: 20px;
+}
+
+.code_box {
+  font-family: monospace;
+  font-size: 14px;
+  min-width: 420px;
+  height: calc(100% - 60px);
+}
+
+.range_field_short {
+  width: 100px;
+}
+
+.canvas {
+  border: 1px solid darkgrey;
+}
+
+.color_box {
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  margin-left: 3px;
+  vertical-align: middle;
+  box-shadow: 0px 0px 0px 1px gray inset;
+}
+
+.stats {
+  display: flex;
+}
+
+.column {
+  float: left;
+  display: flex;
+  margin-right: 20px;
+}
+
+.button {
+  font-family: "SF Pro Display Medium", sans-serif;
+  font-size: 16px;
+  font-weight: bold;
+  color: #fff;
+  text-align: center;
+  padding: 7px 14px;
+  background-color: #2d65bc;
+  outline: none;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  margin-top: 5px;
+  margin-bottom: 10px;
+}
+
+.button:hover {
+  background-color: #19407e;
+}
+
+.button:active {
+  background-color: #0f2035;
+}
+
+.button:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.alternate {
+  background-color: #fff;
+  color: #2d65bc;
+  outline: 1px solid #2d65bc;
+  outline-offset: -1px;
+}
+
+.alternate:hover {
+  background-color: #e6f0fd;
+  outline: 2px solid #2d65bc;
+  outline-offset: -2px;
+}
+
+.alternate:active {
+  background-color: #dae9fd;
+  color: #1a407f;
+  outline: 2px solid #1a407f;
+  outline-offset: -2px;
+}
+
+.alternate:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.menu-dropdown {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: auto;
+  padding: 1px 5px;
+  cursor: pointer;
+  border-radius: 4px;
+  font-family: "SF Pro Display Regular", sans-serif;
+}
+
+input {
+  font-size: 16px;
+}
+
+select {
+  font-size: 16px;
+}
+
+.selectors {
+  line-height: 1.4;
+}
+
+.selectors-adv {
+  line-height: 1.8;
+}
