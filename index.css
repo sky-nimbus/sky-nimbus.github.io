@@ -204,7 +204,7 @@ body {
   font-family: monospace;
   font-size: 14px;
   min-width: 420px;
-  height: 125px;
+  min-height: 125px;
 }
 
 .comment {
