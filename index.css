@@ -20,17 +20,17 @@
 
 @font-face {
   font-family: "SF Pro Display Regular";
-  src: url("SF Pro Display Font/SFPRODISPLAYREGULAR.otf");
+  src: url("SF Pro Display Font/SFPRODISPLAYREGULAR.OTF");
 }
 
 @font-face {
   font-family: "SF Pro Display Medium";
-  src: url("SF Pro Display Font/SFPRODISPLAYMEDIUM.otf");
+  src: url("SF Pro Display Font/SFPRODISPLAYMEDIUM.OTF");
 }
 
 @font-face {
   font-family: "SF Pro Display Bold";
-  src: url("SF Pro Display Font/SFPRODISPLAYBOLD.otf");
+  src: url("SF Pro Display Font/SFPRODISPLAYBOLD.OTF");
 }
 
 .tablink {
@@ -90,7 +90,7 @@ body {
   padding: 0;
 }
 
-h1 {
+.title {
   color: #0a66c2;
   font-family: "SF Pro Display Medium", sans-serif;
   font-size: 30px;
@@ -98,15 +98,16 @@ h1 {
   line-height: 40px;
 }
 
-h2 {
+.page_name {
   color: #282828;
   font-family: "SF Pro Display Medium", sans-serif;
   font-size: 26px;
   margin-top: -6px;
+  margin-bottom: 16px;
   text-align: center;
 }
 
-h3 {
+.section_name {
   line-height: 1.4;
   color: #282828;
   font-family: "SF Pro Display Medium", sans-serif;
@@ -195,7 +196,7 @@ h3 {
   margin-right: 2px;
 }
 
-.code_div {
+.right_side {
   margin-left: 20px;
 }
 
@@ -204,6 +205,20 @@ h3 {
   font-size: 14px;
   min-width: 420px;
   height: calc(100% - 60px);
+}
+
+.code_box_comm {
+  font-family: monospace;
+  font-size: 14px;
+  min-width: 420px;
+  height: 140px;
+}
+
+.comment {
+  font-family: "SF Pro Display Regular", sans-serif;
+  font-size: 16px;
+  width: 450px;
+  margin-top: 20px;
 }
 
 .range_field_short {

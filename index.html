@@ -25,32 +25,32 @@
     <link
       rel="stylesheet"
       type="text/css"
-      href="SF Pro Display Font/SFPRODISPLAYREGULAR.otf"
+      href="SF Pro Display Font/SFPRODISPLAYREGULAR.OTF"
     />
     <link
       rel="stylesheet"
       type="text/css"
-      href="SF Pro Display Font/SFPRODISPLAYMEDIUM.otf"
+      href="SF Pro Display Font/SFPRODISPLAYMEDIUM.OTF"
     />
     <link
       rel="stylesheet"
       type="text/css"
-      href="SF Pro Display Font/SFPRODISPLAYBOLD.otf"
+      href="SF Pro Display Font/SFPRODISPLAYBOLD.OTF"
     />
 
     <link rel="stylesheet" type="text/css" href="index.css" />
   </head>
 
   <body
-    onload="ssjLoadCode(), genAccFields(), genAcc2Fields(), genTabFields(), genDropFields(), genCarFields()"
+    onload="ssjLoadCode(), godLoadCode(), genAccFields(), genAcc2Fields(), genTabFields(), genDropFields(), genCarFields()"
   >
-    <!-- HEADER, PAGES -->
+    <!------------------------------------------------------------ HEADER, PAGES -->
     <div class="header">
       <div style="width: 950px; margin: auto; display: flex; direction: row">
-        <div style="width: 33.33%; float: left; padding: 10px 0">
-          <h1>go/Stylizer</h1>
+        <div style="width: 25%; float: left; padding: 10px 0">
+          <div class="title">go/Stylizer</div>
         </div>
-        <div style="width: 33.33%; float: left">
+        <div style="width: 50%; float: left">
           <div class="page_buttons">
             <button
               class="tablink"
@@ -58,6 +58,12 @@
               id="defaultOpen"
             >
               <img src="Icons/ghost-solid.svg" height="25" /><br />Stylizer
+            </button>
+            <button class="tablink" onclick="openPage('pageComments', this)">
+              <img
+                src="Icons/masks-theater-solid.svg"
+                height="25"
+              /><br />Comments
             </button>
             <button class="tablink" onclick="openPage('pageAccordions', this)">
               <img src="Icons/meteor-solid.svg" height="25" /><br />Accordions
@@ -67,7 +73,7 @@
             </button>
           </div>
         </div>
-        <div style="width: 33.33%; float: left; padding: 9px 0">
+        <div style="width: 25%; float: left; padding: 9px 0">
           <button
             class="button alternate"
             id="ssj_bug_button"
@@ -82,18 +88,17 @@
     </div>
     <br />
 
-    <!-- TAB 1: STYLIZER -->
+    <!------------------------------------------------------------ STYLIZER -->
     <div id="pageStylizer" class="tabcontent">
-      <!-- STYLIZER -->
       <div class="container">
-        <h2>Stylizer</h2>
+        <div class="page_name">Stylizer</div>
         <div class="flex-container box_set">
           <fieldset class="settings">
             <!-- Title -->
             <!-- <legend class="legend">Stylizer</legend> -->
 
             <!-- Templates -->
-            <h3>Choose Colors</h3>
+            <div class="section_name">Choose Colors</div>
             <br />
             <label for="ssj_colors_drop" id="ssj_colors_label">Theme</label>
             <select
@@ -115,7 +120,7 @@
             <div class="breaker"></div>
 
             <!-- Preserve -->
-            <h3>Preserve Decorations</h3>
+            <div class="section_name">Preserve Decorations</div>
             <br />
             <div class="selectors">
               <label for="ssj_textdecor_check" class="p_select"
@@ -363,7 +368,7 @@
             </div>
           </fieldset>
 
-          <div class="code_div">
+          <div class="right_side">
             <!-- <button id="ssj_test_button" onclick="ssjTestCode()">Test code</button> -->
 
             <!-- Input -->
@@ -376,7 +381,7 @@
             </button>
             <button
               class="button alternate"
-              id="ssj_source_button"
+              id="ssj_clear_button"
               onclick="ssjClearCode()"
             >
               Clear code
@@ -406,7 +411,7 @@
 
             <!-- Instructions -->
             <div class="instructions">
-              <h3>Instructions</h3>
+              <div class="section_name">Instructions</div>
               <ol>
                 <li>Copy an article's source code in ServiceNow.</li>
                 <li>Paste the code into the white box above.</li>
@@ -441,11 +446,39 @@
       </div>
     </div>
 
-    <!-- TAB 2: ACCORDIONS -->
-    <div id="pageAccordions" class="tabcontent">
-      <!-- ACCORDION -->
+    <!------------------------------------------------------------ COMMENTS -->
+    <div id="pageComments" class="tabcontent">
       <div class="container">
-        <h2>Accordions</h2>
+        <div class="page_name">Comments</div>
+        <div class="flex-container box_set">
+          <div>
+            <div class="section_name">Preview:</div>
+            <div class="comment" id="god_comment_box"></div>
+          </div>
+          <div class="right_side">
+            <button
+              class="button alternate"
+              id="god_clear_button"
+              onclick="godClearCode()"
+            >
+              Clear code
+            </button>
+            <br />
+            <textarea
+              id="god_source_box"
+              class="code_box_comm"
+              placeholder="Paste code here"
+              oninput="godStripCode()"
+            ></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!------------------------------------------------------------ ACCORDIONS -->
+    <div id="pageAccordions" class="tabcontent">
+      <div class="container">
+        <div class="page_name">Accordions</div>
         <div class="flex-container box_set">
           <fieldset class="settings">
             <!-- <legend class="legend">Accordion</legend> -->
@@ -505,7 +538,7 @@
               </div>
             </div>
           </fieldset>
-          <div class="code_div">
+          <div class="right_side">
             <button class="button" onclick="copyAcc2Code()">Copy code</button
             ><br />
             <textarea class="code_box" id="acc2_code_box"></textarea>
@@ -515,11 +548,10 @@
       <br />
     </div>
 
-    <!-- TAB 3: TABS -->
+    <!------------------------------------------------------------ TABS -->
     <div id="pageTabs" class="tabcontent">
-      <!-- TABS -->
       <div class="container">
-        <h2>Tabs</h2>
+        <div class="page_name">Tabs</div>
         <div class="flex-container box_set">
           <fieldset class="settings">
             <!-- <legend class="legend">Tabs</legend> -->
@@ -609,7 +641,7 @@
               </div>
             </div>
           </fieldset>
-          <div class="code_div">
+          <div class="right_side">
             <button class="button" onclick="copyTabCode()">Copy code</button
             ><br />
             <textarea class="code_box" id="tab_code_box"></textarea>
@@ -617,9 +649,8 @@
         </div>
       </div>
     </div>
+    <div style="height: 50px"></div>
 
     <script src="index.js"></script>
-
-    <div style="height: 50px"></div>
   </body>
 </html>

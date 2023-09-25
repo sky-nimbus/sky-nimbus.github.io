@@ -3321,6 +3321,26 @@ function ssjUpgradeAccordions(array) {
   }
 }
 
+//! ------------------------------------------------------------ COMMENTS
+
+var godInputBox;
+var godOutputBox;
+function godLoadCode() {
+  godInputBox = document.getElementById("god_source_box");
+  godOutputBox = document.getElementById("god_comment_box");
+}
+// Strip HTML from the source box
+function godStripCode() {
+  godOutputBox.innerHTML = "";
+  let array = godInputBox.value.split("\n");
+  godOutputBox.innerHTML = array.join("\n");
+}
+// Clear code
+function godClearCode() {
+  godInputBox.value = "";
+  godOutputBox.innerHTML = "";
+}
+
 //! ------------------------------------------------------------ ACCORDIONS
 
 function genAcc2Width(val) {
