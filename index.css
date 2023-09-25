@@ -204,14 +204,7 @@ body {
   font-family: monospace;
   font-size: 14px;
   min-width: 420px;
-  height: calc(100% - 60px);
-}
-
-.code_box_comm {
-  font-family: monospace;
-  font-size: 14px;
-  min-width: 420px;
-  height: 140px;
+  height: 125px;
 }
 
 .comment {
