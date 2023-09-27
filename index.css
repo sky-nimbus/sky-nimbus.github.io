@@ -35,6 +35,7 @@
 
 .tablink {
   margin: auto;
+  width: 90px;
   color: #666;
   background-color: white;
   float: left;
