@@ -3358,6 +3358,7 @@ function godFormatHTML(array, i) {
     'src="/',
     'src="/https://linkedin.service-now.com/'
   );
+  /*
   if (array[i].includes("img style")) {
     array[i] = array[i].replaceAll(
       '<img style="',
@@ -3366,6 +3367,7 @@ function godFormatHTML(array, i) {
   } else {
     array[i] = array[i].replaceAll("<img", '<img style="max-width: 100%;"');
   }
+  */
   if (i == array.length - 1 && array[i][array[i].length - 1] == '"') {
     array[i] = array[i].slice(0, -1)
   };

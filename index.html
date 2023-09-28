@@ -479,13 +479,15 @@
     <div id="pageCompare" class="tabcontent">
       <div
         class="container"
-        style="min-width: fit-content; max-width: calc(100% - 100px)"
+        style="min-width: 920px; max-width: calc(100% - 100px)"
       >
         <div class="page_name">Compare</div>
-
-        <!-- Code Boxes -->
-        <div class="flex-container" style="display: flex; flex-direction: row">
-          <div class="left_side" style="width: 50%; text-align: right">
+        <div
+          class="flex-container"
+          style="display: flex; flex-direction: row; width: 100%"
+        >
+          <!-- Code 1 (Frieza) -->
+          <div class="left_side" style="width: 50%">
             <button
               class="button alternate"
               id="frz_clear_button"
@@ -500,7 +502,17 @@
               placeholder="Paste code here"
               oninput="frzStripCode()"
             ></textarea>
+            <br /><br />
+            <div
+              class="preview_box"
+              style="width: fit-content; max-width: 100%"
+            >
+              <div class="section_name">Preview:</div>
+              <div class="comment" id="frz_comment_box"></div>
+            </div>
           </div>
+
+          <!-- Code 2 (Buu) -->
           <div class="right_side" style="width: 50%">
             <button
               class="button alternate"
@@ -516,19 +528,14 @@
               placeholder="Paste code here"
               oninput="buuStripCode()"
             ></textarea>
-          </div>
-        </div>
-        <br />
-
-        <!-- Previews -->
-        <div class="flex-container" style="display: flex; flex-direction: row">
-          <div class="preview_box left_side" style="width: 50%">
-            <div class="section_name">Preview:</div>
-            <div class="comment" id="frz_comment_box"></div>
-          </div>
-          <div class="preview_box right_side" style="width: 50%">
-            <div class="section_name">Preview:</div>
-            <div class="comment" id="buu_comment_box"></div>
+            <br /><br />
+            <div
+              class="preview_box"
+              style="width: fit-content; max-width: 100%"
+            >
+              <div class="section_name">Preview:</div>
+              <div class="comment" id="buu_comment_box"></div>
+            </div>
           </div>
         </div>
       </div>

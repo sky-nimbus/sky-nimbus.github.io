@@ -178,6 +178,7 @@ body {
 
 .static {
   max-width: 446px;
+  max-height: 125px;
 }
 
 .preview_box {
@@ -189,6 +190,7 @@ body {
   font-family: "SF Pro Display Regular", sans-serif;
   font-size: 16px;
   margin-top: 20px;
+  overflow-x: auto;
 }
 
 .instructions {
