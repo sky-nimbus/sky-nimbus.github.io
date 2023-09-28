@@ -40,15 +40,15 @@
   </head>
 
   <body
-    onload="ssjLoadCode(), godLoadCode(), genAccFields(), genAcc2Fields(), genTabFields(), genDropFields(), genCarFields()"
+    onload="ssjLoadCode(), genAccFields(), genAcc2Fields(), genTabFields(), genDropFields(), genCarFields()"
   >
     <!------------------------------------------------------------ HEADER, PAGES -->
     <div class="header">
       <div style="width: 950px; margin: auto; display: flex; direction: row">
-        <div style="width: 25%; float: left; padding: 10px 0">
+        <div style="width: 20%; float: left; padding: 10px 0">
           <div class="title">go/Stylizer</div>
         </div>
-        <div style="width: 50%; float: left">
+        <div style="width: 60%; float: left">
           <div class="page_buttons">
             <button
               class="tablink"
@@ -57,21 +57,24 @@
             >
               <img src="Icons/ghost-solid.svg" height="25" /><br />Stylizer
             </button>
-            <button class="tablink" onclick="openPage('pageComments', this)">
-              <img
-                src="Icons/masks-theater-solid.svg"
-                height="25"
-              /><br />Comments
-            </button>
             <button class="tablink" onclick="openPage('pageAccordions', this)">
               <img src="Icons/meteor-solid.svg" height="25" /><br />Accordions
             </button>
             <button class="tablink" onclick="openPage('pageTabs', this)">
               <img src="Icons/leaf-solid.svg" height="25" /><br />Tabs
             </button>
+            <button class="tablink" onclick="openPage('pageComments', this)">
+              <img
+                src="Icons/masks-theater-solid.svg"
+                height="25"
+              /><br />Comments
+            </button>
+            <button class="tablink" onclick="openPage('pageCompare', this)">
+              <img src="Icons/bowl-rice-solid.svg" height="25" /><br />Compare
+            </button>
           </div>
         </div>
-        <div style="width: 25%; float: left; padding: 9px 0">
+        <div style="width: 20%; float: left; padding: 9px 0">
           <button
             class="button alternate"
             id="ssj_bug_button"
@@ -90,10 +93,9 @@
     <div id="pageStylizer" class="tabcontent">
       <div class="container">
         <div class="page_name">Stylizer</div>
-        <div class="flex-container box_set">
-          <fieldset class="settings">
+        <div class="flex-container" style="display: flex; flex-direction: row">
+          <div class="settings_box left_side">
             <!-- Title -->
-            <!-- <legend class="legend">Stylizer</legend> -->
 
             <!-- Templates -->
             <div class="section_name">Choose Colors</div>
@@ -364,7 +366,7 @@
                 onclick="ssjEnableAdvanced()"
               />
             </div>
-          </fieldset>
+          </div>
 
           <div class="right_side">
             <!-- <button id="ssj_test_button" onclick="ssjTestCode()">Test code</button> -->
@@ -405,10 +407,10 @@
               style="background-color: #eef3f7"
               readonly
             ></textarea>
-            <br /><br />
+            <br /><br /><br />
 
             <!-- Instructions -->
-            <div class="instructions">
+            <div class="settings_box instructions">
               <div class="section_name">Instructions</div>
               <ol>
                 <li>Copy an article's source code in ServiceNow.</li>
@@ -448,8 +450,8 @@
     <div id="pageComments" class="tabcontent">
       <div class="container">
         <div class="page_name">Comments</div>
-        <div class="flex-container box_set">
-          <div>
+        <div class="flex-container" style="display: flex; flex-direction: row">
+          <div class="preview_box left_side">
             <div class="section_name">Preview:</div>
             <div class="comment" id="god_comment_box"></div>
           </div>
@@ -464,10 +466,69 @@
             <br />
             <textarea
               id="god_source_box"
-              class="code_box"
+              class="code_box static"
               placeholder="Paste code here"
               oninput="godStripCode()"
             ></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!------------------------------------------------------------ COMPARE -->
+    <div id="pageCompare" class="tabcontent">
+      <div
+        class="container"
+        style="min-width: fit-content; max-width: calc(100% - 100px)"
+      >
+        <div class="page_name">Compare</div>
+
+        <!-- Code Boxes -->
+        <div class="flex-container" style="display: flex; flex-direction: row">
+          <div class="left_side" style="width: 50%; text-align: right">
+            <button
+              class="button alternate"
+              id="frz_clear_button"
+              onclick="frzClearCode()"
+            >
+              Clear code
+            </button>
+            <br />
+            <textarea
+              id="frz_source_box"
+              class="code_box static"
+              placeholder="Paste code here"
+              oninput="frzStripCode()"
+            ></textarea>
+          </div>
+          <div class="right_side" style="width: 50%">
+            <button
+              class="button alternate"
+              id="buu_clear_button"
+              onclick="buuClearCode()"
+            >
+              Clear code
+            </button>
+            <br />
+            <textarea
+              id="buu_source_box"
+              class="code_box static"
+              placeholder="Paste code here"
+              oninput="buuStripCode()"
+            ></textarea>
+          </div>
+        </div>
+        <br />
+
+        <!-- Previews -->
+        <div class="flex-container" style="display: flex; flex-direction: row">
+          <div class="preview_box left_side" style="width: 50%">
+            <div class="section_name">Preview:</div>
+            <div class="comment" id="frz_comment_box"></div>
+          </div>
+          <div class="preview_box right_side" style="width: 50%">
+            <div class="section_name">Preview:</div>
+            <div class="comment" id="buu_comment_box"></div>
           </div>
         </div>
       </div>
@@ -477,9 +538,8 @@
     <div id="pageAccordions" class="tabcontent">
       <div class="container">
         <div class="page_name">Accordions</div>
-        <div class="flex-container box_set">
-          <fieldset class="settings">
-            <!-- <legend class="legend">Accordion</legend> -->
+        <div class="flex-container" style="display: flex; flex-direction: row">
+          <div class="settings_box left_side">
             <div class="selectors-adv">
               <label for="acc2_quantity">Quantity</label>
               <input
@@ -535,7 +595,7 @@
                 <div id="acc2_fields"></div>
               </div>
             </div>
-          </fieldset>
+          </div>
           <div class="right_side">
             <button class="button" onclick="copyAcc2Code()">Copy code</button
             ><br />
@@ -550,16 +610,9 @@
     <div id="pageTabs" class="tabcontent">
       <div class="container">
         <div class="page_name">Tabs</div>
-        <div class="flex-container box_set">
-          <fieldset class="settings">
-            <!-- <legend class="legend">Tabs</legend> -->
+        <div class="flex-container" style="display: flex; flex-direction: row">
+          <div class="settings_box left_side">
             <div class="selectors-adv">
-              <!--
-              <span class="note">
-                <strong>Note:</strong> Justify + dropdowns don't work together
-                for some reason.<br />
-              </span>
-              -->
               <label for="tab_quantity">Quantity</label>
               <input
                 type="number"
@@ -638,7 +691,7 @@
                 <div id="tab_fields" class="flex-container gen_field"></div>
               </div>
             </div>
-          </fieldset>
+          </div>
           <div class="right_side">
             <button class="button" onclick="copyTabCode()">Copy code</button
             ><br />

@@ -132,24 +132,6 @@ body {
   margin: auto;
 }
 
-.box_set {
-  display: flex;
-  flex-direction: row;
-}
-
-.settings {
-  min-width: 420px;
-  background-color: #fff;
-  border: 1px solid #dfdeda;
-  border-radius: 10px;
-  padding-top: 10px;
-}
-
-.legend {
-  color: #c31d28;
-  font-family: "SF Pro Display Medium", sans-serif;
-}
-
 .radio {
   margin-right: 10px;
   height: 15px;
@@ -162,20 +144,6 @@ body {
   width: 15px;
 }
 
-.note {
-  color: gray;
-  font-size: 14px;
-}
-
-.instructions {
-  max-width: 400px;
-  line-height: 1.5;
-  background-color: #fff;
-  border: 1px solid #dfdeda;
-  border-radius: 10px;
-  padding: 10px 10px 0px 10px;
-}
-
 .asterisk {
   color: red;
 }
@@ -185,42 +153,50 @@ body {
   flex-direction: column;
 }
 
-.sub_label {
-  margin-left: 2px;
-  margin-top: 2px;
-  margin-right: 2px;
-}
-
-.sub_label_margin {
-  margin-left: 47px;
-  margin-top: 2px;
-  margin-right: 2px;
+.left_side {
+  margin-right: 10px;
 }
 
 .right_side {
-  margin-left: 20px;
+  margin-left: 10px;
+}
+
+.settings_box {
+  width: 420px;
+  background-color: #fff;
+  border: 1px solid #dfdeda;
+  border-radius: 10px;
+  padding: 15px;
 }
 
 .code_box {
   font-family: monospace;
   font-size: 14px;
-  min-width: 420px;
+  min-width: 446px;
+  min-height: 125px;
+}
+
+.static {
+  max-width: 446px;
+}
+
+.preview_box {
+  width: 452px;
   min-height: 125px;
 }
 
 .comment {
   font-family: "SF Pro Display Regular", sans-serif;
   font-size: 16px;
-  width: 450px;
   margin-top: 20px;
+}
+
+.instructions {
+  line-height: 1.5;
 }
 
 .range_field_short {
   width: 100px;
-}
-
-.canvas {
-  border: 1px solid darkgrey;
 }
 
 .color_box {

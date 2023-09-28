@@ -31,11 +31,23 @@ var ssjOutputBox;
 var ssjArray;
 var sampleBox;
 var samples = [];
+var godInputBox;
+var godOutputBox;
+var frzInputBox;
+var frzOutputBox;
+var buuInputBox;
+var buuOutputBox;
 function ssjLoadCode() {
   ssjInputBox = document.getElementById("ssj_source_box");
   ssjOutputBox = document.getElementById("ssj_code_box");
   sampleBox = document.getElementById("ssj_sample_box");
   ssjChangeColorBoxes();
+  godInputBox = document.getElementById("god_source_box");
+  godOutputBox = document.getElementById("god_comment_box");
+  frzInputBox = document.getElementById("frz_source_box");
+  frzOutputBox = document.getElementById("frz_comment_box");
+  buuInputBox = document.getElementById("buu_source_box");
+  buuOutputBox = document.getElementById("buu_comment_box");
 }
 // Copy code in the code box
 function ssjCopyCode() {
@@ -3323,22 +3335,77 @@ function ssjUpgradeAccordions(array) {
 
 //! ------------------------------------------------------------ COMMENTS
 
-var godInputBox;
-var godOutputBox;
-function godLoadCode() {
-  godInputBox = document.getElementById("god_source_box");
-  godOutputBox = document.getElementById("god_comment_box");
-}
 // Strip HTML from the source box
 function godStripCode() {
   godOutputBox.innerHTML = "";
   let array = godInputBox.value.split("\n");
+  for (let i = 0; i < array.length; i++) {
+    godFormatHTML(array, i);
+  }
   godOutputBox.innerHTML = array.join("\n");
 }
 // Clear code
 function godClearCode() {
   godInputBox.value = "";
   godOutputBox.innerHTML = "";
+}
+
+//! ------------------------------------------------------------ COMPARE
+
+// Format HTML
+function godFormatHTML(array, i) {
+  array[i] = array[i].replaceAll(
+    'src="/',
+    'src="/https://linkedin.service-now.com/'
+  );
+  if (array[i].includes("img style")) {
+    array[i] = array[i].replaceAll(
+      '<img style="',
+      '<img style="max-width: 100%; '
+    );
+  } else {
+    array[i] = array[i].replaceAll("<img", '<img style="max-width: 100%;"');
+  }
+  if (i == array.length - 1 && array[i][array[i].length - 1] == '"') {
+    array[i] = array[i].slice(0, -1)
+  };
+  if (i == 0 && array[i][0] == '"') {
+    array[i] = array[i].slice(1)
+  };
+}
+
+//? ------------------------------ Code 1 (Frieza)
+
+// Strip HTML from the source box
+function frzStripCode() {
+  frzOutputBox.innerHTML = "";
+  let array = frzInputBox.value.split("\n");
+  for (let i = 0; i < array.length; i++) {
+    godFormatHTML(array, i);
+  }
+  frzOutputBox.innerHTML = array.join("\n");
+}
+// Clear code
+function frzClearCode() {
+  frzInputBox.value = "";
+  frzOutputBox.innerHTML = "";
+}
+
+//? ------------------------------ Code 2 (Buu)
+
+// Strip HTML from the source box
+function buuStripCode() {
+  buuOutputBox.innerHTML = "";
+  let array = buuInputBox.value.split("\n");
+  for (let i = 0; i < array.length; i++) {
+    godFormatHTML(array, i);
+  }
+  buuOutputBox.innerHTML = array.join("\n");
+}
+// Clear code
+function buuClearCode() {
+  buuInputBox.value = "";
+  buuOutputBox.innerHTML = "";
 }
 
 //! ------------------------------------------------------------ ACCORDIONS
