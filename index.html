@@ -50,11 +50,7 @@
         </div>
         <div style="width: 60%; float: left">
           <div class="page_buttons">
-            <button
-              class="tablink"
-              onclick="openPage('pageStylizer', this)"
-              id="defaultOpen"
-            >
+            <button class="tablink" onclick="openPage('pageStylizer', this)">
               <img src="Icons/ghost-solid.svg" height="25" /><br />Stylizer
             </button>
             <button class="tablink" onclick="openPage('pageAccordions', this)">
@@ -69,7 +65,11 @@
                 height="25"
               /><br />Comments
             </button>
-            <button class="tablink" onclick="openPage('pageCompare', this)">
+            <button
+              class="tablink"
+              onclick="openPage('pageCompare', this)"
+              id="defaultOpen"
+            >
               <img src="Icons/bowl-rice-solid.svg" height="25" /><br />Compare
             </button>
           </div>
@@ -503,11 +503,22 @@
               oninput="frzStripCode()"
             ></textarea>
             <br /><br />
-            <div
-              class="preview_box"
-              style="width: fit-content; max-width: 100%"
-            >
-              <div class="section_name">Preview:</div>
+            <div class="preview_box" style="width: 100%">
+              <div style="width: 100%">
+                <span class="section_name" style="float: left">Preview:</span>
+                <input
+                  type="checkbox"
+                  class="checkbox"
+                  id="frz_hide_images_check"
+                  onclick="frzStripCode()"
+                  style="margin-left: 5px"
+                />
+                <label
+                  for="frz_hide_images_check"
+                  style="float: left; margin-left: 200px"
+                  >Hide images</label
+                >
+              </div>
               <div class="comment" id="frz_comment_box"></div>
             </div>
           </div>
@@ -529,11 +540,22 @@
               oninput="buuStripCode()"
             ></textarea>
             <br /><br />
-            <div
-              class="preview_box"
-              style="width: fit-content; max-width: 100%"
-            >
-              <div class="section_name">Preview:</div>
+            <div class="preview_box" style="width: 100%">
+              <div style="width: 100%">
+                <span class="section_name" style="float: left">Preview:</span>
+                <input
+                  type="checkbox"
+                  class="checkbox"
+                  id="buu_hide_images_check"
+                  onclick="buuStripCode()"
+                  style="margin-left: 5px"
+                />
+                <label
+                  for="buu_hide_images_check"
+                  style="float: left; margin-left: 200px"
+                  >Hide images</label
+                >
+              </div>
               <div class="comment" id="buu_comment_box"></div>
             </div>
           </div>

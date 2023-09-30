@@ -3358,22 +3358,24 @@ function godFormatHTML(array, i) {
     'src="/',
     'src="/https://linkedin.service-now.com/'
   );
-  /*
-  if (array[i].includes("img style")) {
-    array[i] = array[i].replaceAll(
-      '<img style="',
-      '<img style="max-width: 100%; '
-    );
-  } else {
-    array[i] = array[i].replaceAll("<img", '<img style="max-width: 100%;"');
-  }
-  */
   if (i == array.length - 1 && array[i][array[i].length - 1] == '"') {
-    array[i] = array[i].slice(0, -1)
-  };
+    array[i] = array[i].slice(0, -1);
+  }
   if (i == 0 && array[i][0] == '"') {
-    array[i] = array[i].slice(1)
-  };
+    array[i] = array[i].slice(1);
+  }
+}
+// Hide images
+function godHideImages(array, i) {
+  if (array[i].includes("<img") && !array[i].includes("<img hidden")) {
+    array[i] = array[i].replaceAll("<img", "<img hidden");
+  }
+}
+// Show images
+function godShowImages(array, i) {
+  if (array[i].includes("<img hidden")) {
+    array[i] = array[i].replaceAll("<img hidden", "<img");
+  }
 }
 
 //? ------------------------------ Code 1 (Frieza)
@@ -3384,6 +3386,11 @@ function frzStripCode() {
   let array = frzInputBox.value.split("\n");
   for (let i = 0; i < array.length; i++) {
     godFormatHTML(array, i);
+    if (document.getElementById("frz_hide_images_check").checked) {
+      godHideImages(array, i);
+    } else {
+      godShowImages(array, i);
+    }
   }
   frzOutputBox.innerHTML = array.join("\n");
 }
@@ -3401,6 +3408,11 @@ function buuStripCode() {
   let array = buuInputBox.value.split("\n");
   for (let i = 0; i < array.length; i++) {
     godFormatHTML(array, i);
+    if (document.getElementById("buu_hide_images_check").checked) {
+      godHideImages(array, i);
+    } else {
+      godShowImages(array, i);
+    }
   }
   buuOutputBox.innerHTML = array.join("\n");
 }
