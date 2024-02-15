@@ -2132,7 +2132,7 @@ function ssjChangeHeadings(array, i) {
   } else {
     ssjCode.ToC.StylesChosen = [3, 4, 5, 6, 6, 6];
   }*/
-  ssjCode.ToC.StylesChosen = [3, 4, 5, 6, 6, 6];
+  ssjCode.ToC.StylesChosen = [2, 3, 4, 5, 6, 6];
   for (let style = 0; style < ssjCode.ToC.StylesUsed.length; style++) {
     if (array[i].match("<h" + ssjCode.ToC.StylesUsed[style])) {
       if (ssjCode.ToC.StylesUsed[style] != ssjCode.ToC.StylesChosen[style]) {
@@ -2152,31 +2152,31 @@ function ssjChangeHeadings(array, i) {
 // Stylize the headings
 function ssjStylizeHeadings(array, i) {
   ssjStoreTheme();
-  if (array[i].match(/<h3[^>]*>/)) {
+  if (array[i].match(/<h2[^>]*>/)) {
     if (ssj_well_check.checked) {
       array[i] = array[i].replace(
-        /<h3[^>]*>/,
-        `<h3 class="well" style="${ssjChosenTheme.Values.Well} margin-top: 14px;" align="center">`
+        /<h2[^>]*>/,
+        `<h2 class="well" style="${ssjChosenTheme.Values.Well} margin-top: 14px;" align="center">`
       );
       ssjRemoveHorizon(array, i);
     } else {
-      array[i] = array[i].replace(/<h3[^>]*>/, "<h3>");
-      ssjAddHorizon(array, i);
+      array[i] = array[i].replace(/<h2[^>]*>/, "<h3>");
+      // ssjAddHorizon(array, i);
     }
     ssjAddSpaceAbove(array, i);
-  } else if (array[i].match(/<h4[^>]*>/)) {
+  } else if (array[i].match(/<h3[^>]*>/)) {
     array[i] = array[i].replace(
-      /<h4[^>]*>/,
-      '<h4 style="margin-bottom: 14px;">'
+      /<h3[^>]*>/,
+      '<h3 style="margin-bottom: 14px;">'
     );
     ssjAddSpaceAbove(array, i);
     ssjRemoveHorizon(array, i);
-  } else if (array[i].match(/<h5[^>]*>/)) {
+  } else if (array[i].match(/<h4[^>]*>/)) {
     array[i] = array[i].replace(
-      /<h5[^>]*>/,
-      '<h5 style="margin-bottom: 14px;"><em>'
+      /<h4[^>]*>/,
+      '<h4 style="margin-bottom: 14px;"><em>'
     );
-    array[i] = array[i].replace("</h5>", "</em></h5>");
+    array[i] = array[i].replace("</h4>", "</em></h4>");
     ssjAddSpaceAbove(array, i);
     ssjRemoveHorizon(array, i);
   }
