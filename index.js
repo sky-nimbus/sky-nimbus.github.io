@@ -2160,25 +2160,10 @@ function ssjStylizeHeadings(array, i) {
       );
       ssjRemoveHorizon(array, i);
     } else {
-      array[i] = array[i].replace(/<h2[^>]*>/, "<h3>");
+      array[i] = array[i].replace(/<h2[^>]*>/, "<h2>");
       // ssjAddHorizon(array, i);
     }
     ssjAddSpaceAbove(array, i);
-  } else if (array[i].match(/<h3[^>]*>/)) {
-    array[i] = array[i].replace(
-      /<h3[^>]*>/,
-      '<h3 style="margin-bottom: 14px;">'
-    );
-    ssjAddSpaceAbove(array, i);
-    ssjRemoveHorizon(array, i);
-  } else if (array[i].match(/<h4[^>]*>/)) {
-    array[i] = array[i].replace(
-      /<h4[^>]*>/,
-      '<h4 style="margin-bottom: 14px;"><em>'
-    );
-    array[i] = array[i].replace("</h4>", "</em></h4>");
-    ssjAddSpaceAbove(array, i);
-    ssjRemoveHorizon(array, i);
   }
 }
 // Add space above a heading
