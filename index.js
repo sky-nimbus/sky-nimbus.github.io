@@ -1125,7 +1125,7 @@ function ssjLoopLists(array) {
     }
     ssjCompressBreaks(array, i);
     ssjZeroEmptyLists(array, i);
-    //ssjConvertSoloItems(array, i);
+    ssjConvertSoloItems(array, i);
   }
 }
 //? Check lists
@@ -1137,7 +1137,7 @@ function ssjCheckLists(array) {
     ssjCheckMediaItems(array, i);
     ssjCheckSplitItems(array, i);
     ssjCheckAlignment(array, i);
-    //ssjCheckSolos(array, i);
+    ssjCheckSolos(array, i);
   }
 }
 //? Finish lists
@@ -1490,15 +1490,12 @@ function ssjZeroEmptyLists(array, i) {
 // LOOP Convert solo lists to bullists
 function ssjConvertSoloItems(array, i) {
   if (array[i].match(/<li[^>]*>/)) {
-    if (array[i - 1] != null && array[i + 1] != null) {
-      if (array[i - 1].startsWith("<ol") && array[i + 1].startsWith("</ol")) {
-        array[i - 1] = "<ol>";
-        array[i + 1] = "</ol>";
-      }
-      if (array[i - 1].startsWith("<ul") && array[i + 1].startsWith("</ul")) {
+    if (
+      (array[i - 1].startsWith("<ol") && array[i + 1].startsWith("</ol")) ||
+      (array[i - 1].startsWith("<ul") && array[i + 1].startsWith("</ul"))
+      ) {
         array[i - 1] = "<ul>";
         array[i + 1] = "</ul>";
-      }
     }
   }
 }
