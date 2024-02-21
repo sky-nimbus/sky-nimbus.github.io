@@ -1489,10 +1489,10 @@ function ssjZeroEmptyLists(array, i) {
 // LOOP Convert solo lists to bullists
 function ssjConvertSoloItems(array, i) {
   if (array[i].match(/<li[^>]*>/)) {
-    if (
-      (array[i - 1].startsWith("<ol") && array[i + 1].startsWith("</ol")) ||
-      (array[i - 1].startsWith("<ul") && array[i + 1].startsWith("</ul"))
-    ) {
+    if (array[i - 1].startsWith("<ol") && array[i + 1].startsWith("</ol")) {
+      array[i - 1] = "<ol>";
+      array[i + 1] = "</ol>";
+    } else if (array[i - 1].startsWith("<ul") && array[i + 1].startsWith("</ul")) {
       array[i - 1] = "<ul>";
       array[i + 1] = "</ul>";
     }
@@ -2591,14 +2591,7 @@ function ssjStripHeadings(array, i) {
         !array[i].match('class="panel-title"') &&
         !ssjCode.SkipZones.Lists.includes(i)
       ) {
-        if (array[i + 1] != null && array[i + 1] != "<hr />") {
-          array[i] = array[i].replaceAll(
-            heading,
-            heading.slice(0, 3) + ' style="margin-bottom: 14px;">'
-          );
-        } else {
-          array[i] = array[i].replace(heading, heading.slice(0, 3) + ">");
-        }
+        array[i] = array[i].replace(heading, heading.slice(0, 3) + ">");
       }
     } else {
       if (ssjMediaExists(array, i)) {
