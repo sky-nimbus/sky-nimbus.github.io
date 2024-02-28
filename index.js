@@ -2742,6 +2742,7 @@ function ssjSaveSpans(array, i, j, value) {
   // Check that the value belongs to the current span
   if (
     value_o != -1 &&
+    !(array[i].indexOf("--sn-tinymce_content", value_o) < array[i].indexOf(";", value_o)) &&
     (array[i][value_o - 1] == '"' || array[i][value_o - 1] == " ") &&
     array[i].lastIndexOf("<", value_o) <= span.OpenTag_O &&
     span.OpenTag_O < array[i].lastIndexOf('style="', value_o) &&
