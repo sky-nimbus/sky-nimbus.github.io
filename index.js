@@ -1493,9 +1493,9 @@ function ssjConvertSoloItems(array, i) {
     if (
       (array[i - 1].startsWith("<ol") && array[i + 1].startsWith("</ol")) ||
       (array[i - 1].startsWith("<ul") && array[i + 1].startsWith("</ul"))
-      ) {
-        array[i - 1] = "<ul>";
-        array[i + 1] = "</ul>";
+    ) {
+      array[i - 1] = "<ul>";
+      array[i + 1] = "</ul>";
     }
   }
 }
@@ -2669,8 +2669,12 @@ function ssjReplaceImg(array, i) {
           }
         }
       }
-      if (img.match(/border="[1-9]"/) || img.match(/border:\s*[1-9]px/)) {
-        ssjTagAttributes.push('style="border: 1px solid black;" border="1"');
+      if (
+        img.match(/border="[1-9]"/) ||
+        img.match(/border:\s*[1-9]px/) ||
+        img.match(/border-width:\s*[1-9]px/)
+      ) {
+        ssjTagAttributes.push('style="border-width: 1px; border-style: solid;"');
       }
       if (img.includes('align="center"') || img.includes("align: center")) {
         ssjTagAttributes.push('align="center"');
@@ -2742,7 +2746,10 @@ function ssjSaveSpans(array, i, j, value) {
   // Check that the value belongs to the current span
   if (
     value_o != -1 &&
-    !(array[i].indexOf("--sn-tinymce_content", value_o) < array[i].indexOf(">", value_o)) &&
+    !(
+      array[i].indexOf("--sn-tinymce_content", value_o) <
+      array[i].indexOf(">", value_o)
+    ) &&
     (array[i][value_o - 1] == '"' || array[i][value_o - 1] == " ") &&
     array[i].lastIndexOf("<", value_o) <= span.OpenTag_O &&
     span.OpenTag_O < array[i].lastIndexOf('style="', value_o) &&
