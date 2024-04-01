@@ -1229,10 +1229,10 @@ function ssjReplaceListImg(array, i) {
       if (!ssj_img_sizes_check.checked) {
         let dim = ["width", "height"];
         for (let d = 0; d < dim.length; d++) {
-          if (img.includes(dim[d] + "=")) {
-            ssjRescueAttr(array, i, x, "<img", dim[d]);
+          if (img.includes(" " + dim[d] + "=")) {
+            ssjRescueAttr(array, i, x, "<img", " " + dim[d]);
           } else if (img.includes("style=")) {
-            let value = ssjRescueValue(img, dim[d]);
+            let value = ssjRescueValue(img, " " + dim[d]);
             if (value != null) {
               if (value.match(/\d+px/)) {
                 let value_n = value.match(/\d+/)[0];
@@ -1245,7 +1245,7 @@ function ssjReplaceListImg(array, i) {
         }
       }
       if (ssj_img_borders_check.checked) {
-        ssjTagAttributes.push('style="border: 1px solid black;" border="1"');
+        ssjTagAttributes.push('style="border-width: 1px; border-style: solid;"');
       }
       array[i] = array[i].replace(
         "<img ",
@@ -2655,10 +2655,10 @@ function ssjReplaceImg(array, i) {
       ssjRescueAttr(array, i, x, "<img", "src");
       let dim = ["width", "height"];
       for (let d = 0; d < dim.length; d++) {
-        if (img.includes(dim[d] + "=")) {
-          ssjRescueAttr(array, i, x, "<img", dim[d]);
+        if (img.includes(" " + dim[d] + "=")) {
+          ssjRescueAttr(array, i, x, "<img", " " + dim[d]);
         } else if (img.includes("style=")) {
-          let value = ssjRescueValue(img, dim[d]);
+          let value = ssjRescueValue(img, " " + dim[d]);
           if (value != null) {
             if (value.match(/\d+px/)) {
               let value_n = value.match(/\d+/)[0];
