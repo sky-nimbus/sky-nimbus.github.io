@@ -1245,7 +1245,9 @@ function ssjReplaceListImg(array, i) {
         }
       }
       if (ssj_img_borders_check.checked) {
-        ssjTagAttributes.push('style="border-width: 1px; border-style: solid;"');
+        ssjTagAttributes.push(
+          'style="border-width: 1px; border-style: solid;"'
+        );
       }
       array[i] = array[i].replace(
         "<img ",
@@ -2674,7 +2676,9 @@ function ssjReplaceImg(array, i) {
         img.match(/border:\s*[1-9]px/) ||
         img.match(/border-width:\s*[1-9]px/)
       ) {
-        ssjTagAttributes.push('style="border-width: 1px; border-style: solid;"');
+        ssjTagAttributes.push(
+          'style="border-width: 1px; border-style: solid;"'
+        );
       }
       if (img.includes('align="center"') || img.includes("align: center")) {
         ssjTagAttributes.push('align="center"');
@@ -2746,32 +2750,34 @@ function ssjSaveSpans(array, i, j, value) {
   // Check that the value belongs to the current span
   if (
     value_o != -1 &&
-    !(
-      array[i].indexOf("--sn-tinymce_content", value_o) <
-      array[i].indexOf(">", value_o)
-    ) &&
     (array[i][value_o - 1] == '"' || array[i][value_o - 1] == " ") &&
     array[i].lastIndexOf("<", value_o) <= span.OpenTag_O &&
     span.OpenTag_O < array[i].lastIndexOf('style="', value_o) &&
     span.Save != true
   ) {
-    // Save the closing span
-    ssjMapInlineTag(array[i], span.OpenTag_O, "span");
-    if (ssjCloseInline != null) {
+    if (
+      array[i].indexOf("--sn-tinymce_content", value_o) == -1 ||
+      array[i].indexOf("--sn-tinymce_content", value_o) >
+        array[i].indexOf(">", value_o)
+    ) {
+      // Save the closing span
+      ssjMapInlineTag(array[i], span.OpenTag_O, "span");
+      if (ssjCloseInline != null) {
+        array[i] =
+          array[i].slice(0, ssjCloseInline) +
+          "</save>" +
+          array[i].slice(ssjCloseInline + 7);
+      }
+      // Save the opening span
+      span.Save = true;
       array[i] =
-        array[i].slice(0, ssjCloseInline) +
-        "</save>" +
-        array[i].slice(ssjCloseInline + 7);
+        array[i].slice(0, span.OpenTag_O) +
+        span.SaveTag +
+        array[i].slice(span.OpenTag_X + 1);
+      let value_x = array[i].indexOf(";", value_o);
+      span.Value = array[i].slice(value_o, value_x + 1);
+      span.NewTag = '<new style="' + span.Value + '">';
     }
-    // Save the opening span
-    span.Save = true;
-    array[i] =
-      array[i].slice(0, span.OpenTag_O) +
-      span.SaveTag +
-      array[i].slice(span.OpenTag_X + 1);
-    let value_x = array[i].indexOf(";", value_o);
-    span.Value = array[i].slice(value_o, value_x + 1);
-    span.NewTag = '<new style="' + span.Value + ' font-size: 100%;">';
   }
 }
 //? Replace span tags
@@ -2788,8 +2794,8 @@ function ssjReplaceSpans(array, i) {
 //? Remove black text spans
 function ssjRemoveBlackSpans(array, i) {
   let black = [
-    '<span style="color: #000000; font-size: 100%;">',
-    '<span style="color: black; font-size: 100%;">',
+    '<span style="color: #000000;">',
+    '<span style="color: black;">',
   ];
   for (let x = 0; x < black.length; x++) {
     if (array[i].includes(black[x])) {
