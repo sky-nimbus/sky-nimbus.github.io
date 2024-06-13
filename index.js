@@ -1025,6 +1025,13 @@ function ssjMarkupDivs(array, start) {
       ssjMapBlockTag(array, i, "<div", "</div>");
       ssjCode.Divs.CloseTags.push(ssjCloseBlock);
       if (
+        array[i].match("kb-block-content-item") ||
+        array[i].match("block-info")
+      ) {
+        ssjCode.SkipZones.Divs.push(i);
+        ssjCode.SkipZones.Divs.push(ssjCloseBlock);
+      }
+      if (
         ssjCode.SkipZones.Accordions.includes(i) ||
         ssjCode.SkipZones.Tabs.includes(i)
       ) {
@@ -2736,10 +2743,42 @@ function ssjStoreSpanTags(array, i) {
       span.SaveTag = array[i]
         .slice(open_o, open_x + 1)
         .replace("<span", "<save");
+      ssjSaveBlockSpans(array, i, j, "block-info");
       ssjSaveSpans(array, i, j, "color");
       ssjSaveSpans(array, i, j, "background-color");
       ssjSaveSpans(array, i, j, "text-decoration");
     }
+  }
+}
+// Rename block span tags
+function ssjSaveBlockSpans(array, i, j, value) {
+  // Find the value index
+  let span = ssjLine[i].Spans[j];
+  let value_o = array[i].indexOf(value, span.OpenTag_O);
+  // Check that the value belongs to the current span
+  if (
+    value_o != -1 &&
+    (array[i][value_o - 1] == '"' || array[i][value_o - 1] == " ") &&
+    array[i].lastIndexOf("<", value_o) <= span.OpenTag_O &&
+    span.OpenTag_O < array[i].lastIndexOf('class="', value_o) &&
+    span.Save != true
+  ) {
+    // Save the closing span
+    ssjMapInlineTag(array[i], span.OpenTag_O, "span");
+    if (ssjCloseInline != null) {
+      array[i] =
+        array[i].slice(0, ssjCloseInline) +
+        "</save>" +
+        array[i].slice(ssjCloseInline + 7);
+    }
+    // Save the opening span
+    span.Save = true;
+    array[i] =
+      array[i].slice(0, span.OpenTag_O) +
+      span.SaveTag +
+      array[i].slice(span.OpenTag_X + 1);
+    span.NewTag =
+      "<new" + array[i].slice(span.OpenTag_O + 5, span.OpenTag_X + 1);
   }
 }
 // Rename span tags that carry a given attribute value
