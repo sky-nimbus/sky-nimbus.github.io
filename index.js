@@ -3459,12 +3459,12 @@ function buuClearCode() {
 // Display code in the code box by default
 document.getElementById(
     "acc3_code_box"
-  ).value = `<details>
+  ).value = `<p></p><details>
 <summary style="color: #064584; font-weight: bold; margin-bottom: 10px;">
 HEADER TEXT
 </summary>
 BODY TEXT
-</details>`;
+</details><p></p>`;
 // Copy the code in the code box
 function copyAcc3Code() {
   const acc3CopyText = document.getElementById("acc3_code_box");
