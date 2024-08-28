@@ -3454,7 +3454,26 @@ function buuClearCode() {
   buuOutputBox.innerHTML = "";
 }
 
-//! ------------------------------------------------------------ ACCORDIONS
+//! ------------------------------------------------------------ ACCORDIONS (new style)
+
+// Display code in the code box by default
+document.getElementById(
+    "acc3_code_box"
+  ).value = `<details>
+<summary style="color: #064584; font-weight: bold; margin-bottom: 10px;">
+HEADER TEXT
+</summary>
+BODY TEXT
+</details>`;
+// Copy the code in the code box
+function copyAcc3Code() {
+  const acc3CopyText = document.getElementById("acc3_code_box");
+  acc3CopyText.select();
+  acc3CopyText.setSelectionRange(0, 99999);
+  document.execCommand("copy");
+}
+
+//! ------------------------------------------------------------ ACCORDIONS (old style)
 
 function genAcc2Width(val) {
   document.getElementById("acc2_width_amount").innerHTML = val + "px";

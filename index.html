@@ -139,6 +139,7 @@
                 type="checkbox"
                 class="checkbox p_heading"
                 id="ssj_headings_check"
+                checked
               />
               <br />
               <label for="ssj_tbl_colors_check" class="tbl_select"
@@ -489,7 +490,7 @@
           style="display: flex; flex-direction: row; width: 100%"
         > -->
 
-          <!-- Code 1 (Frieza) 
+    <!-- Code 1 (Frieza) 
           <div class="left_side" style="width: 50%">
             <button
               class="button alternate"
@@ -526,7 +527,7 @@
             </div>
           </div> -->
 
-          <!-- Code 2 (Buu) 
+    <!-- Code 2 (Buu) 
           <div class="right_side" style="width: 50%">
             <button
               class="button alternate"
@@ -567,12 +568,31 @@
     </div> -->
 
     <!------------------------------------------------------------ ACCORDIONS -->
-    <div id="pageAccordions" class="tabcontent">
+    <div id="pageAccordions" class="tabcontent" onload="genAcc3Code()">
       <div class="container">
         <div class="page_name">Accordions</div>
+
+        <!-- New Style -->
         <div class="flex-container" style="display: flex; flex-direction: row">
           <div class="settings_box left_side">
             <div class="selectors-adv">
+              <div class="section_name" style="margin-bottom: 15px">Simple Style</div>
+              <label>Just copy the code on the right and paste in ServiceNow.</label>
+            </div>
+          </div>
+          <div class="right_side">
+            <button class="button" onclick="copyAcc3Code()">Copy code</button
+            ><br />
+            <textarea class="code_box2" id="acc3_code_box" readonly></textarea>
+          </div>
+        </div>
+        <div class="spacing"></div>
+
+        <!-- Old Style -->
+        <div class="flex-container" style="display: flex; flex-direction: row">
+          <div class="settings_box left_side">
+            <div class="selectors-adv">
+              <div class="section_name" style="margin-bottom: 15px">Button Style</div>
               <label for="acc2_quantity">Quantity</label>
               <input
                 type="number"
