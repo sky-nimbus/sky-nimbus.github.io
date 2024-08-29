@@ -888,10 +888,12 @@ function ssjMarkupAccordions(array, start) {
   while (i < array.length) {
     if (
       array[i].includes("<!--Start acc set") ||
-      array[i].match(/<div[^>]*class="panel[^>]*>/)
+      array[i].match(/<div[^>]*class="panel[^>]*>/) ||
+      array[i].match("<details>")
     ) {
       ssjCode.Accordions.OpenTags.push(i);
       ssjMapBlockTag(array, i, "<div", "</div>");
+      ssjMapBlockTag(array, i, "<details", "</details>");
       ssjCode.Accordions.CloseTags.push(ssjCloseBlock);
       for (let mark = i; mark <= ssjCloseBlock; mark++) {
         ssjCode.SkipZones.Accordions.push(mark);
@@ -3459,10 +3461,18 @@ function buuClearCode() {
 // Display code in the code box by default
 document.getElementById(
     "acc3_code_box"
-  ).value = `<p></p><details>
+  ).value = `<p></p>
+<details>
 <summary style="color: #064584; font-weight: bold; margin-bottom: 11px;">HEADER TEXT</summary>
-<table style="width: 100%;"><tbody><tr><td>BODY TEXT</td></tr></tbody></table>
-</details><p></p>`;
+<table style="width: 100%;">
+<tbody>
+<tr>
+<td>BODY TEXT</td>
+</tr>
+</tbody>
+</table>
+</details>
+<p></p>`;
 // Copy the code in the code box
 function copyAcc3Code() {
   const acc3CopyText = document.getElementById("acc3_code_box");
