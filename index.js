@@ -3460,10 +3460,8 @@ function buuClearCode() {
 document.getElementById(
     "acc3_code_box"
   ).value = `<p></p><details>
-<summary style="color: #064584; font-weight: bold; margin-bottom: 10px;">
-HEADER TEXT
-</summary>
-BODY TEXT
+<summary style="color: #064584; font-weight: bold; margin-bottom: 11px;">HEADER TEXT</summary>
+<table style="width: 100%;"><tbody><tr><td>BODY TEXT</td></tr></tbody></table>
 </details><p></p>`;
 // Copy the code in the code box
 function copyAcc3Code() {
