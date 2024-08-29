@@ -893,6 +893,7 @@ function ssjMarkupAccordions(array, start) {
     ) {
       ssjCode.Accordions.OpenTags.push(i);
       ssjMapBlockTag(array, i, "<div", "</div>");
+      ssjMapBlockTag(array, i, "<details", "</details>");
       ssjCode.Accordions.CloseTags.push(ssjCloseBlock);
       for (let mark = i; mark <= ssjCloseBlock; mark++) {
         ssjCode.SkipZones.Accordions.push(mark);
