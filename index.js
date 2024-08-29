@@ -889,7 +889,7 @@ function ssjMarkupAccordions(array, start) {
     if (
       array[i].includes("<!--Start acc set") ||
       array[i].match(/<div[^>]*class="panel[^>]*>/) ||
-      array[i].match("<details>")
+      array[i].match("<details")
     ) {
       ssjCode.Accordions.OpenTags.push(i);
       ssjMapBlockTag(array, i, "<div", "</div>");
