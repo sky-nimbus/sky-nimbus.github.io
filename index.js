@@ -888,11 +888,19 @@ function ssjMarkupAccordions(array, start) {
   while (i < array.length) {
     if (
       array[i].includes("<!--Start acc set") ||
-      array[i].match(/<div[^>]*class="panel[^>]*>/) ||
-      array[i].match("<details")
+      array[i].match(/<div[^>]*class="panel[^>]*>/)
     ) {
       ssjCode.Accordions.OpenTags.push(i);
       ssjMapBlockTag(array, i, "<div", "</div>");
+      ssjCode.Accordions.CloseTags.push(ssjCloseBlock);
+      for (let mark = i; mark <= ssjCloseBlock; mark++) {
+        ssjCode.SkipZones.Accordions.push(mark);
+      }
+      i = ssjCloseBlock;
+    } else if (
+      array[i].match("<details")
+    ) {
+      ssjCode.Accordions.OpenTags.push(i);
       ssjMapBlockTag(array, i, "<details", "</details>");
       ssjCode.Accordions.CloseTags.push(ssjCloseBlock);
       for (let mark = i; mark <= ssjCloseBlock; mark++) {
