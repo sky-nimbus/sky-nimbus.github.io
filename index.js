@@ -3367,6 +3367,20 @@ function ssjUpgradeAccordions(array) {
         /<div class="list-group-item" style="[^"]*"/g,
         '<div class="panel-body" style="border: 1px solid #d5d8de; border-radius: 8px;"'
       );
+      // Upgrade accordion type 0
+      array[i] = array[i].replaceAll(
+        '<div class="panel">',
+        '<div class="panel panel-default" style="box-shadow: none; border: none;">'
+      );
+      array[i] = array[i].replaceAll(
+        '<div class="panel panel-default">',
+        '<div class="panel panel-default" style="box-shadow: none; border: none;">'
+      );
+      array[i] = array[i].replaceAll('<div class="panel-heading">', "<div>");
+      array[i] = array[i].replaceAll(
+        '<a data-toggle="collapse"',
+        '<a class="btn btn-default" style="width: 100%; text-align: left;" data-toggle="collapse"'
+      );
     }
   }
 }
@@ -3929,10 +3943,24 @@ function acc4UpgradeAccordions(code) {
       /<div class="list-group-item" style="[^"]*"/g,
       '<div class="panel-body" style="border: 1px solid #d5d8de; border-radius: 8px;"'
     );
+    // Upgrade accordion type 0
+    newcode[i] = newcode[i].replaceAll(
+      '<div class="panel">',
+      '<div class="panel panel-default" style="box-shadow: none; border: none;">'
+    );
+    newcode[i] = newcode[i].replaceAll(
+      '<div class="panel panel-default">',
+      '<div class="panel panel-default" style="box-shadow: none; border: none;">'
+    );
+    newcode[i] = newcode[i].replaceAll('<div class="panel-heading">', "<div>");
+    newcode[i] = newcode[i].replaceAll(
+      '<a data-toggle="collapse"',
+      '<a class="btn btn-default" style="width: 100%; text-align: left;" data-toggle="collapse"'
+    );
     // Convert non-breaking spaces
     newcode[i] = newcode[i].replaceAll("&nbsp;", " ").replaceAll(/\s+/g, " ");
     // Trim each line
-    newcode[i].trim();
+    newcode[i] = newcode[i].trim();
   }
 
   newcode = newcode.join("\n");
