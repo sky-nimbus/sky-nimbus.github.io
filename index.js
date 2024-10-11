@@ -60,6 +60,7 @@ function ssjSourceCode() {
   let ssjSource = ssjInputBox.value.split("\n");
   ssjOutputBox.value = "";
   ssjOutputBox.value = ssjSource.join("\n");
+  document.getElementById("ssj_code_box").style.color = "#808080";
   ssjEnableControls();
   ssjDisplayStats();
   sampleBox.value = samples;
@@ -3632,6 +3633,7 @@ function genAcc4Fields() {
 
   // Copy input code to output box
   document.getElementById("acc4_output_box").value = code;
+  document.getElementById("acc4_output_box").style.color = "#808080";
 
   // Clear previous content on the left
   fields.innerHTML = "";
@@ -3786,6 +3788,7 @@ function removeSection(sectionID) {
   let code = outputBox.value;
   code = code.replace(regex, "");
   outputBox.value = removeBlankLines(code);
+  document.getElementById("acc4_output_box").style.color = "#CB6C00";
 }
 
 // Create the plus button
@@ -3866,6 +3869,7 @@ Content for new accordion item
 
     // Update the output box with the new code
     outputBox.value = removeBlankLines(code);
+    document.getElementById("acc4_output_box").style.color = "#00952F";
   }
 }
 
