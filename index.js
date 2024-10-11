@@ -3610,8 +3610,11 @@ function copyAcc2Code() {
 //! ------------------------------------------------------------ EDIT ACCORDIONS
 
 function genAcc4Fields() {
-  const code = document.getElementById("acc4_code_box").value;
+  var code = document.getElementById("acc4_code_box").value;
   const fields = document.getElementById("acc4_fields");
+
+  // Upgrade accordions
+  code = acc4UpgradeAccordions(code);
 
   // Copy input code to output box
   document.getElementById("acc4_output_box").value = code;
@@ -3852,13 +3855,6 @@ Content for new accordion item
   }
 }
 
-function removeBlankLines(string) {
-  return string
-    .split("\n")
-    .filter((line) => line.trim() !== "")
-    .join("\n");
-}
-
 function clearAcc4Code() {
   document.getElementById("acc4_code_box").value = "";
   document.getElementById("acc4_output_box").value = "";
@@ -3874,6 +3870,73 @@ function copyAcc4Code() {
 
 function commitAcc4Code() {
   genAcc4Fields();
+}
+
+function removeBlankLines(code) {
+  return code
+    .split("\n")
+    .filter((line) => line.trim() !== "")
+    .join("\n");
+}
+
+function acc4UpgradeAccordions(code) {
+  let newcode = code.split("\n");
+
+  for (let i = 0; i < newcode.length; i++) {
+    // Upgrade accordion type 2
+    newcode[i] = newcode[i].replaceAll(
+      '<div class="panel panel-default" style="box-shadow: none;">',
+      '<div class="panel panel-default" style="box-shadow: none; border: none;">'
+    );
+    newcode[i] = newcode[i].replaceAll(
+      'class="btn btn-primary"',
+      'class="btn btn-default"'
+    );
+    newcode[i] = newcode[i].replaceAll(
+      'class="btn btn-success"',
+      'class="btn btn-default"'
+    );
+    newcode[i] = newcode[i].replaceAll(
+      'class="btn btn-info"',
+      'class="btn btn-default"'
+    );
+    newcode[i] = newcode[i].replaceAll(
+      'class="btn btn-warning"',
+      'class="btn btn-default"'
+    );
+    newcode[i] = newcode[i].replaceAll(
+      'class="btn btn-danger"',
+      'class="btn btn-default"'
+    );
+    newcode[i] = newcode[i].replaceAll(
+      '<div class="panel-body">',
+      '<div class="panel-body" style="border: 1px solid #d5d8de; border-radius: 8px;">'
+    );
+    // Upgrade accordion type 1
+    newcode[i] = newcode[i].replaceAll(
+      'class="panel list-group"',
+      'class="panel-group"'
+    );
+    newcode[i] = newcode[i].replaceAll(
+      /<a class="list-group-item" style="[^"]*"/g,
+      '<a class="btn btn-default" style="width: 100%; text-align: left;"'
+    );
+    newcode[i] = newcode[i].replaceAll(
+      'class="collapse"',
+      'class="panel-collapse collapse"'
+    );
+    newcode[i] = newcode[i].replaceAll(
+      /<div class="list-group-item" style="[^"]*"/g,
+      '<div class="panel-body" style="border: 1px solid #d5d8de; border-radius: 8px;"'
+    );
+    // Convert non-breaking spaces
+    newcode[i] = newcode[i].replaceAll("&nbsp;", " ").replaceAll(/\s+/g, " ");
+    // Trim each line
+    newcode[i].trim();
+  }
+
+  newcode = newcode.join("\n");
+  return newcode;
 }
 
 //! ------------------------------------------------------------ TABS
