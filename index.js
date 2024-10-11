@@ -60,7 +60,6 @@ function ssjSourceCode() {
   let ssjSource = ssjInputBox.value.split("\n");
   ssjOutputBox.value = "";
   ssjOutputBox.value = ssjSource.join("\n");
-  document.getElementById("ssj_code_box").style.color = "#808080";
   ssjEnableControls();
   ssjDisplayStats();
   sampleBox.value = samples;
@@ -897,9 +896,7 @@ function ssjMarkupAccordions(array, start) {
         ssjCode.SkipZones.Accordions.push(mark);
       }
       i = ssjCloseBlock;
-    } else if (
-      array[i].match("<details")
-    ) {
+    } else if (array[i].match("<details")) {
       ssjCode.Accordions.OpenTags.push(i);
       ssjMapBlockTag(array, i, "<details", "</details>");
       ssjCode.Accordions.CloseTags.push(ssjCloseBlock);
@@ -3304,7 +3301,6 @@ function ssjRunAdvanced() {
   ssjArray = ssjArray.filter((value) => Object.keys(value).length !== 0);
   // Display the results in the code box
   ssjOutputBox.value = ssjArray.join("\n");
-  document.getElementById("ssj_code_box").style.color = "#DF5601";
   sampleBox.value = samples;
   ssjDisplayStats();
 }
@@ -3467,9 +3463,7 @@ function buuClearCode() {
 //! ------------------------------------------------------------ ACCORDIONS (new style)
 
 // Display code in the code box by default
-document.getElementById(
-    "acc3_code_box"
-  ).value = `<p></p>
+document.getElementById("acc3_code_box").value = `<p></p>
 <details>
 <summary style="color: #064584; font-weight: bold; margin-bottom: 11px;">HEADER TEXT</summary>
 <table style="width: 100%;">
@@ -3516,12 +3510,14 @@ function genAcc2Fields() {
     acc2IdFields.setAttribute("id", `acc2_id_field${i}`);
     acc2IdFields.setAttribute("placeholder", `Accordion item ${i} ID`);
     acc2IdFields.setAttribute("oninput", "genAcc2Code()");
+    acc2IdFields.classList.add("acc_input_field");
     acc2IdFields.style.float = "left";
     let acc2NameFields = document.createElement("INPUT");
     acc2NameFields.setAttribute("type", "text");
     acc2NameFields.setAttribute("id", `acc2_name_field${i}`);
     acc2NameFields.setAttribute("placeholder", `Accordion item ${i} name`);
     acc2NameFields.setAttribute("oninput", "genAcc2Code()");
+    acc2IdFields.classList.add("acc_input_field");
     acc2DivFields.appendChild(acc2IdFields);
     acc2DivFields.appendChild(acc2NameFields);
     document.getElementById("acc2_fields").appendChild(acc2DivFields);
@@ -3609,6 +3605,275 @@ function copyAcc2Code() {
   acc2CopyText.select();
   acc2CopyText.setSelectionRange(0, 99999);
   document.execCommand("copy");
+}
+
+//! ------------------------------------------------------------ EDIT ACCORDIONS
+
+function genAcc4Fields() {
+  const code = document.getElementById("acc4_code_box").value;
+  const fields = document.getElementById("acc4_fields");
+
+  // Copy input code to output box
+  document.getElementById("acc4_output_box").value = code;
+
+  // Clear previous content on the left
+  fields.innerHTML = "";
+
+  // Parse and process each accordion block
+  const accordions = extractAccordions(code);
+  accordions.forEach((accordion) => {
+    renderAccordion(accordion.id, accordion.sections, fields);
+  });
+}
+
+// Extract accordions and their content
+function extractAccordions(code) {
+  const regex =
+    /<!--Start acc set "(.*?)"-->([\s\S]*?)<!--End acc set "(.*?)"-->/g;
+  const accordions = [];
+  let match;
+
+  while ((match = regex.exec(code)) !== null) {
+    const accordionID = match[1];
+    const accordionContent = match[2];
+    const sections = extractSections(accordionContent);
+    accordions.push({ id: accordionID, sections });
+  }
+
+  return accordions;
+}
+
+// Extract sections from each accordion block
+function extractSections(accordionContent) {
+  const regex =
+    /<!--Start acc item (\d+ )?"(.*?)"-->([\s\S]*?)<!--End acc item (\d+ )?"(.*?)"-->/g;
+  const sections = [];
+  let match;
+
+  while ((match = regex.exec(accordionContent)) !== null) {
+    const sectionID = match[2];
+    const sectionContent = match[3];
+    const sectionText = extractSampleText(sectionContent);
+    sections.push({ id: sectionID, text: sectionText });
+  }
+
+  return sections;
+}
+
+// Extract a sample of non-tag text
+function extractSampleText(content) {
+  const textContent = content.replace(/<[^>]*>/g, " ").trim();
+  return textContent.substring(0, 30).trim() || "N/A";
+}
+
+// Render each accordion with its sections
+function renderAccordion(name, sections, container) {
+  const accordionDiv = document.createElement("div");
+  accordionDiv.classList.add("section_div");
+  accordionDiv.setAttribute("data-accordion-id", name);
+
+  // Create and append the minus accordion button
+  accordionDiv.appendChild(minusAccordionButton(name));
+
+  // Create and append the accordion label
+  const label = document.createElement("label");
+  label.classList.add("accordion_name");
+  label.innerHTML = `Accordion ID: ${name}`;
+  accordionDiv.appendChild(label);
+
+  // Render each section under the accordion label
+  sections.forEach((section) => {
+    const sectionDiv = document.createElement("div");
+    sectionDiv.setAttribute("data-section-id", section.id);
+
+    // Append the minus button
+    sectionDiv.appendChild(createMinusButton(section.id));
+
+    // Append the section label
+    const sectionLabel = document.createElement("span");
+    sectionLabel.innerHTML = `Section: "${section.text}"`;
+    sectionDiv.appendChild(sectionLabel);
+
+    // Append the plus button
+    sectionDiv.appendChild(createPlusButton(section.id, name));
+
+    // Append the section div to the accordion field
+    accordionDiv.appendChild(sectionDiv);
+  });
+
+  container.appendChild(accordionDiv);
+}
+
+// Create the minus accordion button
+function minusAccordionButton(accordionID) {
+  const button = document.createElement("button");
+  button.innerHTML = "&#8722;";
+  button.classList.add("minus_button");
+  button.onclick = function () {
+    removeAccordion(accordionID);
+  };
+  return button;
+}
+
+// Remove the accordion div and code
+function removeAccordion(accordionID) {
+  // Remove the accordion div
+  let accordionDiv = document.querySelector(
+    `div[data-accordion-id="${accordionID}"]`
+  );
+  if (accordionDiv) {
+    accordionDiv.remove();
+  }
+
+  // Define the regex pattern to match the accordion code
+  const regex = new RegExp(
+    `<!--Start acc set "${accordionID}"-->[\\s\\S]*?<!--End acc set "${accordionID}"--></div>`,
+    "g"
+  );
+
+  // Remove the accordion code
+  const outputBox = document.getElementById("acc4_output_box");
+  let code = outputBox.value;
+  code = code.replace(regex, "");
+  outputBox.value = removeBlankLines(code);
+}
+
+// Create the minus button
+function createMinusButton(sectionID) {
+  const button = document.createElement("button");
+  button.innerHTML = "&#8722;";
+  button.classList.add("minus_button");
+  button.onclick = function () {
+    removeSection(sectionID);
+  };
+  return button;
+}
+
+function removeSection(sectionID) {
+  // Remove the section div
+  let sectionDiv = document.querySelector(
+    `div[data-section-id="${sectionID}"]`
+  );
+  if (sectionDiv) {
+    sectionDiv.remove();
+  }
+
+  // Define the regex pattern to match the section code
+  const regex = new RegExp(
+    `<!--Start acc item (\\d+ )?"${sectionID}"-->[\\s\\S]*?<!--End acc item (\\d+ )?"${sectionID}"--></div>`,
+    "g"
+  );
+
+  // Remove the section code
+  const outputBox = document.getElementById("acc4_output_box");
+  let code = outputBox.value;
+  code = code.replace(regex, "");
+  outputBox.value = removeBlankLines(code);
+}
+
+// Create the plus button
+function createPlusButton(sectionID, accordionName) {
+  const button = document.createElement("button");
+  button.innerHTML = "&#43;";
+  button.classList.add("plus_button");
+  button.onclick = function () {
+    const newSectionID = `${Date.now()}`;
+    addSection(sectionID, newSectionID, accordionName);
+    addSectionCode(sectionID, newSectionID, accordionName);
+  };
+  return button;
+}
+
+function addSection(sectionID, newSectionID, accordionName) {
+  const sectionDiv = document.querySelector(
+    `div[data-section-id="${sectionID}"]`
+  );
+
+  // Create a new div to hold the input fields
+  const inputDiv = document.createElement("div");
+  inputDiv.setAttribute("data-section-id", newSectionID);
+
+  // Create a minus button for the new section
+  const minusButton = createMinusButton(newSectionID);
+  inputDiv.appendChild(minusButton);
+
+  // Create the new section name input field
+  const newSectionName = document.createElement("label");
+  newSectionName.id = `accordion-item-name-${newSectionID}`;
+  newSectionName.innerHTML = `New Section`;
+  inputDiv.appendChild(newSectionName);
+
+  // Create a plus button for the new section
+  const plusButton = createPlusButton(newSectionID, accordionName);
+  inputDiv.appendChild(plusButton);
+
+  // Append the input div underneath the section
+  if (sectionDiv) {
+    sectionDiv.insertAdjacentElement("afterend", inputDiv);
+  }
+}
+
+function addSectionCode(sectionID, newSectionID, accordionName) {
+  const outputBox = document.getElementById("acc4_output_box");
+  let code = outputBox.value;
+
+  // New section code
+  const newSectionCode = `
+<!--Start acc item "${newSectionID}"-->
+<div class="panel panel-default" style="box-shadow: none; border: none;">
+<!--Start acc item head "${newSectionID}"-->
+<table><tbody><tr><td>
+<a class="btn btn-default" style="width: 100%; text-align: left;" data-toggle="collapse" data-parent="#${accordionName}" data-target="#${newSectionID}">
+New accordion item
+<!--End acc item head "${newSectionID}"-->
+</a>
+</td></tr></tbody></table>
+<!--Start acc item body "${newSectionID}"-->
+<div id="${newSectionID}" class="panel-collapse collapse">
+<div class="panel-body" style="border: 1px solid #d5d8de; border-radius: 8px;">
+<table><tbody><tr><td>
+Content for new accordion item
+</td></tr></tbody></table>
+</div>
+<!--End acc item body "${newSectionID}"--></div>
+<!--End acc item "${newSectionID}"--></div>
+`;
+
+  // Find the position of the sectionID in the output box and insert the new section
+  const regex = new RegExp(`<!--End acc item (\\d* )?"${sectionID}"--></div>`);
+
+  const match = code.match(regex);
+  if (match) {
+    // Insert the new section code after the div of the matched section
+    code = code.replace(match[0], match[0] + "\n" + newSectionCode);
+
+    // Update the output box with the new code
+    outputBox.value = removeBlankLines(code);
+  }
+}
+
+function removeBlankLines(string) {
+  return string
+    .split("\n")
+    .filter((line) => line.trim() !== "")
+    .join("\n");
+}
+
+function clearAcc4Code() {
+  document.getElementById("acc4_code_box").value = "";
+  document.getElementById("acc4_output_box").value = "";
+  document.getElementById("acc4_fields").innerHTML = "";
+}
+
+function copyAcc4Code() {
+  const acc4CopyText = document.getElementById("acc4_output_box");
+  acc4CopyText.select();
+  acc4CopyText.setSelectionRange(0, 99999);
+  document.execCommand("copy");
+}
+
+function commitAcc4Code() {
+  genAcc4Fields();
 }
 
 //! ------------------------------------------------------------ TABS

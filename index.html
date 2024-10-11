@@ -50,20 +50,21 @@
         </div>
         <div style="width: 60%; float: left">
           <div class="page_buttons">
-            <button
-              class="tablink"
-              onclick="openPage('pageStylizer', this)"
-              id="defaultOpen"
-            >
+            <button class="tablink" onclick="openPage('pageStylizer', this)">
               <img src="Icons/ghost-solid.svg" height="25" /><br />Stylizer
             </button>
+            <!--
             <button class="tablink" onclick="openPage('pageComments', this)">
               <img
                 src="Icons/masks-theater-solid.svg"
                 height="25"
               /><br />Preview
-            </button>
-            <button class="tablink" onclick="openPage('pageAccordions', this)">
+            </button> -->
+            <button
+              class="tablink"
+              onclick="openPage('pageAccordions', this)"
+              id="defaultOpen"
+            >
               <img src="Icons/meteor-solid.svg" height="25" /><br />Accordions
             </button>
             <button class="tablink" onclick="openPage('pageTabs', this)">
@@ -402,9 +403,8 @@
             </button>
             <br />
             <textarea
-              class="code_box"
+              class="code_box_read"
               id="ssj_code_box"
-              style="background-color: #eef3f7"
               readonly
             ></textarea>
             <br /><br /><br />
@@ -447,6 +447,7 @@
     </div>
 
     <!------------------------------------------------------------ COMMENTS -->
+
     <div id="pageComments" class="tabcontent">
       <div class="container">
         <div class="page_name">Preview</div>
@@ -567,11 +568,12 @@
     </div> -->
 
     <!------------------------------------------------------------ ACCORDIONS -->
-    <div id="pageAccordions" class="tabcontent" onload="genAcc3Code()">
+    <div id="pageAccordions" class="tabcontent">
       <div class="container">
         <div class="page_name">Accordions</div>
 
-        <!-- New Style -->
+        <!-- Simple Style -->
+        <!--
         <div class="flex-container" style="display: flex; flex-direction: row">
           <div class="settings_box left_side">
             <div class="selectors-adv">
@@ -586,12 +588,15 @@
           </div>
         </div>
         <div class="spacing"></div>
+        -->
 
-        <!-- Old Style -->
+        <!-- Button Style -->
         <div class="flex-container" style="display: flex; flex-direction: row">
           <div class="settings_box left_side">
             <div class="selectors-adv">
-              <div class="section_name" style="margin-bottom: 10px">Button Style</div>
+              <div class="section_name" style="margin-bottom: 10px">
+                Create Accordions
+              </div>
               <label for="acc2_quantity">Quantity</label>
               <input
                 type="number"
@@ -653,6 +658,43 @@
             <textarea class="code_box" id="acc2_code_box"></textarea>
           </div>
         </div>
+        <div class="spacing"></div>
+
+        <!-- Edit Accordions -->
+        <div class="flex-container" style="display: flex; flex-direction: row">
+          <div class="settings_box left_side">
+            <div class="selectors-adv">
+              <div class="section_name" style="margin-bottom: 10px">
+                Edit Accordions
+              </div>
+              <label>Paste article code into the white box.</label>
+              <div id="acc4_fields"></div>
+            </div>
+          </div>
+          <div class="right_side">
+            <button class="button alternate" onclick="commitAcc4Code()">
+              Commit code
+            </button>
+            <button class="button alternate" onclick="clearAcc4Code()">
+              Clear code</button
+            ><br />
+            <textarea
+              class="code_box"
+              id="acc4_code_box"
+              placeholder="Paste code here"
+              oninput="genAcc4Fields()"
+            ></textarea>
+            <br /><br />
+            <button class="button" onclick="copyAcc4Code()">Copy code</button>
+            <br />
+            <textarea
+              class="code_box_read"
+              id="acc4_output_box"
+              readonly
+            ></textarea>
+          </div>
+        </div>
+        <div class="spacing"></div>
       </div>
       <br />
     </div>

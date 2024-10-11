@@ -193,6 +193,15 @@ body {
   color: gray;
 }
 
+.code_box_read {
+  font-family: monospace;
+  font-size: 14px;
+  min-width: 446px;
+  min-height: 125px;
+  background-color: #eef3f7;
+  color: #808080;
+}
+
 .static {
   max-width: 446px;
   max-height: 125px;
@@ -315,4 +324,25 @@ select {
 
 .selectors-adv {
   line-height: 1.8;
+}
+
+.accordion_name {
+  color: #282828;
+  font-family: "SF Pro Display Medium", sans-serif;
+}
+
+.minus_button {
+  margin-right: 8px;
+}
+
+.plus_button {
+  margin-left: 8px;
+}
+
+.section_div {
+  margin-top: 10px;
+}
+
+.acc_input_field {
+  width: 300px;
 }
