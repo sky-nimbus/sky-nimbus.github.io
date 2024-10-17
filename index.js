@@ -3322,39 +3322,29 @@ function ssjConvertBreaks(array) {
 function ssjUpgradeAccordions(array) {
   if (ssj_upgrade_acc_check.checked) {
     for (let i = ssjSkip; i < array.length; i++) {
-      // Upgrade accordion type 2
-      array[i] = array[i].replaceAll(
-        '<div class="panel panel-default" style="box-shadow: none;">',
-        '<div class="panel panel-default" style="box-shadow: none; border: none;">'
-      );
-      array[i] = array[i].replaceAll(
-        'class="btn btn-primary"',
-        'class="btn btn-default"'
-      );
-      array[i] = array[i].replaceAll(
-        'class="btn btn-success"',
-        'class="btn btn-default"'
-      );
-      array[i] = array[i].replaceAll(
-        'class="btn btn-info"',
-        'class="btn btn-default"'
-      );
-      array[i] = array[i].replaceAll(
-        'class="btn btn-warning"',
-        'class="btn btn-default"'
-      );
-      array[i] = array[i].replaceAll(
-        'class="btn btn-danger"',
-        'class="btn btn-default"'
-      );
-      array[i] = array[i].replaceAll(
-        '<div class="panel-body">',
-        '<div class="panel-body" style="border: 1px solid #d5d8de; border-radius: 8px;">'
-      );
-      // Upgrade accordion type 1
       array[i] = array[i].replaceAll(
         'class="panel list-group"',
         'class="panel-group"'
+      );
+      array[i] = array[i].replaceAll(
+        /<div class="panel panel-default"[^>]*>/g,
+        '<div class="panel panel-default" style="box-shadow: none; border: none;">'
+      );
+      array[i] = array[i].replaceAll(
+        /<div class="panel"[^>]*>/g,
+        '<div class="panel panel-default" style="box-shadow: none; border: none;">'
+      );
+      array[i] = array[i].replaceAll(
+        /<div class="panel-heading"[^>]*>/g,
+        "<div>"
+      );
+      array[i] = array[i].replaceAll(
+        /class="btn btn-[^"]*"/g,
+        'class="btn btn-default"'
+      );
+      array[i] = array[i].replaceAll(
+        '<a data-toggle="collapse"',
+        '<a class="btn btn-default" style="width: 100%; text-align: left;" data-toggle="collapse"'
       );
       array[i] = array[i].replaceAll(
         /<a class="list-group-item" style="[^"]*"/g,
@@ -3365,22 +3355,12 @@ function ssjUpgradeAccordions(array) {
         'class="panel-collapse collapse"'
       );
       array[i] = array[i].replaceAll(
-        /<div class="list-group-item" style="[^"]*"/g,
-        '<div class="panel-body" style="border: 1px solid #d5d8de; border-radius: 8px;"'
-      );
-      // Upgrade accordion type 0
-      array[i] = array[i].replaceAll(
-        '<div class="panel">',
-        '<div class="panel panel-default" style="box-shadow: none; border: none;">'
+        /<div class="list-group-item"[^>]*>/g,
+        '<div class="panel-body" style="border: 1px solid #d5d8de; border-radius: 8px;">'
       );
       array[i] = array[i].replaceAll(
-        '<div class="panel panel-default">',
-        '<div class="panel panel-default" style="box-shadow: none; border: none;">'
-      );
-      array[i] = array[i].replaceAll('<div class="panel-heading">', "<div>");
-      array[i] = array[i].replaceAll(
-        '<a data-toggle="collapse"',
-        '<a class="btn btn-default" style="width: 100%; text-align: left;" data-toggle="collapse"'
+        /<div class="panel-body"[^>]*>/g,
+        '<div class="panel-body" style="border: 1px solid #d5d8de; border-radius: 8px;">'
       );
     }
   }
@@ -3624,6 +3604,389 @@ function copyAcc2Code() {
 
 //! ------------------------------------------------------------ EDIT ACCORDIONS
 
+function genAcc4Fields() {
+  var code = document.getElementById("acc4_code_box").value;
+  const fields = document.getElementById("acc4_fields");
+
+  // Upgrade accordions
+  code = acc4UpgradeAccordions(code);
+
+  // Copy input code to output box
+  document.getElementById("acc4_output_box").value = code;
+  document.getElementById("acc4_output_box").style.color = "#808080";
+
+  // Clear previous content on the left
+  fields.innerHTML = "";
+
+  // Parse and process each accordion block
+  const accordions = extractAccordions(code);
+  accordions.forEach((accordion) => {
+    renderAccordion(accordion, fields);
+  });
+
+  const test_box = document.getElementById("test_box");
+  //test_box.value = "test";
+}
+
+// Extract accordions and their content
+function extractAccordions(code) {
+  // Parse code into a DOM object
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(code, "text/html");
+  const accordions = [];
+
+  // Select all divs with class "panel-group"
+  const accordionDivs = doc.querySelectorAll("div.panel-group");
+
+  accordionDivs.forEach((accordionDiv) => {
+    const id = accordionDiv.getAttribute("id");
+    const html = accordionDiv.outerHTML;
+    const split_code = code.split("\n");
+    const split_html = html.split("\n");
+    const start = split_code.findIndex((line) => line === split_html[0]);
+    const end = start + split_html.length;
+    const sections = extractSections(html);
+
+    accordions.push({ id, sections, start, end });
+  });
+
+  return accordions;
+}
+
+// Extract sections from each accordion
+function extractSections(accordion_html) {
+  const test_area = document.getElementById("test_area");
+
+  // Parse the accordion content into a DOM structure
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(accordion_html, "text/html");
+  const sections = [];
+
+  // Select all divs with class "panel panel-default"
+  const sectionDivs = doc.querySelectorAll("div.panel.panel-default");
+
+  sectionDivs.forEach((sectionDiv) => {
+    const section_html = sectionDiv.outerHTML;
+    const id = extractSectionID(section_html);
+    const text = extractSampleText(section_html);
+    const split_accordion = accordion_html.split("\n");
+    const split_section = section_html.split("\n");
+    const start = split_accordion.findIndex(
+      (line) => line === split_section[0]
+    );
+    const end = start + split_section.length;
+
+    sections.push({ id, text, start, end });
+  });
+
+  return sections;
+}
+
+// Extract the id from a section
+function extractSectionID(code) {
+  const regex = /<div id="(.*?)" class="panel-collapse collapse">/;
+  const match = regex.exec(code);
+  return match[1];
+}
+
+// Extract a sample of non-tag text
+function extractSampleText(content) {
+  const textContent = content.replace(/<[^>]*>/g, " ").trim();
+  return textContent.substring(0, 30).trim() || "N/A";
+}
+
+// Render each accordion with its sections
+function renderAccordion(accordion, container) {
+  const accordionDiv = document.createElement("div");
+  accordionDiv.classList.add("section_div");
+  accordionDiv.setAttribute("data-accordion-id", accordion.id);
+
+  // Create and append the minus accordion button
+  accordionDiv.appendChild(minusAccordionButton(accordion));
+
+  // Create and append the accordion label
+  const label = document.createElement("label");
+  label.classList.add("accordion_name");
+  label.innerHTML = `Accordion ID: ${accordion.id}`;
+  accordionDiv.appendChild(label);
+
+  // Render each section under the accordion label
+  accordion.sections.forEach((section) => {
+    const sectionDiv = document.createElement("div");
+    sectionDiv.setAttribute("data-section-id", section.id);
+
+    // Append the minus button
+    sectionDiv.appendChild(minusSectionButton(section, accordion));
+
+    // Append the section label
+    const sectionLabel = document.createElement("span");
+    sectionLabel.innerHTML = `Section: "${section.text}"`;
+    sectionDiv.appendChild(sectionLabel);
+
+    // Append the plus button
+    sectionDiv.appendChild(plusSectionButton(section, accordion));
+
+    // Append the section div to the accordion field
+    accordionDiv.appendChild(sectionDiv);
+  });
+
+  container.appendChild(accordionDiv);
+}
+
+// Create the minus accordion button
+function minusAccordionButton(accordion) {
+  const button = document.createElement("button");
+  button.innerHTML = "&#8722;";
+  button.classList.add("minus_button");
+  button.onclick = function () {
+    removeAccordionDiv(accordion);
+    removeAccordionCode(accordion);
+    regenAcc4Fields();
+  };
+  return button;
+}
+
+function removeAccordionDiv(accordion) {
+  let accordionDiv = document.querySelector(
+    `div[data-accordion-id="${accordion.id}"]`
+  );
+  if (accordionDiv) {
+    accordionDiv.remove();
+  }
+}
+
+function removeAccordionCode(accordion) {
+  const outputBox = document.getElementById("acc4_output_box");
+
+  let code = outputBox.value;
+  code = code.replace(`<!--Start acc set "${accordion.id}"-->`, "");
+
+  let split_code = code.split("\n");
+  split_code.splice(accordion.start, accordion.end - accordion.start);
+
+  outputBox.value = removeBlankLines(split_code.join("\n"));
+  document.getElementById("acc4_output_box").style.color = "#CB6C00";
+}
+
+function regenAcc4Fields() {
+  var code = document.getElementById("acc4_output_box").value;
+  const fields = document.getElementById("acc4_fields");
+
+  // Clear previous content on the left
+  fields.innerHTML = "";
+
+  // Parse and process each accordion block
+  const accordions = extractAccordions(code);
+  accordions.forEach((accordion) => {
+    renderAccordion(accordion, fields);
+  });
+}
+
+// Create the minus section button
+function minusSectionButton(section, accordion) {
+  const button = document.createElement("button");
+  button.innerHTML = "&#8722;";
+  button.classList.add("minus_button");
+  button.onclick = function () {
+    removeSectionDiv(section);
+    removeSectionCode(section, accordion);
+    regenAcc4Fields();
+  };
+  return button;
+}
+
+function removeSectionDiv(section) {
+  let sectionDiv = document.querySelector(
+    `div[data-section-id="${section.id}"]`
+  );
+  if (sectionDiv) {
+    sectionDiv.remove();
+  }
+}
+
+function removeSectionCode(section, accordion) {
+  const outputBox = document.getElementById("acc4_output_box");
+
+  let code = outputBox.value;
+  let regex = new RegExp(`<!--Start acc item ?\\d* ?"${section.id}"-->`);
+  code = code.replace(regex, "");
+
+  let split_code = code.split("\n");
+  split_code.splice(
+    accordion.start + section.start,
+    section.end - section.start
+  );
+
+  outputBox.value = removeBlankLines(split_code.join("\n"));
+  document.getElementById("acc4_output_box").style.color = "#CB6C00";
+}
+
+// Create the plus section button
+function plusSectionButton(section, accordion) {
+  const button = document.createElement("button");
+  button.innerHTML = "&#43;";
+  button.classList.add("plus_button");
+  button.onclick = function () {
+    // Create the new section
+    const id = `${Date.now()}`;
+    const text = "New accordion item"
+    const start = accordion.start + section.end
+    let new_section = { id, text, start, start }
+    
+    addSectionDiv(section, new_section, accordion);
+    addSectionCode(section, new_section, accordion);
+    regenAcc4Fields();
+  };
+  return button;
+}
+
+function addSectionDiv(section, new_section, accordion) {
+  const sectionDiv = document.querySelector(
+    `div[data-section-id="${section.id}"]`
+  );
+
+  // Create a new div for the new section
+  const inputDiv = document.createElement("div");
+  inputDiv.setAttribute("data-section-id", new_section.id);
+
+  // Create a minus button for the new section
+  const minusButton = minusSectionButton(new_section, accordion);
+  inputDiv.appendChild(minusButton);
+
+  // Create the new section name input field
+  const newSectionName = document.createElement("label");
+  newSectionName.id = `accordion-item-name-${new_section.id}`;
+  newSectionName.innerHTML = `New Section`;
+  inputDiv.appendChild(newSectionName);
+
+  // Create a plus button for the new section
+  const plusButton = plusSectionButton(new_section, accordion);
+  inputDiv.appendChild(plusButton);
+
+  // Append the input div underneath the section
+  if (sectionDiv) {
+    sectionDiv.insertAdjacentElement("afterend", inputDiv);
+  }
+}
+
+function addSectionCode(section, new_section, accordion) {
+  const outputBox = document.getElementById("acc4_output_box");
+  let code = outputBox.value;
+
+  // New section code
+  const newSectionCode = `
+<!--Start acc item "${new_section.id}"-->
+<div class="panel panel-default" style="box-shadow: none; border: none;"><!--Start acc item head "${new_section.id}"-->
+<table>
+<tbody>
+<tr>
+<td><a class="btn btn-default" style="width: 100%; text-align: left;" data-toggle="collapse" data-parent="#${accordion.id}" data-target="#${new_section.id}">New accordion item<!--End acc item head "${new_section.id}"--></a></td>
+</tr>
+</tbody>
+</table>
+<!--Start acc item body "${new_section.id}"-->
+<div id="${new_section.id}" class="panel-collapse collapse">
+<div class="panel-body" style="border: 1px solid #d5d8de; border-radius: 8px;">
+<table>
+<tbody>
+<tr>
+<td>Content for new accordion item</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!--End acc item body "${new_section.id}"--></div>
+<!--End acc item "${new_section.id}"--></div>
+`;
+
+  // Insert the new section code
+  let insert_line = new_section.start;
+  let split_code = code.split("\n");
+  split_code.splice(insert_line, 0, newSectionCode);
+  outputBox.value = removeBlankLines(split_code.join("\n"));
+  document.getElementById("acc4_output_box").style.color = "#00952F";
+}
+
+function clearAcc4Code() {
+  document.getElementById("acc4_code_box").value = "";
+  document.getElementById("acc4_output_box").value = "";
+  document.getElementById("acc4_fields").innerHTML = "";
+}
+
+function copyAcc4Code() {
+  const acc4CopyText = document.getElementById("acc4_output_box");
+  acc4CopyText.select();
+  acc4CopyText.setSelectionRange(0, 99999);
+  document.execCommand("copy");
+}
+
+function commitAcc4Code() {
+  genAcc4Fields();
+}
+
+function removeBlankLines(code) {
+  return code
+    .split("\n")
+    .filter((line) => line.trim() !== "")
+    .join("\n");
+}
+
+function acc4UpgradeAccordions(code) {
+  let newcode = code.split("\n");
+
+  for (let i = 0; i < newcode.length; i++) {
+    newcode[i] = newcode[i].replaceAll(
+      'class="panel list-group"',
+      'class="panel-group"'
+    );
+    newcode[i] = newcode[i].replaceAll(
+      /<div class="panel panel-default"[^>]*>/g,
+      '<div class="panel panel-default" style="box-shadow: none; border: none;">'
+    );
+    newcode[i] = newcode[i].replaceAll(
+      /<div class="panel"[^>]*>/g,
+      '<div class="panel panel-default" style="box-shadow: none; border: none;">'
+    );
+    newcode[i] = newcode[i].replaceAll(
+      /<div class="panel-heading"[^>]*>/g,
+      "<div>"
+    );
+    newcode[i] = newcode[i].replaceAll(
+      /class="btn btn-[^"]*"/g,
+      'class="btn btn-default"'
+    );
+    newcode[i] = newcode[i].replaceAll(
+      '<a data-toggle="collapse"',
+      '<a class="btn btn-default" style="width: 100%; text-align: left;" data-toggle="collapse"'
+    );
+    newcode[i] = newcode[i].replaceAll(
+      /<a class="list-group-item" style="[^"]*"/g,
+      '<a class="btn btn-default" style="width: 100%; text-align: left;"'
+    );
+    newcode[i] = newcode[i].replaceAll(
+      'class="collapse"',
+      'class="panel-collapse collapse"'
+    );
+    newcode[i] = newcode[i].replaceAll(
+      /<div class="list-group-item"[^>]*>/g,
+      '<div class="panel-body" style="border: 1px solid #d5d8de; border-radius: 8px;">'
+    );
+    newcode[i] = newcode[i].replaceAll(
+      /<div class="panel-body"[^>]*>/g,
+      '<div class="panel-body" style="border: 1px solid #d5d8de; border-radius: 8px;">'
+    );
+    // Convert non-breaking spaces
+    newcode[i] = newcode[i].replaceAll("&nbsp;", " ").replaceAll(/\s+/g, " ");
+    // Trim each line
+    newcode[i] = newcode[i].trim();
+  }
+
+  newcode = newcode.join("\n");
+  return newcode;
+}
+
+//! ------------------------------------------------------------ EDIT ACCORDIONS
+/*
 function genAcc4Fields() {
   var code = document.getElementById("acc4_code_box").value;
   const fields = document.getElementById("acc4_fields");
@@ -3970,7 +4333,7 @@ function acc4UpgradeAccordions(code) {
   newcode = newcode.join("\n");
   return newcode;
 }
-
+*/
 //! ------------------------------------------------------------ TABS
 
 function genTabImgWidth(val) {
