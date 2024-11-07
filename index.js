@@ -2556,6 +2556,7 @@ function ssjConvertPhrases(array, i) {
 }
 // Correct misspellings
 function ssjCorrectSpellings(array, i) {
+  /*
   array[i] = array[i].replaceAll("Log into", "Log in to");
   array[i] = array[i].replaceAll("Login to", "Log in to");
   array[i] = array[i].replaceAll(" log into", " log in to");
@@ -2564,6 +2565,7 @@ function ssjCorrectSpellings(array, i) {
   array[i] = array[i].replaceAll("Signin to", "Sign in to");
   array[i] = array[i].replaceAll(" sign into", " sign in to");
   array[i] = array[i].replaceAll(" signin to", " sign in to");
+  */
 }
 // Connect incomplete tags
 function ssjAssembleTags(array, i) {
@@ -3305,6 +3307,7 @@ function ssjRunAdvanced() {
   sampleBox.value = samples;
   ssjDisplayStats();
 }
+
 // Convert breaks into paragraphs
 function ssjConvertBreaks(array) {
   if (ssj_breaks_check.checked) {
@@ -3318,6 +3321,8 @@ function ssjConvertBreaks(array) {
     }
   }
 }
+
+/*
 // Upgrade accordions
 function ssjUpgradeAccordions(array) {
   if (ssj_upgrade_acc_check.checked) {
@@ -3364,6 +3369,161 @@ function ssjUpgradeAccordions(array) {
       );
     }
   }
+}
+*/
+
+// Upgrade accordions
+function ssjUpgradeAccordions(array) {
+  if (ssj_upgrade_acc_check.checked) {
+    let accordions = ssjGetAccordions(array); // Map accordions
+    ssjRemoveJunk(array, accordions);
+    let remove = [];
+    let bodyTables = [];
+    let bodyTDs = [];
+    let closeDetails = [];
+    for (let i = ssjSkip; i < array.length; i++) {
+      if (accordions.includes(i)) {
+        // Identify yellow tags to remove
+        if (array[i].match(/<div(.*?)class="panel-group"[^>]*>/)) {
+          remove.push(i);
+          remove.push(ssjGetCloseTag(array, i, "<div", "</div>"));
+        }
+        // Identify table tags around the heading to remove
+        if (
+          array[i].match(/<div(.*?)class="panel panel-default"/) ||
+          array[i].match(/<div(.*?)class="panel list-group">/)
+        ) {
+          let table = ssjGetTable(array, i + 1);
+          remove = remove.concat(table);
+        }
+        // Identify purple tags to remove
+        if (
+          array[i].match(/<div(.*?)class="panel-collapse collapse"[^>]*>/) ||
+          array[i].match(/<div(.*?)class="collapse"[^>]*>/)
+        ) {
+          remove.push(i);
+          remove.push(ssjGetCloseTag(array, i, "<div", "</div>"));
+        }
+        // Identify cyan tags to remove
+        if (
+          array[i].match(/<div(.*?)class="panel-body"[^>]*>/) ||
+          array[i].match(/<div(.*?)class="list-group-item"[^>]*>/)
+        ) {
+          remove.push(i);
+          remove.push(ssjGetCloseTag(array, i, "<div", "</div>"));
+        }
+        // Create orange summary tags with the heading
+        if (array[i].match(/<td[^>]*><a class[^>]*>(.*?)<\/a><\/td>/)) {
+          array[i] = array[i].replace(
+            /<td[^>]*><a class[^>]*>/,
+            `<summary style="color: #064584; font-weight: bold; margin-bottom: 11px;">`
+          );
+          array[i] = array[i].replace(`<\/a><\/td>`, `</summary>`);
+        }
+        // Create green details tags
+        if (array[i].match(/<div class="panel panel-default"/)) {
+          closeDetails.push(ssjGetCloseTag(array, i, "<div", "</div>"));
+          array[i] = `<details style="margin-top: 8px;">`;
+        }
+        if (closeDetails.includes(i)) {
+          array[i] = "</details>";
+        }
+        // Create table body tags
+        if (
+          array[i].match(/<div(.*?)class="panel-body"[^>]*>/) ||
+          array[i].match(/<div(.*?)class="list-group-item"[^>]*>/)
+        ) {
+          if (array[i + 1] != null && array[i + 1].match(/<table[^>]*>/)) {
+            bodyTables.push(i + 1);
+          }
+          if (array[i + 4] && array[i + 4].match(/<td[^>]*>/)) {
+            bodyTDs.push(i + 4);
+          }
+        }
+        if (bodyTables.includes(i)) {
+          array[i] = `<table style="width: 100%; border: 1px solid #d5d8de;">`;
+        }
+        if (bodyTDs.includes(i)) {
+          array[i] = array[i].replace(
+            /<td[^>]*>/,
+            `<td style="padding: 10px;">`
+          );
+        }
+        // Zero tags
+        if (remove.includes(i)) {
+          array[i] = "";
+        }
+      }
+    }
+  }
+}
+
+// Remove comments in accordion
+function ssjRemoveJunk(array, accordions) {
+  for (let i = ssjSkip; i < array.length; i++) {
+    if (accordions.includes(i)) {
+      // Zero comments
+      array[i] = array[i].replace(/<!--(.*?)-->/, "");
+      // Zero errant non-breaking spaces
+      if (array[i].startsWith("&nbsp;<")) {
+        array[i] = array[i].replace("&nbsp;<", "<");
+      } else {
+        array[i] = array[i].replace("&nbsp;", " ");
+      }
+    }
+  }
+  array = array.filter((value) => Object.keys(value).length !== 0);
+}
+
+// Map accordion line numbers
+function ssjGetAccordions(array) {
+  let accordions = [];
+  for (let i = ssjSkip; i < array.length; i++) {
+    if (array[i].match(/<!--Start acc set(.*?)-->/)) {
+      accordions.push(i);
+    }
+    if (array[i].match(/<div id="(.*?)" class="panel(.*?)group">/)) {
+      let close = ssjGetCloseTag(array, i, "<div", "</div>");
+      for (let j = i; j <= close; j++) {
+        accordions.push(j);
+      }
+    }
+  }
+  return accordions;
+}
+
+// Map heading table line numbers
+function ssjGetTable(array, start) {
+  let table = [];
+  if (array[start].match(/<table[^>]*>/)) {
+    let close = ssjGetCloseTag(array, start, "<table", "</table>");
+    for (let i = start; i <= close; i++) {
+      if (!array[i].match(/<td[^>]*><a class[^>]*>(.*?)<\/a><\/td>/)) {
+        table.push(i);
+      }
+    }
+  }
+  return table;
+}
+
+// Return the line number of the closing tag
+function ssjGetCloseTag(array, start, opentag, closetag) {
+  var closingTag = 0;
+  for (let i = start; i < array.length; i++) {
+    if (array[i].match(opentag)) {
+      closingTag += 1;
+    } else if (array[i].match(closetag)) {
+      closingTag -= 1;
+      if (closingTag == 0) {
+        return i;
+      }
+    }
+  }
+}
+
+// Return non-tag content
+function ssjGetContentOnly(content) {
+  return content.replace(/<[^>]*>/g, " ").trim();
 }
 
 //! ------------------------------------------------------------ COMMENTS
@@ -3458,18 +3618,18 @@ function buuClearCode() {
 //! ------------------------------------------------------------ ACCORDIONS (new style)
 
 // Display code in the code box by default
-document.getElementById("acc3_code_box").value = `<p></p>
-<details>
+document.getElementById(
+  "acc3_code_box"
+).value = `<details style="margin-top: 8px;">
 <summary style="color: #064584; font-weight: bold; margin-bottom: 11px;">HEADER TEXT</summary>
-<table style="width: 100%;">
+<table style="width: 100%; border: 1px solid #d5d8de;">
 <tbody>
 <tr>
-<td>BODY TEXT</td>
+<td style="padding: 10px;">BODY TEXT</td>
 </tr>
 </tbody>
 </table>
-</details>
-<p></p>`;
+</details>`;
 // Copy the code in the code box
 function copyAcc3Code() {
   const acc3CopyText = document.getElementById("acc3_code_box");
@@ -3829,10 +3989,10 @@ function plusSectionButton(section, accordion) {
   button.onclick = function () {
     // Create the new section
     const id = `${Date.now()}`;
-    const text = "New accordion item"
-    const start = accordion.start + section.end
-    let new_section = { id, text, start, start }
-    
+    const text = "New accordion item";
+    const start = accordion.start + section.end;
+    let new_section = { id, text, start, start };
+
     addSectionDiv(section, new_section, accordion);
     addSectionCode(section, new_section, accordion);
     regenAcc4Fields();
