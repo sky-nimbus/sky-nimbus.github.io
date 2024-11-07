@@ -3416,14 +3416,14 @@ function ssjUpgradeAccordions(array) {
         if (array[i].match(/<td[^>]*><a class[^>]*>(.*?)<\/a><\/td>/)) {
           array[i] = array[i].replace(
             /<td[^>]*><a class[^>]*>/,
-            `<summary style="color: #064584; font-weight: bold; margin-bottom: 11px;">`
+            `<summary style="color: #064584; font-weight: bold; margin-bottom: 8px;">`
           );
           array[i] = array[i].replace(`<\/a><\/td>`, `</summary>`);
         }
         // Create green details tags
         if (array[i].match(/<div class="panel panel-default"/)) {
           closeDetails.push(ssjGetCloseTag(array, i, "<div", "</div>"));
-          array[i] = `<details style="margin-top: 8px;">`;
+          array[i] = `<details style="margin-top: 10px;">`;
         }
         if (closeDetails.includes(i)) {
           array[i] = "</details>";
