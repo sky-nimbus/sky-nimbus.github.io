@@ -3304,6 +3304,7 @@ function ssjRunAdvanced() {
   ssjArray = ssjArray.filter((value) => Object.keys(value).length !== 0);
   // Display the results in the code box
   ssjOutputBox.value = ssjArray.join("\n");
+  document.getElementById("ssj_code_box").style.color = "#00952F";
   sampleBox.value = samples;
   ssjDisplayStats();
 }
@@ -3620,8 +3621,8 @@ function buuClearCode() {
 // Display code in the code box by default
 document.getElementById(
   "acc3_code_box"
-).value = `<details style="margin-top: 8px;">
-<summary style="color: #064584; font-weight: bold; margin-bottom: 11px;">HEADER TEXT</summary>
+).value = `<details style="margin-top: 10px;">
+<summary style="color: #064584; font-weight: bold; margin-bottom: 8px;">HEADER TEXT</summary>
 <table style="width: 100%; border: 1px solid #d5d8de;">
 <tbody>
 <tr>
