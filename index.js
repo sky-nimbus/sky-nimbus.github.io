@@ -3308,7 +3308,7 @@ function ssjRunAdvanced() {
   // Display the results in the code box
   ssjOutputBox.value = ssjArray.join("\n");
   document.getElementById("ssj_code_box").style.color = "#00952F";
-  sampleBox.value = samples;
+  // sampleBox.value = samples;
   ssjDisplayStats();
 }
 
@@ -3378,6 +3378,9 @@ function ssjUpgradeAccordions(array) {
 
 // Upgrade accordions
 function ssjUpgradeAccordions(array) {
+  // const test_area = document.getElementById("ssj_sample_box");
+  // test_area.value = "fuck"
+
   if (ssj_upgrade_acc_check.checked) {
     let accordions = ssjGetAccordions(array); // Map accordions
     ssjRemoveJunk(array, accordions);
@@ -3388,25 +3391,33 @@ function ssjUpgradeAccordions(array) {
     for (let i = ssjSkip; i < array.length; i++) {
       if (accordions.includes(i)) {
         // Identify yellow tags to remove
-        if (array[i].match(/<div(.*?)class="panel-group"[^>]*>/)) {
+        if (
+          array[i].match(/<div(.*?)class="panel-group"[^>]*>/) ||
+          array[i].match(/<div(.*?)class="panel list-group"[^>]*>/)
+        ) {
+          remove.push(i);
+          remove.push(ssjGetCloseTag(array, i, "<div", "</div>"));
+        }
+        // Identify green tags to remove
+        if (array[i].match(/<div class="panel panel-default"/)) {
           remove.push(i);
           remove.push(ssjGetCloseTag(array, i, "<div", "</div>"));
         }
         // Identify table tags around the heading to remove
         if (
-          array[i].match(/<div(.*?)class="panel panel-default"/) ||
-          array[i].match(/<div(.*?)class="panel list-group">/)
+          array[i].match(/<td[^>]*><a class="btn(.*?)"[^>]*>/) ||
+          array[i].match(/<td[^>]*><a class="list-group-item"[^>]*>/)
         ) {
-          let table = ssjGetTable(array, i + 1);
+          let table = ssjGetTable(array, i - 3);
           remove = remove.concat(table);
         }
-        // Identify purple tags to remove
+        // Identify purple tags to remove or close details
         if (
           array[i].match(/<div(.*?)class="panel-collapse collapse"[^>]*>/) ||
           array[i].match(/<div(.*?)class="collapse"[^>]*>/)
         ) {
           remove.push(i);
-          remove.push(ssjGetCloseTag(array, i, "<div", "</div>"));
+          closeDetails.push(ssjGetCloseTag(array, i, "<div", "</div>"));
         }
         // Identify cyan tags to remove
         if (
@@ -3416,23 +3427,19 @@ function ssjUpgradeAccordions(array) {
           remove.push(i);
           remove.push(ssjGetCloseTag(array, i, "<div", "</div>"));
         }
-        // Create orange summary tags with the heading
+        // Create green and orange details and summary tags
         if (array[i].match(/<td[^>]*><a class[^>]*>(.*?)<\/a><\/td>/)) {
           array[i] = array[i].replace(
             /<td[^>]*><a class[^>]*>/,
-            `<summary style="color: #064584; font-weight: bold; margin-bottom: 8px;">`
+            `<details style="margin-top: 10px;">\n<summary style="color: #064584; font-weight: bold; margin-bottom: 8px;">`
           );
           array[i] = array[i].replace(`<\/a><\/td>`, `</summary>`);
         }
-        // Create green details tags
-        if (array[i].match(/<div class="panel panel-default"/)) {
-          closeDetails.push(ssjGetCloseTag(array, i, "<div", "</div>"));
-          array[i] = `<details style="margin-top: 10px;">`;
-        }
+        // Create purple closing details tags
         if (closeDetails.includes(i)) {
           array[i] = "</details>";
         }
-        // Create table body tags
+        // Create cyan table body tags
         if (
           array[i].match(/<div(.*?)class="panel-body"[^>]*>/) ||
           array[i].match(/<div(.*?)class="list-group-item"[^>]*>/)
@@ -3453,10 +3460,11 @@ function ssjUpgradeAccordions(array) {
             `<td style="padding: 10px;">`
           );
         }
-        // Zero tags
-        if (remove.includes(i)) {
-          array[i] = "";
-        }
+      }
+    }
+    for (let i = ssjSkip; i < array.length; i++) {
+      if (remove.includes(i)) {
+        array[i] = "";
       }
     }
   }
