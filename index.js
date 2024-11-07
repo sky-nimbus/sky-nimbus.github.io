@@ -3109,7 +3109,10 @@ function ssjReconstructAnchor(i, j) {
     if (anchors.Class != "") {
       AnchorAttr.push('class="' + anchors.Class + '"');
     }
-  } else if (anchors.Class.includes("btn")) {
+  } else if (
+    anchors.Class.includes("btn") ||
+    anchors.Class.includes("list-group-item")
+  ) {
     AnchorAttr.push('class="' + anchors.Class + '"');
   }
   if (anchors.DataParent != "") {
