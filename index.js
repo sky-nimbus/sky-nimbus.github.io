@@ -3383,7 +3383,7 @@ function ssjUpgradeAccordions(array) {
 
   if (ssj_upgrade_acc_check.checked) {
     ssjRemoveJunk(array);
-    let accordions = ssjGetAccordions(array); // Map accordions
+    let accordions = ssjGetAccordions(array);
     let remove = [];
     let bodyTables = [];
     let bodyTDs = [];
