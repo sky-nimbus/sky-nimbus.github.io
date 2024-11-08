@@ -3382,8 +3382,8 @@ function ssjUpgradeAccordions(array) {
   // test_area.value = "fuck"
 
   if (ssj_upgrade_acc_check.checked) {
+    ssjRemoveJunk(array);
     let accordions = ssjGetAccordions(array); // Map accordions
-    ssjRemoveJunk(array, accordions);
     let remove = [];
     let bodyTables = [];
     let bodyTDs = [];
@@ -3470,18 +3470,16 @@ function ssjUpgradeAccordions(array) {
   }
 }
 
-// Remove comments in accordion
-function ssjRemoveJunk(array, accordions) {
+// Remove non-breaking spaces and comments
+function ssjRemoveJunk(array) {
   for (let i = ssjSkip; i < array.length; i++) {
-    if (accordions.includes(i)) {
-      // Zero comments
-      array[i] = array[i].replace(/<!--(.*?)-->/, "");
-      // Zero errant non-breaking spaces
-      if (array[i].startsWith("&nbsp;<")) {
-        array[i] = array[i].replace("&nbsp;<", "<");
-      } else {
-        array[i] = array[i].replace("&nbsp;", " ");
-      }
+    // Zero comments
+    array[i] = array[i].replace(/<!--(.*?)-->/, "");
+    // Zero errant non-breaking spaces
+    if (array[i].startsWith("&nbsp;<")) {
+      array[i] = array[i].replace("&nbsp;<", "<");
+    } else {
+      array[i] = array[i].replace("&nbsp;", " ");
     }
   }
   array = array.filter((value) => Object.keys(value).length !== 0);
