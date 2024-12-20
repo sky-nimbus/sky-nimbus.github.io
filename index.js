@@ -2387,6 +2387,7 @@ function ssjMutateLines(array, i) {
   ssjStripHeadings(array, i);
   ssjStripSpecials(array, i);
   ssjReplaceImg(array, i);
+  ssjRemoveEmptyLists(array, i);
   array[i] = array[i].trim();
 }
 //? Loop mutations on each line of code
@@ -2730,6 +2731,11 @@ function ssjRemoveComments(array, i) {
       array[i] = array[i].replace(/<!--.*-->/, "");
     }
   }
+}
+// Remove empty lists
+function ssjRemoveEmptyLists(array, i) {
+  array[i] = array[i].replaceAll(/<ul[^>]*>.*<\/ul>/g, "");
+  array[i] = array[i].replaceAll(/<ol[^>]*>.*<\/ol>/g, "");
 }
 
 //? ------------------------------ Spans
