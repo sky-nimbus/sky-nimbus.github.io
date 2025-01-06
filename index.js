@@ -2174,7 +2174,7 @@ function ssjStylizeHeadings(array, i) {
     if (ssj_well_check.checked) {
       array[i] = array[i].replace(
         /<h2[^>]*>/,
-        `<h2 class="well" style="${ssjChosenTheme.Values.Well};" align="center">`
+        `<h2 class="well" style="${ssjChosenTheme.Values.Well} margin-top: 14px;" align="center">`
       );
       ssjRemoveHorizon(array, i);
     } else {
