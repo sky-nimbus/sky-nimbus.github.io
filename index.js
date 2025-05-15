@@ -1931,7 +1931,7 @@ function ssjMutateHeader(array) {
       array[ssjTable.Table_O] =
         array[ssjTable.Table_O] +
         "\n<colgroup>" +
-        `\n<col style="width: 20%;"><col style="width: 30%;"><col style="width: 50%;">` +
+        `\n<col style="width: 20%;"><col style="width: 20%;"><col style="width: 60%;">` +
         "\n</colgroup>";
     } else if (ssj_tbl_column_check.checked) {
       ssjColorColumn(array);
