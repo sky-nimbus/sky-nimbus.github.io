@@ -107,11 +107,11 @@ function ssjDisplayStats() {
   }
   // Display stats
   document.getElementById("ssj_stats_tags").innerHTML =
-    ssjStatsTags.join("<br />");
+    ssjStatsTags.join("<br>");
   document.getElementById("ssj_stats_line").innerHTML =
-    ssjStatsLines.join("<br />");
+    ssjStatsLines.join("<br>");
   document.getElementById("ssj_stats_type").innerHTML =
-    ssjStatsTypes.join("<br />");
+    ssjStatsTypes.join("<br>");
   */
 }
 
@@ -736,11 +736,11 @@ function ssjAddPeriods(array, i) {
     let dumb = array[i].split("<split>");
     for (sub = 0; sub < dumb.length; sub++) {
       if (dumb[sub].match(/<\/?code[^>]*>/g)) {
-        dumb[sub] = dumb[sub].replaceAll("<br />", "<break>");
+        dumb[sub] = dumb[sub].replaceAll(/<br\s*\/?>/gi, "<break>");
       }
     }
     array[i] = dumb.join("");
-    let split = array[i].split("<br />");
+    let split = array[i].split("<br>");
     for (let x = 0; x < split.length; x++) {
       if (split[x].match(/[A-Za-z0-9]/g)) {
         ssjFindLastText(split, x, split[x].length - 1);
@@ -779,7 +779,7 @@ function ssjAddPeriods(array, i) {
         }
       }
     }
-    array[i] = split.join("<br />").replaceAll("<break>", "<br />");
+    array[i] = split.join("<br>").replaceAll("<break>", "<br>");
   }
 }
 
@@ -855,7 +855,7 @@ function ssjZeroParagraphs(array) {
     if (
       array[i] == "<p></p>" ||
       array[i] == "<hr />" ||
-      array[i] == "<br />" ||
+      array[i] == /<br\s*\/?>/gi ||
       array[i].trim() == ""
     ) {
       array[i] = "";
@@ -869,7 +869,7 @@ function ssjZeroParagraphs(array) {
     if (
       array[j] == "<p></p>" ||
       array[j] == "<hr />" ||
-      array[j] == "<br />" ||
+      array[j] == /<br\s*\/?>/gi ||
       array[j].trim() == ""
     ) {
       array[j] = "";
@@ -1171,7 +1171,7 @@ function ssjRemoveTrails(array) {
     while (i != "listitem" && i > ssjCode.Lists.OpenTags[x]) {
       i -= 1;
       if (ssjContentExists(array, i)) {
-        array[i] = array[i].replace(/(<br \/>)+<\/li>/, "</li>");
+        array[i] = array[i].replace(/(<br\s*\/?>)+<\/li>/, "</li>");
         i = "listitem";
       }
     }
@@ -1345,14 +1345,14 @@ function ssjBreakListMedia(array, i) {
       for (let tag = 0; tag < images.length; tag++) {
         array[i] = array[i].replaceAll(
           images[tag],
-          "<br /><br />" + images[tag] + "<br /><br />"
+          "<br><br>" + images[tag] + "<br><br>"
         );
       }
     }
-    array[i] = array[i].replaceAll("<video", "<br /><br /><video");
-    array[i] = array[i].replaceAll("</video>", "</video><br /><br />");
-    array[i] = array[i].replaceAll("<audio", "<br /><br /><audio");
-    array[i] = array[i].replaceAll("</audio>", "</audio><br /><br />");
+    array[i] = array[i].replaceAll("<video", "<br><br><video");
+    array[i] = array[i].replaceAll("</video>", "</video><br><br>");
+    array[i] = array[i].replaceAll("<audio", "<br><br><audio");
+    array[i] = array[i].replaceAll("</audio>", "</audio><br><br>");
     ssjCondenseBreaks(array, i);
   }
 }
@@ -1366,7 +1366,7 @@ function ssjConnectMediaItems(array, i) {
         if (ssjFirstText == "" || ssjFirstMedia[1] < ssjFirstText) {
           array[i + 1] =
             array[i].replace("</li>", "") +
-            "<br /><br />" +
+            "<br><br>" +
             array[i + 1].slice(array[i].indexOf(">") + 1);
           array[i] = "";
           ssjCondenseBreaks(array, i + 1);
@@ -1390,8 +1390,8 @@ function ssjConnectMediaItems(array, i) {
 // LOOP Connect split list items
 function ssjConnectListItems(array, i) {
   if (array[i + 1] != null) {
-    if (array[i].endsWith("<br />") || !array[i].endsWith(">")) {
-      if (array[i + 1].startsWith("<br />")) {
+    if (array[i].match(/<br\s*\/?>$/i) || !array[i].endsWith(">")) {
+      if (array[i + 1].match(/^<br\s*\/?>/i)) {
         array[i + 1] = array[i] + array[i + 1];
         array[i] = "";
       }
@@ -1407,21 +1407,22 @@ function ssjConnectListItems(array, i) {
           array[i + 1] = array[i] + array[i + 1];
           array[i] = "";
         } else {
-          array[i + 1] = array[i + 1].replace("<p>", "<br /><br />");
+          array[i + 1] = array[i + 1].replace("<p>", "<br><br>");
           array[i + 1] = array[i + 1].replace("</p>", "");
           array[i + 1] = array[i] + array[i + 1];
           array[i] = "";
         }
         ssjReplaceListImg(array, i + 1);
       } else if (array[i + 1] == "</li>") {
-        if (array[i].endsWith("<br />")) {
+        if (array[i].match(/<br\s*\/?>$/i)) {
           ssjFindBeforeTags(array, i, ["<br />"]);
+          ssjFindBeforeTags(array, i, ["<br>"]);
           array[i] = array[i].slice(0, ssjBeforeTags);
         }
         array[i + 1] = array[i] + array[i + 1];
         array[i] = "";
       } else if (array[i + 1].includes("<table")) {
-        array[i] = array[i] + "<br /><br />";
+        array[i] = array[i] + "<br><br>";
       }
     }
   }
@@ -1437,7 +1438,7 @@ function ssjAlignMedia(array, i) {
         let string_x = array[i].indexOf("</li>");
         let string = array[i].slice(string_o, string_x);
         array[i] = array[i].replaceAll(string, "");
-        array[i + 2] = "<br /><br />" + string + "</li>";
+        array[i + 2] = "<br><br>" + string + "</li>";
         let tags = ["strong", "em", "span", "code"];
         ssjFindStrandedTags_X(array, i, tags);
         array[i] = array[i].replace("</li>", ssjStrandedTags_X + "</li>");
@@ -1452,20 +1453,21 @@ function ssjCompressBreaks(array, i) {
   ssjCondenseBreaks(array, i);
   if (array[i].startsWith("<li") && array[i].endsWith("</li>")) {
     if (!ssjMediaExists(array, i) && ssjGetText(array, i) != "") {
-      array[i] = array[i].replace("<br /><br /></li>", "</li>");
-      array[i] = array[i].replace("<br /></li>", "</li>");
-      array[i] = array[i].replace("<br /><br />", "<br />");
+      array[i] = array[i].replace("<br />", "<br>");
+      array[i] = array[i].replace("<br><br></li>", "</li>");
+      array[i] = array[i].replace("<br></li>", "</li>");
+      array[i] = array[i].replace("<br><br>", "<br>");
     }
   }
   if (
-    array[i].startsWith("<br /><br />") &&
+    array[i].match(/^<br\s*\/?><br\s*\/?>/i) &&
     array[i - 1] != null &&
     !array[i - 1].match("</table>")
   ) {
-    array[i] = array[i].replace("<br /><br />", "<br />");
+    array[i] = array[i].replace(/<br\s*\/?><br\s*\/?>/gi, "<br>");
   }
   if (
-    array[i].endsWith("<br /><br />") &&
+    array[i].match(/<br\s*\/?><br\s*\/?>$/i) &&
     !array[i + 1] != null &&
     !array[i + 1].match(/<table[^>]*>/)
   ) {
@@ -1583,8 +1585,8 @@ function ssjCheckMediaItems(array, i) {
 // Check for split list items
 function ssjCheckSplitItems(array, i) {
   if (array[i + 1] != null) {
-    if (array[i].endsWith("<br />") || !array[i].endsWith(">")) {
-      if (array[i + 1].startsWith("<br />")) {
+    if (array[i].match(/<br\s*\/?>$/i) || !array[i].endsWith(">")) {
+      if (array[i + 1].match(/^<br\s*\/?>/i)) {
         ssjInspector = "found";
       }
     }
@@ -1778,14 +1780,14 @@ function ssjBreakTableMedia(array, i) {
       for (let tag = 0; tag < images.length; tag++) {
         array[i] = array[i].replaceAll(
           images[tag],
-          "<br />" + images[tag] + "<br />"
+          "<br>" + images[tag] + "<br>"
         );
       }
     }
-    array[i] = array[i].replaceAll("<video", "<br /><video");
-    array[i] = array[i].replaceAll("</video>", "</video><br />");
-    array[i] = array[i].replaceAll("<audio", "<br /><audio");
-    array[i] = array[i].replaceAll("</audio>", "</audio><br />");
+    array[i] = array[i].replaceAll("<video", "<br><video");
+    array[i] = array[i].replaceAll("</video>", "</video><br>");
+    array[i] = array[i].replaceAll("<audio", "<br><audio");
+    array[i] = array[i].replaceAll("</audio>", "</audio><br>");
   }
 }
 // Convert closing paragraph tags to line breaks
@@ -1798,11 +1800,11 @@ function ssjBreakParagraphs(array, i) {
       if (array[ssjNextLine(array, i)].includes("<p")) {
         array[ssjNextLine(array, i)] = array[ssjNextLine(array, i)].replace(
           "<p>",
-          "<br /><br />"
+          "<br><br>"
         );
         array[ssjNextLine(array, i)] = array[ssjNextLine(array, i)].replace(
           /<p [^>]*>/,
-          "<br /><br />"
+          "<br><br>"
         );
         array[ssjNextLine(array, i)] = array[ssjNextLine(array, i)].replace(
           "</p>",
@@ -1812,9 +1814,9 @@ function ssjBreakParagraphs(array, i) {
         array[i] = "";
       }
       ssjCondenseBreaks(array, i);
-      array[i] = array[i].replaceAll("<br /><br />", "<br />");
+      array[i] = array[i].replaceAll(/<br\s*\/?><br\s*\/?>/gi, "<br>");
       if (ssj_tbl_double_check.checked) {
-        array[i] = array[i].replaceAll("<br />", "<br /><br />");
+        array[i] = array[i].replaceAll(/<br\s*\/?>/gi, "<br><br>");
       }
     } else if (array[i] == "<p></p>") {
       array[i] = "";
@@ -1825,23 +1827,23 @@ function ssjBreakParagraphs(array, i) {
 function ssjUnbreakCells(array, i) {
   if (array[i].startsWith("<td") || array[i].startsWith("<th")) {
     let tag = array[i].match(/<(td|th)[^>]*>/)[0];
-    array[i] = array[i].replace(/<(td|th)[^>]*>(<br \/>)+/, tag);
+    array[i] = array[i].replace(/<(td|th)[^>]*>(<br\s*\/?>)+/, tag);
   }
   if (
-    array[i].startsWith("<br />") &&
+    array[i].match(/^<br\s*\/?>/i) &&
     array[ssjPrevLine(array, i)].match(/<(td|th)[^>]*>/)
   ) {
     let tag = array[ssjPrevLine(array, i)].match(/<(td|th)[^>]*>/)[0];
     if (array[ssjPrevLine(array, i)].trim() == tag) {
-      array[i] = array[i].replace(/(<br \/>)+/, "");
+      array[i] = array[i].replace(/(<br\s*\/?>)+/, "");
     }
   }
-  array[i] = array[i].replace(/(<br \/>)+<\/td>/, "</td>");
-  array[i] = array[i].replace(/(<br \/>)+<\/th>/, "</th>");
+  array[i] = array[i].replace(/(<br\s*\/?>)+<\/td>/, "</td>");
+  array[i] = array[i].replace(/(<br\s*\/?>)+<\/th>/, "</th>");
   if (array[i + 1] != null && array[i + 1] == "</td>") {
-    if (array[i].endsWith("<br /><br />")) {
+    if (array[i].match(/<br\s*\/?><br\s*\/?>$/i)) {
       array[i] = array[i].slice(0, array[i].length - 12);
-    } else if (array[i].endsWith("<br />")) {
+    } else if (array[i].match(/<br\s*\/?>$/i)) {
       array[i] = array[i].slice(0, array[i].length - 6);
     }
   }
@@ -2430,19 +2432,19 @@ function ssjMutateLoops(array, i) {
     ssjZeroEmptyLines(array, i);
     if (
       array[i].match(
-        /(<strong>|<em>|<code[^>]*>|<span[^>]*>)(\s|<br \/>|<img[^>]*>|<video[^>]*>|<audio[^>]*>)+/g
+        /(<strong>|<em>|<code[^>]*>|<span[^>]*>)(\s|<br\s*\/?>|<img[^>]*>|<video[^>]*>|<audio[^>]*>)+/g
       ) ||
       array[i].match(
-        /(\s|<br \/>|<img[^>]*>|<video[^>]*>|<audio[^>]*>)+(<\/strong>|<\/em>|<\/code>|<\/span>)/g
+        /(\s|<br\s*\/?>|<img[^>]*>|<video[^>]*>|<audio[^>]*>)+(<\/strong>|<\/em>|<\/code>|<\/span>)/g
       ) ||
       array[i].match(
         /(<span[^>]*><\/span>|<strong><\/strong>|<em><\/em>|<code[^>]*><\/code>)/g
       ) ||
       array[i].match(/(<\/strong><strong>|<\/em><em>|<\/code><code[^>]*>)/g) ||
-      array[i].match(/(\s+<br \/>|<br \/>\s+)/g) ||
-      array[i].match(/(<p>(<br \/>)+|(<br \/>)+<\/p>)/g) ||
+      array[i].match(/(\s+<br\s*\/?>|<br\s*\/?>\s+)/g) ||
+      array[i].match(/(<p>(<br\s*\/?>)+|(<br\s*\/?>)+<\/p>)/g) ||
       array[i].match(/(<p>\s+|\s+<\/p>)/g) ||
-      array[i].match("<br /><br /><br />")
+      array[i].match(/<br\s*\/?><br\s*\/?><br\s*\/?>/gi)
     ) {
       inspector = "found";
     }
@@ -2566,6 +2568,7 @@ function ssjConvertPhrases(array, i) {
   array[i] = array[i].replaceAll("&rsquo;", "'");
   array[i] = array[i].replaceAll("&ldquo;", '"');
   array[i] = array[i].replaceAll("&rdquo;", '"');
+  array[i] = array[i].replaceAll("<br />", "<br>");
 }
 // Correct misspellings
 function ssjCorrectSpellings(array, i) {
@@ -2634,7 +2637,7 @@ function ssjStripHeadings(array, i) {
         array[i] = "<p></p>";
       }
     }
-    array[i] = array[i].replaceAll("<br />", " ");
+    array[i] = array[i].replaceAll(/<br\s*\/?>/gi, " ");
     array[i] = array[i].replaceAll(/<strong[^>]*>/g, "");
     array[i] = array[i].replaceAll("</strong>", "");
     array[i] = array[i].replaceAll(/<em[^>]*>/g, "");
@@ -2655,8 +2658,8 @@ function ssjStripSpecials(array, i) {
     /<blockquote[^>]*>/g,
     `<blockquote style="display: block; margin: 1em 40px;">`
   );
-  array[i] = array[i].replaceAll(/<br [^>]*>/g, "<br />");
-  if (array[i] == "<br />") {
+  array[i] = array[i].replaceAll(/<br\s*\/?>/gi, "<br>");
+  if (array[i] == "<br />" || array[i] == "<br>") {
     array[i] = "";
   }
   array[i] = array[i].replaceAll(/<hr [^>]*>/g, "<hr />");
@@ -3159,10 +3162,10 @@ function ssjConvertSpaces(array, i) {
 }
 // LOOP Condense breaks
 function ssjCondenseBreaks(array, i) {
-  array[i] = array[i].replaceAll(/\s*<br \/>\s*/g, "<br />");
-  array[i] = array[i].replaceAll(/<br \/>(<br \/>)+/g, "<br /><br />");
-  array[i] = array[i].replaceAll(/(<p>|<p [^>]*>)(<br \/>)+\s*/g, "<p>");
-  array[i] = array[i].replaceAll(/\s*(<br \/>)+<\/p>/g, "</p>");
+  array[i] = array[i].replaceAll(/\s*<br\s*\/?>\s*/g, "<br>");
+  array[i] = array[i].replaceAll(/<br\s*\/?>(<br\s*\/?>)+/g, "<br><br>");
+  array[i] = array[i].replaceAll(/(<p>|<p [^>]*>)(<br\s*\/?>)+\s*/g, "<p>");
+  array[i] = array[i].replaceAll(/\s*(<br\s*\/?>)+<\/p>/g, "</p>");
 }
 // LOOP Shift inline tags around spaces and breaks
 function ssjShiftInline(array, i) {
@@ -3187,18 +3190,28 @@ function ssjShiftInline(array, i) {
     array[i] = array[i].replaceAll(open[x] + " ", " " + open[x]);
     array[i] = array[i].replaceAll(
       open[x] + "<br /><br />",
-      "<br /><br />" + open[x]
+      "<br><br>" + open[x]
     );
-    array[i] = array[i].replaceAll(open[x] + "<br />", "<br />" + open[x]);
+    array[i] = array[i].replaceAll(
+      open[x] + "<br><br>",
+      "<br><br>" + open[x]
+    );
+    array[i] = array[i].replaceAll(open[x] + "<br />", "<br>" + open[x]);
+    array[i] = array[i].replaceAll(open[x] + "<br>", "<br>" + open[x]);
   }
   let close = ["</strong>", "</em>", "</code>", "</span>"];
   for (let x = 0; x < close.length; x++) {
     array[i] = array[i].replaceAll(" " + close[x], close[x] + " ");
     array[i] = array[i].replaceAll(
       "<br /><br />" + close[x],
-      close[x] + "<br /><br />"
+      close[x] + "<br><br>"
     );
-    array[i] = array[i].replaceAll("<br />" + close[x], close[x] + "<br />");
+    array[i] = array[i].replaceAll(
+      "<br><br>" + close[x],
+      close[x] + "<br><br>"
+    );
+    array[i] = array[i].replaceAll("<br />" + close[x], close[x] + "<br>");
+    array[i] = array[i].replaceAll("<br>" + close[x], close[x] + "<br>");
   }
   array[i] = array[i].replaceAll(":</strong> ", ":</strong>&nbsp; ");
   array[i] = array[i].replaceAll(":</em> ", ":</em>&nbsp; ");
@@ -3334,10 +3347,10 @@ function ssjRunAdvanced() {
 function ssjConvertBreaks(array) {
   if (ssj_breaks_check.checked) {
     for (let i = ssjSkip; i < array.length; i++) {
-      array[i] = array[i].replaceAll(/<br [^>]*>/g, "<br />");
+      array[i] = array[i].replaceAll(/<br\s*\/?>/gi, "<br>");
       if (array[i].startsWith("<p") && array[i].endsWith("</p>")) {
-        array[i] = array[i].replaceAll(/(<br \/>)+/g, "</p>\n<p>");
-      } else if (array[i].trim() == "<br />") {
+        array[i] = array[i].replaceAll(/(<br\s*\/?>)+/g, "</p>\n<p>");
+      } else if (array[i].trim() == "<br>") {
         array[i] = "";
       }
     }
