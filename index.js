@@ -1923,6 +1923,7 @@ function ssjMutateHeader(array) {
       '<table style="width: fit-content;" class="table' +
       ssjBootstrap.join("") +
       '">';
+    /*
     if (ssj_special_tbl_check.checked) {
       array[ssjTable.Table_O] =
         '<table style="width: 100%;" class="table' +
@@ -1936,6 +1937,10 @@ function ssjMutateHeader(array) {
         `\n<col style="width: 20%;"><col style="width: 20%;"><col style="width: 60%;">` +
         "\n</colgroup>";
     } else if (ssj_tbl_column_check.checked) {
+      ssjColorColumn(array);
+    }
+    */
+    if (ssj_tbl_column_check.checked) {
       ssjColorColumn(array);
     }
     i = array.indexOf("<table>", ssjTable.Table_O + 1);
