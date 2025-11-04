@@ -3218,8 +3218,8 @@ function ssjShiftInline(array, i) {
     array[i] = array[i].replaceAll("<br />" + close[x], close[x] + "<br>");
     array[i] = array[i].replaceAll("<br>" + close[x], close[x] + "<br>");
   }
-  array[i] = array[i].replaceAll(":</strong> ", ":</strong>&nbsp; ");
-  array[i] = array[i].replaceAll(":</em> ", ":</em>&nbsp; ");
+  array[i] = array[i].replaceAll(":</strong> ", ":</strong> ");
+  array[i] = array[i].replaceAll(":</em> ", ":</em> ");
 }
 // LOOP Shift or remove inline tags around media
 function ssjShiftMedia(array, i) {
